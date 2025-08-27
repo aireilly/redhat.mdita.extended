@@ -166,6 +166,20 @@ public class SpecializeFilter extends XMLFilterImpl {
           }
           taskState = TaskState.STEPS;
           renameStartElement(TASK_STEPS_UNORDERED, atts);
+        } else if ((taskState == TaskState.STEP || taskState == TaskState.INFO) && depth == 5) {
+          if (taskState != TaskState.INFO) {
+            AttributesImpl infoAtts = new AttributesImpl();
+            infoAtts.addAttribute(
+              NULL_NS_URI,
+              ATTRIBUTE_NAME_CLASS,
+              ATTRIBUTE_NAME_CLASS,
+              "CDATA",
+              TASK_INFO.toString()
+            );
+            doStartElement(NULL_NS_URI, TASK_INFO.localName, TASK_INFO.localName, infoAtts);
+            taskState = TaskState.INFO;
+          }
+          doStartElement(uri, localName, qName, atts);
         } else {
           doStartElement(uri, localName, qName, atts);
         }
@@ -201,15 +215,15 @@ public class SpecializeFilter extends XMLFilterImpl {
               if (paragraphCountInStep == 1) {
                 renameStartElement(TASK_CMD, atts);
               } else if (paragraphCountInStep == 2 && taskState != TaskState.INFO) {
-                AttributesImpl res = new AttributesImpl(atts);
-                res.addAttribute(
+                AttributesImpl infoAtts = new AttributesImpl();
+                infoAtts.addAttribute(
                   NULL_NS_URI,
                   ATTRIBUTE_NAME_CLASS,
                   ATTRIBUTE_NAME_CLASS,
                   "CDATA",
                   TASK_INFO.toString()
                 );
-                doStartElement(NULL_NS_URI, TASK_INFO.localName, TASK_INFO.localName, res);
+                doStartElement(NULL_NS_URI, TASK_INFO.localName, TASK_INFO.localName, infoAtts);
                 taskState = TaskState.INFO;
                 doStartElement(uri, localName, qName, atts);
               } else {
@@ -218,15 +232,15 @@ public class SpecializeFilter extends XMLFilterImpl {
               break;
             default:
               if (taskState != TaskState.INFO) {
-                AttributesImpl res = new AttributesImpl(atts);
-                res.addAttribute(
+                AttributesImpl infoAtts = new AttributesImpl();
+                infoAtts.addAttribute(
                   NULL_NS_URI,
                   ATTRIBUTE_NAME_CLASS,
                   ATTRIBUTE_NAME_CLASS,
                   "CDATA",
                   TASK_INFO.toString()
                 );
-                doStartElement(NULL_NS_URI, TASK_INFO.localName, TASK_INFO.localName, res);
+                doStartElement(NULL_NS_URI, TASK_INFO.localName, TASK_INFO.localName, infoAtts);
                 taskState = TaskState.INFO;
               }
               doStartElement(uri, localName, qName, atts);

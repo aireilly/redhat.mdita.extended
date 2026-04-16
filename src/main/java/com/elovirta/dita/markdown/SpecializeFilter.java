@@ -327,15 +327,15 @@ public class SpecializeFilter extends XMLFilterImpl {
               if (paragraphCountInSubstep == 1) {
                 renameStartElement(TASK_CMD, atts);
               } else if (paragraphCountInSubstep == 2 && taskState != TaskState.SUBINFO) {
-                AttributesImpl res = new AttributesImpl(atts);
-                res.addAttribute(
+                AttributesImpl infoAtts = new AttributesImpl();
+                infoAtts.addAttribute(
                   NULL_NS_URI,
                   ATTRIBUTE_NAME_CLASS,
                   ATTRIBUTE_NAME_CLASS,
                   "CDATA",
                   TASK_INFO.toString()
                 );
-                doStartElement(NULL_NS_URI, TASK_INFO.localName, TASK_INFO.localName, res);
+                doStartElement(NULL_NS_URI, TASK_INFO.localName, TASK_INFO.localName, infoAtts);
                 taskState = TaskState.SUBINFO;
                 doStartElement(uri, localName, qName, atts);
               } else {
@@ -344,15 +344,15 @@ public class SpecializeFilter extends XMLFilterImpl {
               break;
             default:
               if (taskState != TaskState.SUBINFO) {
-                AttributesImpl res = new AttributesImpl(atts);
-                res.addAttribute(
+                AttributesImpl infoAtts = new AttributesImpl();
+                infoAtts.addAttribute(
                   NULL_NS_URI,
                   ATTRIBUTE_NAME_CLASS,
                   ATTRIBUTE_NAME_CLASS,
                   "CDATA",
                   TASK_INFO.toString()
                 );
-                doStartElement(NULL_NS_URI, TASK_INFO.localName, TASK_INFO.localName, res);
+                doStartElement(NULL_NS_URI, TASK_INFO.localName, TASK_INFO.localName, infoAtts);
                 taskState = TaskState.SUBINFO;
               }
               doStartElement(uri, localName, qName, atts);

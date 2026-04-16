@@ -26,6 +26,97 @@ Two different Markdown source formats are supported:
 
 For a comparison of these two formats, see [Format comparison](https://github.com/jelovirt/org.lwdita/wiki/Format-comparison) in the LwDITA Wiki.
 
+## Task topic support
+
+When a topic is identified as a task (via `{.task}` on the H1 heading or
+`$schema: urn:oasis:names:tc:dita:xsd:task.xsd` in YAML front matter), the
+plug-in automatically maps Markdown constructs to DITA task elements.
+
+### Body-level structure
+
+Content before the first ordered/unordered list becomes `<context>`. The
+list itself becomes `<steps>` (ordered) or `<steps-unordered>` (unordered).
+Content after the list becomes `<result>`.
+
+Task sections can be created using H2 headings with specific default titles
+or explicit class attributes:
+
+| Default title    | Class attribute          | DITA element           |
+|------------------|--------------------------|------------------------|
+| Prerequisites    | `{.prereq}`              | `<prereq>`             |
+| About this task  | `{.context}`             | `<context>`            |
+| Verification     | `{.result}`              | `<result>`             |
+| Next steps       | `{.postreq}`             | `<postreq>`            |
+| *(none)*         | `{.tasktroubleshooting}` | `<tasktroubleshooting>` |
+
+Default titles are matched case-insensitively and require no attributes.
+Explicit class attributes can be used with any heading text.
+
+```markdown
+# Install the software {.task}
+
+## Prerequisites
+
+You need administrator access.
+
+## About this task
+
+This procedure installs the base package.
+
+1.  Download the installer.
+
+2.  Run the installer.
+
+## Verification
+
+The software is now installed.
+
+## Next steps
+
+Configure the license key.
+```
+
+The same task can also use explicit class attributes with custom titles:
+
+```markdown
+## Before you begin {.prereq}
+
+## Troubleshooting {.tasktroubleshooting}
+```
+
+### Step-level structure
+
+Within each step, the first paragraph becomes `<cmd>` and subsequent
+paragraphs are wrapped in `<info>`. Nested constructs within a step are
+automatically specialized:
+
+- **Substeps**: A nested ordered list becomes `<substeps>`, with each item
+  as a `<substep>` containing its own `<cmd>` and `<info>`.
+- **Choices**: A nested unordered list becomes `<choices>`, with each item
+  as a `<choice>`.
+- **Choice table**: A table within a step becomes a `<choicetable>` with
+  `<choption>` and `<chdesc>` columns.
+
+```markdown
+1.  Configure the server:
+
+    1.  Edit the config file.
+    2.  Set the port number.
+
+2.  Select the installation type:
+
+    -   Minimal
+    -   Standard
+    -   Full
+
+3.  Select an option:
+
+    | Option | Description   |
+    |--------|---------------|
+    | Fast   | Quick setup   |
+    | Full   | Complete install |
+```
+
 ## Usage
 
 ### Using Markdown-based and HDITA files as input

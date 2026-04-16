@@ -1,0 +1,21 @@
+<task xmlns:ditaarch="http://dita.oasis-open.org/architecture/2005/"
+      ditaarch:DITAArchVersion="2.0"
+      specializations="@props/audience @props/deliveryTarget @props/otherprops @props/platform @props/product"
+      class="- topic/topic task/task " id="task">
+  <title class="- topic/title ">Task</title>
+  <taskbody class="- topic/body task/taskbody ">
+    <prereq class="- topic/section task/prereq ">
+      <title class="- topic/title ">Prerequisites</title>
+      <p class="- topic/p ">You need admin access.</p>
+    </prereq>
+    <steps class="- topic/ol task/steps ">
+      <step class="- topic/li task/step ">
+        <cmd class="- topic/ph task/cmd ">Command</cmd>
+      </step>
+    </steps>
+    <postreq class="- topic/section task/postreq ">
+      <title class="- topic/title ">What to do next</title>
+      <p class="- topic/p ">Restart the server.</p>
+    </postreq>
+  </taskbody>
+</task>

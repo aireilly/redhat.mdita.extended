@@ -112,9 +112,35 @@ public class TopicRenderer extends AbstractRenderer {
 
   private static final Map<String, DitaClass> sections = new HashMap<>();
 
+  /**
+   * Section class names that should be stripped from outputclass.
+   * Task section names (prereq, context, etc.) are preserved in outputclass
+   * so the SpecializeFilter can detect and rename them.
+   */
+  private static final Set<String> SECTION_CLASSES_TO_STRIP = Set.of(
+    TOPIC_SECTION.localName,
+    TOPIC_EXAMPLE.localName
+  );
+
+  /**
+   * Default heading titles that map to task section elements without
+   * requiring explicit class attributes.
+   */
+  private static final Map<String, String> DEFAULT_TASK_SECTION_TITLES = Map.of(
+    "prerequisites", TASK_PREREQ.localName,
+    "about this task", TASK_CONTEXT.localName,
+    "verification", TASK_RESULT.localName,
+    "next steps", TASK_POSTREQ.localName
+  );
+
   static {
     sections.put(TOPIC_SECTION.localName, TOPIC_SECTION);
     sections.put(TOPIC_EXAMPLE.localName, TOPIC_EXAMPLE);
+    sections.put(TASK_PREREQ.localName, TOPIC_SECTION);
+    sections.put(TASK_CONTEXT.localName, TOPIC_SECTION);
+    sections.put(TASK_RESULT.localName, TOPIC_SECTION);
+    sections.put(TASK_POSTREQ.localName, TOPIC_SECTION);
+    sections.put(TASK_TASKTROUBLESHOOTING.localName, TOPIC_SECTION);
   }
 
   private final Map<String, String> abbreviations = new HashMap<>();
@@ -562,6 +588,9 @@ public class TopicRenderer extends AbstractRenderer {
       if (sectionClassName != null) {
         isSection = true;
         cls = sections.get(sectionClassName);
+      } else if (DEFAULT_TASK_SECTION_TITLES.containsKey(node.getText().toString().trim().toLowerCase())) {
+        isSection = true;
+        cls = TOPIC_SECTION;
       } else {
         isSection = false;
         cls = null;
@@ -587,7 +616,15 @@ public class TopicRenderer extends AbstractRenderer {
       }
       if (!mditaCoreProfile) {
         final Collection<String> classes = new ArrayList<>(header.classes);
-        classes.removeAll(sections.keySet());
+        classes.removeAll(SECTION_CLASSES_TO_STRIP);
+        if (Collections.disjoint(classes, DEFAULT_TASK_SECTION_TITLES.values())) {
+          final String defaultClass = DEFAULT_TASK_SECTION_TITLES.get(
+            node.getText().toString().trim().toLowerCase()
+          );
+          if (defaultClass != null) {
+            classes.add(defaultClass);
+          }
+        }
         if (!classes.isEmpty()) {
           atts.add("outputclass", String.join(" ", classes));
         }

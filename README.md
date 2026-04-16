@@ -38,16 +38,28 @@ Content before the first ordered/unordered list becomes `<context>`. The
 list itself becomes `<steps>` (ordered) or `<steps-unordered>` (unordered).
 Content after the list becomes `<result>`.
 
-Task sections can also be created explicitly using heading attributes:
+Task sections can be created using H2 headings with specific default titles
+or explicit class attributes:
+
+| Default title    | Class attribute          | DITA element           |
+|------------------|--------------------------|------------------------|
+| Prerequisites    | `{.prereq}`              | `<prereq>`             |
+| About this task  | `{.context}`             | `<context>`            |
+| Verification     | `{.result}`              | `<result>`             |
+| Next steps       | `{.postreq}`             | `<postreq>`            |
+| *(none)*         | `{.tasktroubleshooting}` | `<tasktroubleshooting>` |
+
+Default titles are matched case-insensitively and require no attributes.
+Explicit class attributes can be used with any heading text.
 
 ```markdown
 # Install the software {.task}
 
-## Prerequisites {.prereq}
+## Prerequisites
 
 You need administrator access.
 
-## About this task {.context}
+## About this task
 
 This procedure installs the base package.
 
@@ -55,17 +67,22 @@ This procedure installs the base package.
 
 2.  Run the installer.
 
-## Verification {.result}
+## Verification
 
 The software is now installed.
 
-## What to do next {.postreq}
+## Next steps
 
 Configure the license key.
 ```
 
-Supported section classes: `.prereq`, `.context`, `.result`, `.postreq`,
-`.tasktroubleshooting`.
+The same task can also use explicit class attributes with custom titles:
+
+```markdown
+## Before you begin {.prereq}
+
+## Troubleshooting {.tasktroubleshooting}
+```
 
 ### Step-level structure
 

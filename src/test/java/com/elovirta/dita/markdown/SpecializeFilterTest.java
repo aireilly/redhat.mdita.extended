@@ -73,6 +73,7 @@ public class SpecializeFilterTest {
       "task_choices",
       "task_choicetable",
       "task_prereq_section",
+      "task_default_titles",
     }
   )
   public void test(String name) throws Exception {

@@ -1,0 +1,21 @@
+<topic xmlns:ditaarch="http://dita.oasis-open.org/architecture/2005/"
+      ditaarch:DITAArchVersion="2.0"
+      specializations="@props/audience @props/deliveryTarget @props/otherprops @props/platform @props/product"
+      class="- topic/topic " id="task" outputclass="task">
+  <title class="- topic/title ">Task</title>
+  <body class="- topic/body ">
+    <section class="- topic/section " outputclass="prereq">
+      <title class="- topic/title ">Prerequisites</title>
+      <p class="- topic/p ">You need admin access.</p>
+    </section>
+    <ol class="- topic/ol ">
+      <li class="- topic/li ">
+        <p class="- topic/p ">Command</p>
+      </li>
+    </ol>
+    <section class="- topic/section " outputclass="postreq">
+      <title class="- topic/title ">What to do next</title>
+      <p class="- topic/p ">Restart the server.</p>
+    </section>
+  </body>
+</topic>

@@ -1,0 +1,27 @@
+<topic xmlns:ditaarch="http://dita.oasis-open.org/architecture/2005/"
+      ditaarch:DITAArchVersion="2.0"
+      specializations="@props/audience @props/deliveryTarget @props/otherprops @props/platform @props/product"
+      class="- topic/topic " id="task" outputclass="task">
+  <title class="- topic/title ">Task</title>
+  <body class="- topic/body ">
+    <ol class="- topic/ol ">
+      <li class="- topic/li ">
+        <p class="- topic/p ">Select an option:</p>
+        <simpletable class="- topic/simpletable ">
+          <sthead class="- topic/sthead ">
+            <stentry class="- topic/stentry ">Option</stentry>
+            <stentry class="- topic/stentry ">Description</stentry>
+          </sthead>
+          <strow class="- topic/strow ">
+            <stentry class="- topic/stentry ">Fast</stentry>
+            <stentry class="- topic/stentry ">Quick setup</stentry>
+          </strow>
+          <strow class="- topic/strow ">
+            <stentry class="- topic/stentry ">Full</stentry>
+            <stentry class="- topic/stentry ">Complete install</stentry>
+          </strow>
+        </simpletable>
+      </li>
+    </ol>
+  </body>
+</topic>

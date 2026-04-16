@@ -75,6 +75,10 @@ dependencies {
     testImplementation group: 'org.xmlunit', name: 'xmlunit-core', version: '2.9.1'
 }
 
+test {
+    useJUnitPlatform()
+}
+
 tasks.register('dist', Zip) {
     from(jar) {
         into "lib"

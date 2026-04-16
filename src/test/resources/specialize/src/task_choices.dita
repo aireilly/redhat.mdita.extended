@@ -1,0 +1,18 @@
+<topic xmlns:ditaarch="http://dita.oasis-open.org/architecture/2005/"
+      ditaarch:DITAArchVersion="2.0"
+      specializations="@props/audience @props/deliveryTarget @props/otherprops @props/platform @props/product"
+      class="- topic/topic " id="task" outputclass="task">
+  <title class="- topic/title ">Task</title>
+  <body class="- topic/body ">
+    <ol class="- topic/ol ">
+      <li class="- topic/li ">
+        <p class="- topic/p ">Choose one of the following:</p>
+        <ul class="- topic/ul ">
+          <li class="- topic/li ">Option A</li>
+          <li class="- topic/li ">Option B</li>
+          <li class="- topic/li ">Option C</li>
+        </ul>
+      </li>
+    </ol>
+  </body>
+</topic>

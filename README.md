@@ -1,18 +1,21 @@
-# Lightweight DITA for DITA-OT [![Test](https://github.com/jelovirt/org.lwdita/actions/workflows/test.yml/badge.svg)](https://github.com/jelovirt/org.lwdita/actions/workflows/test.yml)
+# redhat.mdita.extended
 
-The DITA-OT LwDITA plug-in supersedes the previously released [Markdown
-plug-in for DITA-OT](https://github.com/jelovirt/dita-ot-markdown) and
-adds additional features to support Lightweight DITA.
+A fork of [org.lwdita](https://github.com/jelovirt/org.lwdita) with extended
+MDITA task support for Red Hat documentation workflows.
 
-> **Note**
-> The LwDITA plug-in is included in DITA Open Toolkit 3.0 and
-newer.
+This plug-in incorporates the following upstream PRs that have not yet been
+merged:
+
+- [#249 — Add fuller DITA task element support to MDITA task topic type](https://github.com/jelovirt/org.lwdita/pull/249)
+- [#242 — Fix duplicate class attribute error in task info elements](https://github.com/jelovirt/org.lwdita/pull/242)
 
 It contains:
 
 - a custom SAX parser for Markdown and HTML to allow using Markdown and HDITA
   as source document formats,
-- and a transtype to generate Markdown from DITA source.
+- a transtype to generate Markdown from DITA source,
+- and extended DITA task element support (substeps, choices, choicetables,
+  task sections via heading inference).
 
 ## Markdown source document formats
 
@@ -172,29 +175,21 @@ content as Markdown.
 
 ## Install
 
-1.  Run the plug-in installation command:
-
-    On DITA-OT version 3.5 and newer:
+1.  Build the distribution:
 
     ``` shell
-    $ dita install org.lwdita
+    ./gradlew dist
     ```
 
-    On DITA-OT version 3.2–3.4:
+2.  Install the plug-in from the built ZIP:
 
     ``` shell
-    $ dita --install org.lwdita
-    ```
-
-    On DITA-OT version 3.1 and older:
-
-    ``` shell
-    $ dita --install https://github.com/jelovirt/org.lwdita/releases/download/2.3.2/org.lwdita-2.3.2.zip
+    dita install build/distributions/redhat.mdita.extended-*.zip
     ```
 
 The `dita` command line tool requires no additional configuration;
 running DITA-OT using Ant requires adding plug-in contributed JAR files
-to the `CLASSPATH` with e.g. `-lib plugins/org.lwdita`.
+to the `CLASSPATH` with e.g. `-lib plugins/redhat.mdita.extended`.
 
 ## Build
 
@@ -209,22 +204,10 @@ To build the DITA-OT Markdown plug-in from source:
 
     The distribution ZIP file is generated under `build/distributions`.
 
-## Release
+## Upstream
 
-To release and build distribution:
-
-1.  Tag release in `master` branch using semantic version as tag name,
-    e.g. `1.2.3`.
-
-    [GitHub Actions](.github/workflows/dist.yml) will create
-    * a distribution ZIP and upload it to GitHub Release for the tag,
-    * a JAR release that is published to [github.com/jelovirt/org.lwdita/packages](https://github.com/jelovirt/org.lwdita/packages/),
-    * a pull request to [github.com/dita-ot/registry](https://github.com/dita-ot/registry)
-to update the release to DITA-OT plug-in registry.
-
-## Donating
-
-Support this project and others by
+This is a fork of [jelovirt/org.lwdita](https://github.com/jelovirt/org.lwdita).
+Support the upstream project and its author
 [@jelovirt](https://github.com/jelovirt) via [GitHub
 Sponsors](https://github.com/sponsors/jelovirt).
 

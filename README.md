@@ -156,59 +156,6 @@ Other useful transtypes:
 | `dita`            | Normalized DITA XML        |
 | `pdf`             | PDF (requires PDF plug-in) |
 
-## Usage
-
-### Using Markdown-based and HDITA files as input
-
-Markdown-based or HTML DITA topics can only be used by linking to them in
-map files.
-
-```xml
-<map>
-  <!-- Markdown DITA -->
-  <topicref href="test1.md" format="md"/>
-  <topicref href="test1.md" format="markdown"/>
-
-  <!-- MDITA -->
-  <topicref href="test2.md" format="mdita"/>
-
-  <!-- HDITA -->
-  <topicref href="test3.html" format="hdita"/>
-</map>
-```
-
-The `format` attribute value must be set to the values shown above in order
-to recognize files as Markdown DITA, MDITA, or HDITA, respectively; the file
-extension is not used to recognize format.
-
-### Generating Markdown output
-
-The DITA-OT LwDITA plug-in extends the DITA Open Toolkit with additional
-output formats *(transformation types)* that can be used to publish DITA
-content as Markdown.
-
-- To publish Markdown DITA files, use the `markdown` transtype.
-
-- To generate [GitHub Flavored
-  Markdown](https://help.github.com/categories/writing-on-github/)
-  files, use the `markdown_github` transtype.
-
-- To publish GitHub Flavored Markdown and generate a `SUMMARY.md` table
-  of contents file for publication via
-  [GitBook](https://www.gitbook.com), use the `markdown_gitbook`
-  transtype.
-
-## Requirements
-
-| LwDITA plug-in | DITA-OT  | Java |
-|----------------|----------|------|
-| ≤ 2.5          | 2.4      | 1.8  |
-| ≥ 3.0          | 3.4      | 1.8  |
-| ≥ 4.0          | 3.4      | 11   |
-| ≥ 5.2          | 3.4 [^1] | 11   |
-
-[^1]: Support MDITA map requires DITA-OT version 4.1.
-
 ## Install
 
 1.  Build the distribution:
@@ -232,19 +179,6 @@ to the `CLASSPATH` with e.g. `-lib plugins/redhat.mdita.extended`.
     ``` shell
     dita -i demo/src/example.mditamap -f xhtml -o out
     ```
-
-## Build
-
-To build the DITA-OT Markdown plug-in from source:
-
-1.  Run the Gradle distribution task to generate the plug-in
-    distribution package:
-
-    ``` shell
-    ./gradlew dist
-    ```
-
-    The distribution ZIP file is generated under `build/distributions`.
 
 ## Upstream
 

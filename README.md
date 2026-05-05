@@ -120,6 +120,28 @@ automatically specialized:
     | Full   | Complete install |
 ```
 
+## Demo
+
+A ready-to-build demo is included under `demo/src/`. It contains an MDITA map
+and three topics (concept, reference, task) that exercise the plug-in's key
+features: YAML front matter, admonitions, tables, fenced code blocks, task
+sections, substeps, choices, and choice tables.
+
+Build the demo to XHTML:
+
+``` shell
+dita -i demo/src/example.mditamap -f xhtml -o out
+```
+
+Other useful transtypes:
+
+| Transtype         | Output                     |
+|-------------------|----------------------------|
+| `xhtml`           | XHTML                      |
+| `html5`           | HTML5                      |
+| `dita`            | Normalized DITA XML        |
+| `pdf`             | PDF (requires PDF plug-in) |
+
 ## Usage
 
 ### Using Markdown-based and HDITA files as input

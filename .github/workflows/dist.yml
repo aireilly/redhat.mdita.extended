@@ -2,92 +2,28 @@ name: Distribution
 
 on:
   push:
-    branches:
-      - '!*'
     tags:
       - '*'
 
 permissions:
   contents: write
-  pull-requests: write
-  packages: write
 
 jobs:
   dist:
-    if: github.repository == 'jelovirt/org.lwdita'
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - name: Set up JDK 11
-        uses: actions/setup-java@v3
+        uses: actions/setup-java@v4
         with:
           distribution: 'temurin'
           java-version: 11
           cache: gradle
       - name: Build with Gradle
         run: ./gradlew dist
-      - name: Set variables
-        run: |
-          echo "CHKSUM=$(shasum -a 256 build/distributions/org.lwdita-*.zip | cut -d ' ' -f 1)" >> $GITHUB_ENV
       - name: Release
-        uses: softprops/action-gh-release@v1
+        uses: softprops/action-gh-release@v2
         with:
-          files: build/distributions/org.lwdita-*.zip
+          files: build/distributions/redhat.mdita.extended-*.zip
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-    outputs:
-      shasum: ${{ env.CHKSUM }}
-  publish:
-    needs: dist
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-      - name: Set up JDK 11
-        uses: actions/setup-java@v3
-        with:
-          distribution: 'temurin'
-          java-version: 11
-          cache: gradle
-      - name: Publish package
-        run: ./gradlew publish
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-  registry:
-    needs: dist
-    runs-on: ubuntu-latest
-    steps:
-      - name: Set variables
-        run: |
-          echo "VERSION=$(echo $GITHUB_REF | cut -d / -f 3)" >> $GITHUB_ENV
-          echo "PLUGIN_NAME=org.lwdita" >> $GITHUB_ENV
-      - name: Check out registry
-        uses: actions/checkout@v3
-        with:
-          repository: dita-ot/registry
-          path: registry
-      - name: Update registry
-        working-directory: registry
-        run: |
-          URL=https://github.com/jelovirt/org.lwdita/releases/download/${{ env.VERSION }}/org.lwdita-${{ env.VERSION }}.zip
-          cat ${{ env.PLUGIN_NAME }}.json \
-            | jq '.[length -1]' \
-            | jq --arg url "$URL" '. | .url|=$url' \
-            | jq --arg chksum "${{ needs.dist.outputs.shasum }}" '. | .cksum|=$chksum' \
-            | jq --arg vers "${{ env.VERSION }}" '. | .vers|=$vers' > buf.json 
-          jq '. += [input]' ${{ env.PLUGIN_NAME }}.json buf.json \
-            | jq . > concat.json
-          mv concat.json ${{ env.PLUGIN_NAME }}.json
-          rm buf.json
-      - name: Create Pull Request
-        uses: peter-evans/create-pull-request@v7
-        with:
-          path: registry
-          token: ${{ secrets.LWDITA_REGISTRY_PR }}
-          push-to-fork: jelovirt/registry
-          branch-suffix: timestamp
-          commit-message: Add ${{ env.PLUGIN_NAME }} ${{ env.VERSION }}
-          title: Add ${{ env.PLUGIN_NAME }} ${{ env.VERSION }}
-          body: |
-            Add plug-in `${{ env.PLUGIN_NAME }}` version `${{ env.VERSION }}`.
-            
-            * [Release notes](https://github.com/jelovirt/org.lwdita/releases/tag/${{ env.VERSION }})

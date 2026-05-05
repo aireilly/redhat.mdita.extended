@@ -158,6 +158,16 @@ Other useful transtypes:
 
 ## Install
 
+### From a release
+
+Install the plug-in directly from a GitHub release:
+
+``` shell
+dita install https://github.com/aireilly/redhat.mdita.extended/releases/download/0.0.1/redhat.mdita.extended-0.0.1.zip
+```
+
+### From source
+
 1.  Build the distribution:
 
     ``` shell
@@ -170,15 +180,22 @@ Other useful transtypes:
     dita install build/distributions/redhat.mdita.extended-*.zip
     ```
 
-The `dita` command line tool requires no additional configuration;
-running DITA-OT using Ant requires adding plug-in contributed JAR files
-to the `CLASSPATH` with e.g. `-lib plugins/redhat.mdita.extended`.
+### Run a build
 
-3.  Run a build using an MDITA map as input:
+``` shell
+dita -i demo/src/example.mditamap -f xhtml -o out
+```
 
-    ``` shell
-    dita -i demo/src/example.mditamap -f xhtml -o out
-    ```
+## Release
+
+To create a new release, tag the commit and push. The GitHub Actions
+workflow builds the distribution ZIP and attaches it to a release
+automatically.
+
+``` shell
+git tag 0.0.2
+git push origin 0.0.2
+```
 
 ## Upstream
 
@@ -189,5 +206,5 @@ Sponsors](https://github.com/sponsors/jelovirt).
 
 ## License
 
-DITA-OT LwDITA is licensed for use under the [Apache License
+DITA-OT redhat.mdita.extended is licensed for use under the [Apache License
 2.0](http://www.apache.org/licenses/LICENSE-2.0).

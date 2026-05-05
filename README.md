@@ -127,6 +127,20 @@ and three topics (concept, reference, task) that exercise the plug-in's key
 features: YAML front matter, admonitions, tables, fenced code blocks, task
 sections, substeps, choices, and choice tables.
 
+The MDITA map (`demo/src/example.mditamap`):
+
+```markdown
+---
+$schema: urn:oasis:names:tc:dita:xsd:map.xsd
+---
+
+# MDITA Extended Demo
+
+- [Understanding widgets](docs/concept.md)
+- [Widget configuration reference](docs/reference.md)
+- [Installing the widget](docs/task.md)
+```
+
 Build the demo to XHTML:
 
 ``` shell
@@ -212,6 +226,12 @@ content as Markdown.
 The `dita` command line tool requires no additional configuration;
 running DITA-OT using Ant requires adding plug-in contributed JAR files
 to the `CLASSPATH` with e.g. `-lib plugins/redhat.mdita.extended`.
+
+3.  Run a build using an MDITA map as input:
+
+    ``` shell
+    dita -i demo/src/example.mditamap -f xhtml -o out
+    ```
 
 ## Build
 

@@ -61,11 +61,16 @@ public class SpecializeFilter extends XMLFilterImpl {
   private boolean inChoicetableHead = false;
 
   private static final Map<String, DitaClass> TASK_SECTIONS = Map.of(
-    TASK_PREREQ.localName, TASK_PREREQ,
-    TASK_CONTEXT.localName, TASK_CONTEXT,
-    TASK_RESULT.localName, TASK_RESULT,
-    TASK_POSTREQ.localName, TASK_POSTREQ,
-    TASK_TASKTROUBLESHOOTING.localName, TASK_TASKTROUBLESHOOTING
+    TASK_PREREQ.localName,
+    TASK_PREREQ,
+    TASK_CONTEXT.localName,
+    TASK_CONTEXT,
+    TASK_RESULT.localName,
+    TASK_RESULT,
+    TASK_POSTREQ.localName,
+    TASK_POSTREQ,
+    TASK_TASKTROUBLESHOOTING.localName,
+    TASK_TASKTROUBLESHOOTING
   );
 
   private final Deque<String> elementStack = new ArrayDeque<>();

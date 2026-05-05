@@ -117,20 +117,21 @@ public class TopicRenderer extends AbstractRenderer {
    * Task section names (prereq, context, etc.) are preserved in outputclass
    * so the SpecializeFilter can detect and rename them.
    */
-  private static final Set<String> SECTION_CLASSES_TO_STRIP = Set.of(
-    TOPIC_SECTION.localName,
-    TOPIC_EXAMPLE.localName
-  );
+  private static final Set<String> SECTION_CLASSES_TO_STRIP = Set.of(TOPIC_SECTION.localName, TOPIC_EXAMPLE.localName);
 
   /**
    * Default heading titles that map to task section elements without
    * requiring explicit class attributes.
    */
   private static final Map<String, String> DEFAULT_TASK_SECTION_TITLES = Map.of(
-    "prerequisites", TASK_PREREQ.localName,
-    "about this task", TASK_CONTEXT.localName,
-    "verification", TASK_RESULT.localName,
-    "next steps", TASK_POSTREQ.localName
+    "prerequisites",
+    TASK_PREREQ.localName,
+    "about this task",
+    TASK_CONTEXT.localName,
+    "verification",
+    TASK_RESULT.localName,
+    "next steps",
+    TASK_POSTREQ.localName
   );
 
   static {
@@ -618,9 +619,7 @@ public class TopicRenderer extends AbstractRenderer {
         final Collection<String> classes = new ArrayList<>(header.classes);
         classes.removeAll(SECTION_CLASSES_TO_STRIP);
         if (Collections.disjoint(classes, DEFAULT_TASK_SECTION_TITLES.values())) {
-          final String defaultClass = DEFAULT_TASK_SECTION_TITLES.get(
-            node.getText().toString().trim().toLowerCase()
-          );
+          final String defaultClass = DEFAULT_TASK_SECTION_TITLES.get(node.getText().toString().trim().toLowerCase());
           if (defaultClass != null) {
             classes.add(defaultClass);
           }

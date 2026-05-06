@@ -25,3 +25,7 @@ Set the `MAX_RETRIES`{.varname} variable.
 Check the `ERR_TIMEOUT`{.msgph} message.
 
 Use `codeph`{.codeph} for code phrases.
+
+See *Ansible Automation Platform Planning Guide*{.cite} for details.
+
+This needs review.{.draft-comment author="jsmith"}

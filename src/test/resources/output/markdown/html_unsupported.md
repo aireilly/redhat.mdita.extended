@@ -50,7 +50,7 @@ content
 
 contentcontent
 
-**content**
+**content**{.cite}
 
 `content`
 

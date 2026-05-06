@@ -18,6 +18,8 @@ It contains:
 - relationship table support in MDITA maps,
 - DITA domain element specialization (UI, software, and programming domains),
 - DITA-to-Markdown roundtrip preservation of domain semantics,
+- related-links support for all topic types (task, concept, reference),
+- cite and draft-comment element support,
 - and extended DITA task element support (substeps, choices, choicetables,
   task sections, stepresult, stepxmp via heading inference).
 
@@ -190,6 +192,7 @@ name is used as an outputclass, the plug-in promotes the generic element
 | `` `verbose`{.option} ``             | `<option>verbose</option>`        | PR     |
 | `` `inventory`{.parmname} ``         | `<parmname>inventory</parmname>`  | PR     |
 | `` `getHosts`{.apiname} ``           | `<apiname>getHosts</apiname>`     | PR     |
+| `*Title*{.cite}`                     | `<cite>Title</cite>`              | Topic  |
 
 Bold and italic elements can also be specialized. The `{.classname}`
 attribute is applied directly after the closing marker with no space:
@@ -241,6 +244,65 @@ wrapped in the corresponding DITA task elements:
 
 This produces `<stepresult>` and `<stepxmp>` elements inside the step,
 alongside the standard `<cmd>` and `<info>` wrappers.
+
+### Related links
+
+Use `## Related information` or `## Related links` (or any heading with
+`{.related-links}`) to create a related-links section. When specialization
+is enabled, the section and its list of xrefs are restructured into proper
+DITA `<related-links>` with `<link>` and `<linktext>` children, placed
+outside the body element.
+
+```markdown
+# Install the software {.task}
+
+1. Run the installer.
+
+## Related information
+
+- [Widget reference](reference.dita)
+- [Online docs](https://example.com)
+```
+
+This produces:
+
+```xml
+<task id="install-the-software">
+  <title>Install the software</title>
+  <taskbody>
+    <steps>
+      <step><cmd>Run the installer.</cmd></step>
+    </steps>
+  </taskbody>
+  <related-links>
+    <link href="reference.dita">
+      <linktext>Widget reference</linktext>
+    </link>
+    <link href="https://example.com" format="html" scope="external">
+      <linktext>Online docs</linktext>
+    </link>
+  </related-links>
+</task>
+```
+
+Related links work for all topic types (task, concept, reference, and
+plain topics). The heading text "Related information" and "Related links"
+are recognized automatically without needing `{.related-links}`.
+
+### Draft comments
+
+Use `{.draft-comment}` on a paragraph to produce a `<draft-comment>`
+element. Author and other attributes are preserved:
+
+```markdown
+This needs SME review.{.draft-comment author="jsmith"}
+```
+
+This produces:
+
+```xml
+<draft-comment author="jsmith">This needs SME review.</draft-comment>
+```
 
 ### Sub-map references (mapref)
 
@@ -603,19 +665,19 @@ Coverage was measured against the Red Hat Ansible Automation Platform 2.6
 documentation corpus (1,793 DITA topics, 67,775 total element occurrences,
 65 unique element types).
 
-**Coverage: 97.6% by occurrence, 89% by element type (58 of 65).**
+**Coverage: 99.9% by occurrence (67,731 of 67,775), 97% by element type (63 of 65).**
 
 ### Coverage by category
 
 | Category | AAP elements | Supported | Coverage |
 |----------|-------------|-----------|----------|
 | Topic structure (`task`, `concept`, `reference`, bodies) | 6 | 6 | 100% |
-| Block elements (`p`, `section`, `codeblock`, `note`, `fig`, `image`, ...) | 16 | 14 | 88% |
-| Inline elements (`codeph`, `b`, `i`, `uicontrol`, `menucascade`, `xref`, ...) | 10 | 9 | 90% |
+| Block elements (`p`, `section`, `codeblock`, `note`, `fig`, `image`, `draft-comment`, ...) | 16 | 15 | 94% |
+| Inline elements (`codeph`, `b`, `i`, `uicontrol`, `menucascade`, `xref`, `cite`, ...) | 10 | 10 | 100% |
 | Task elements (`cmd`, `step`, `info`, `steps`, `substeps`, `choices`, ...) | 16 | 16 | 100% |
 | List elements (`ul`, `ol`, `dl`, `li`, ...) | 7 | 7 | 100% |
 | Table elements (`table`, `tgroup`, `entry`, `row`, ...) | 7 | 7 | 100% |
-| Link elements (`related-links`, `link`, `linktext`, `linklist`) | 4 | 0 | 0% |
+| Link elements (`related-links`, `link`, `linktext`, `linklist`) | 4 | 3 | 75% |
 
 ### Elements added in this release
 
@@ -623,10 +685,15 @@ documentation corpus (1,793 DITA topics, 67,775 total element occurrences,
 |---------|-------------------|--------------|
 | `uicontrol` | 1,650 | `**Save**{.uicontrol}` |
 | `menucascade` | 420 | `**File > Open**{.menucascade}` |
+| `related-links` | 336 | `## Related information` |
+| `link` | 647 | `- [Text](href)` under related-links |
+| `linktext` | 619 | Link text inside `<link>` |
 | `filepath` | 18 | `` `path`{.filepath} `` |
-| `cmdname` | 3 | `` `cmd`{.cmdname} `` |
+| `cite` | 7 | `*Title*{.cite}` |
+| `draft-comment` | 5 | `Text.{.draft-comment}` |
 | `stepresult` | 5 | `Text.{.stepresult}` |
 | `stepxmp` | 6 | `Text.{.stepxmp}` |
+| `cmdname` | 3 | `` `cmd`{.cmdname} `` |
 
 Plus 7 additional domain elements with no occurrences in the AAP corpus
 but available for authoring: `wintitle`, `userinput`, `systemoutput`,
@@ -636,19 +703,13 @@ but available for authoring: `wintitle`, `userinput`, `systemoutput`,
 
 | Element | Occurrences | Notes |
 |---------|-------------|-------|
-| `related-links` | 336 | Per-topic related links section |
-| `link` | 647 | Individual related link |
-| `linktext` | 619 | Link display text |
-| `linklist` | 43 | Grouped link list |
-| `cite` | 7 | Citation element |
-| `draft-comment` | 5 | Editorial comment |
-| `data-about` | 1 | Metadata association |
+| `linklist` | 43 | Grouped link list (planned) |
+| `data-about` | 1 | Metadata association (not planned) |
 
-The `related-links` family (1,645 occurrences, 2.4% of the corpus) is
-the only significant gap. It requires structural changes to place
-`<related-links>` outside `<taskbody>`/`<conbody>`/`<refbody>` and is
-planned for a future release. The remaining gaps (`cite`,
-`draft-comment`, `data-about`) total 13 occurrences.
+The remaining gaps total 44 occurrences (0.1% of the corpus). `linklist`
+grouping within `related-links` is planned for a future release.
+`data-about` is a metadata element with a single occurrence and no
+practical MDITA equivalent.
 
 ## Install
 

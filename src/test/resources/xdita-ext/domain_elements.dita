@@ -27,5 +27,9 @@
     <p class="- topic/p ">Set the <varname class="+ topic/keyword sw-d/varname ">MAX_RETRIES</varname> variable.</p>
     <p class="- topic/p ">Check the <msgph class="+ topic/ph sw-d/msgph ">ERR_TIMEOUT</msgph> message.</p>
     <p class="- topic/p ">Use <codeph class="+ topic/ph pr-d/codeph ">codeph</codeph> for code phrases.</p>
+    <p class="- topic/p ">See <cite class="- topic/cite ">Ansible Automation Platform Planning Guide</cite> for
+      details.
+    </p>
+    <p author="jsmith" class="- topic/p " outputclass="draft-comment">This needs review.</p>
   </body>
 </topic>

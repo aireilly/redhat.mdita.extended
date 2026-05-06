@@ -1,0 +1,20 @@
+<topic xmlns:ditaarch="http://dita.oasis-open.org/architecture/2005/"
+       ditaarch:DITAArchVersion="2.0"
+       specializations="@props/audience @props/deliveryTarget @props/otherprops @props/platform @props/product"
+       outputclass="concept"
+       class="- topic/topic " id="concept-related-links">
+  <title class="- topic/title ">Understanding widgets</title>
+  <body class="- topic/body ">
+    <p class="- topic/p ">Widgets are reusable components.</p>
+    <section class="- topic/section " outputclass="related-links">
+      <title class="- topic/title ">Related information</title>
+      <ul class="- topic/ul ">
+        <li class="- topic/li ">
+          <p class="- topic/p ">
+            <xref class="- topic/xref " href="install.dita">Installing widgets</xref>
+          </p>
+        </li>
+      </ul>
+    </section>
+  </body>
+</topic>

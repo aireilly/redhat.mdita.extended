@@ -134,6 +134,13 @@ public class TopicRenderer extends AbstractRenderer {
     TASK_POSTREQ.localName
   );
 
+  private static final Map<String, String> DEFAULT_SECTION_TITLES = Map.of(
+    "related information",
+    "related-links",
+    "related links",
+    "related-links"
+  );
+
   static {
     sections.put(TOPIC_SECTION.localName, TOPIC_SECTION);
     sections.put(TOPIC_EXAMPLE.localName, TOPIC_EXAMPLE);
@@ -142,6 +149,7 @@ public class TopicRenderer extends AbstractRenderer {
     sections.put(TASK_RESULT.localName, TOPIC_SECTION);
     sections.put(TASK_POSTREQ.localName, TOPIC_SECTION);
     sections.put(TASK_TASKTROUBLESHOOTING.localName, TOPIC_SECTION);
+    sections.put("related-links", TOPIC_SECTION);
   }
 
   private final Map<String, String> abbreviations = new HashMap<>();
@@ -597,6 +605,9 @@ public class TopicRenderer extends AbstractRenderer {
       } else if (DEFAULT_TASK_SECTION_TITLES.containsKey(node.getText().toString().trim().toLowerCase())) {
         isSection = true;
         cls = TOPIC_SECTION;
+      } else if (DEFAULT_SECTION_TITLES.containsKey(node.getText().toString().trim().toLowerCase())) {
+        isSection = true;
+        cls = TOPIC_SECTION;
       } else {
         isSection = false;
         cls = null;
@@ -623,8 +634,15 @@ public class TopicRenderer extends AbstractRenderer {
       if (!mditaCoreProfile) {
         final Collection<String> classes = new ArrayList<>(header.classes);
         classes.removeAll(SECTION_CLASSES_TO_STRIP);
+        final String headingText = node.getText().toString().trim().toLowerCase();
         if (Collections.disjoint(classes, DEFAULT_TASK_SECTION_TITLES.values())) {
-          final String defaultClass = DEFAULT_TASK_SECTION_TITLES.get(node.getText().toString().trim().toLowerCase());
+          final String defaultClass = DEFAULT_TASK_SECTION_TITLES.get(headingText);
+          if (defaultClass != null) {
+            classes.add(defaultClass);
+          }
+        }
+        if (Collections.disjoint(classes, DEFAULT_SECTION_TITLES.values())) {
+          final String defaultClass = DEFAULT_SECTION_TITLES.get(headingText);
           if (defaultClass != null) {
             classes.add(defaultClass);
           }

@@ -341,7 +341,8 @@ public abstract class AbstractRenderer {
     Map.entry("codeph", DitaClass.getInstance("+ topic/ph pr-d/codeph ")),
     Map.entry("option", DitaClass.getInstance("+ topic/keyword pr-d/option ")),
     Map.entry("parmname", DitaClass.getInstance("+ topic/keyword pr-d/parmname ")),
-    Map.entry("apiname", DitaClass.getInstance("+ topic/keyword pr-d/apiname "))
+    Map.entry("apiname", DitaClass.getInstance("+ topic/keyword pr-d/apiname ")),
+    Map.entry("cite", DitaClass.getInstance("- topic/cite "))
   );
 
   private static final DitaClass UI_D_UICONTROL = DitaClass.getInstance("+ topic/ph ui-d/uicontrol ");

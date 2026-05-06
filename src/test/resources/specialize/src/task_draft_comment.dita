@@ -1,0 +1,15 @@
+<topic xmlns:ditaarch="http://dita.oasis-open.org/architecture/2005/"
+       ditaarch:DITAArchVersion="2.0"
+       specializations="@props/audience @props/deliveryTarget @props/otherprops @props/platform @props/product"
+       outputclass="task"
+       class="- topic/topic " id="task-draft-comment">
+  <title class="- topic/title ">Task with draft comment</title>
+  <body class="- topic/body ">
+    <p class="- topic/p " outputclass="draft-comment" author="jsmith">This needs review.</p>
+    <ol class="- topic/ol ">
+      <li class="- topic/li ">
+        <p class="- topic/p ">Run the command.</p>
+      </li>
+    </ol>
+  </body>
+</topic>

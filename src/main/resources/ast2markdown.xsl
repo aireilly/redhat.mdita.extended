@@ -72,7 +72,7 @@
     </xsl:if>
   </xsl:template>
 
-  <xsl:variable name="domain-class-names" select="('uicontrol', 'wintitle', 'menucascade', 'filepath', 'userinput', 'systemoutput', 'sysout', 'cmdname', 'varname', 'msgph', 'codeph', 'option', 'parmname', 'apiname')" as="xs:string*"/>
+  <xsl:variable name="domain-class-names" select="('uicontrol', 'wintitle', 'menucascade', 'filepath', 'userinput', 'systemoutput', 'sysout', 'cmdname', 'varname', 'msgph', 'codeph', 'option', 'parmname', 'apiname', 'cite')" as="xs:string*"/>
 
   <xsl:template name="inline-class-attribute">
     <xsl:if test="@class and tokenize(@class, '\s+')[. = $domain-class-names]">
@@ -429,6 +429,7 @@
       <xsl:with-param name="escape" select="concat('*', $escape)" as="xs:string?" tunnel="yes"/>
     </xsl:apply-templates>
     <xsl:value-of select="$char"/>
+    <xsl:text>{.cite}</xsl:text>
   </xsl:template>
 
   <xsl:template match="code" mode="ast">

@@ -49,6 +49,10 @@ public class SpecializeFilter extends XMLFilterImpl {
 
   private static final DitaClass TASK_STEPRESULT = DitaClass.getInstance("- topic/itemgroup task/stepresult ");
   private static final DitaClass TASK_STEPXMP = DitaClass.getInstance("- topic/itemgroup task/stepxmp ");
+  private static final DitaClass TOPIC_DRAFT_COMMENT = DitaClass.getInstance("- topic/draft-comment ");
+  private static final DitaClass TOPIC_RELATED_LINKS = DitaClass.getInstance("- topic/related-links ");
+  private static final DitaClass TOPIC_LINK = DitaClass.getInstance("- topic/link ");
+  private static final DitaClass TOPIC_LINKTEXT = DitaClass.getInstance("- topic/linktext ");
 
   private final Type forceType;
 
@@ -64,6 +68,10 @@ public class SpecializeFilter extends XMLFilterImpl {
   private boolean stepsCompleted = false;
   private int choicetableColumn = 0;
   private boolean inChoicetableHead = false;
+  private boolean inRelatedLinks = false;
+  private int relatedLinksSuppressDepth = 0;
+  private boolean inRelatedLinksXref = false;
+  private boolean bodyClosedForRelatedLinks = false;
 
   private static final Map<String, DitaClass> TASK_SECTIONS = Map.of(
     TASK_PREREQ.localName,
@@ -111,6 +119,21 @@ public class SpecializeFilter extends XMLFilterImpl {
       }
     }
 
+    if ("p".equals(localName) && getOutputclass(atts).contains("draft-comment")) {
+      renameStartElement(TOPIC_DRAFT_COMMENT, atts);
+      return;
+    }
+
+    if ("section".equals(localName) && depth == DEPTH_IN_BODY && getOutputclass(atts).contains("related-links")) {
+      startRelatedLinks(uri);
+      return;
+    }
+
+    if (inRelatedLinks) {
+      startElementRelatedLinks(uri, localName, qName, atts);
+      return;
+    }
+
     switch (typeStack.peek()) {
       case CONCEPT:
         startElementConcept(uri, localName, qName, atts);
@@ -128,6 +151,18 @@ public class SpecializeFilter extends XMLFilterImpl {
 
   @Override
   public void endElement(String uri, String localName, String qName) throws SAXException {
+    if (inRelatedLinks) {
+      endElementRelatedLinks(uri, localName, qName);
+      depth--;
+      return;
+    }
+
+    if (bodyClosedForRelatedLinks && "body".equals(localName)) {
+      bodyClosedForRelatedLinks = false;
+      depth--;
+      return;
+    }
+
     switch (typeStack.peek()) {
       case TASK:
         endElementTask(uri, localName, qName);
@@ -574,6 +609,94 @@ public class SpecializeFilter extends XMLFilterImpl {
       default:
         doEndElement(uri, localName, qName);
     }
+  }
+
+  private void startRelatedLinks(String uri) throws SAXException {
+    switch (typeStack.peek()) {
+      case TASK:
+        closeImplicitSection(uri);
+        break;
+      case REFERENCE:
+        if (referenceState == ReferenceState.SECTION) {
+          referenceState = null;
+          doEndElement(uri, TOPIC_SECTION.localName, TOPIC_SECTION.localName);
+        }
+        break;
+      default:
+        break;
+    }
+    doEndElement(uri, "body", "body");
+    bodyClosedForRelatedLinks = true;
+    AttributesImpl rlAtts = new AttributesImpl();
+    rlAtts.addAttribute(
+      NULL_NS_URI,
+      ATTRIBUTE_NAME_CLASS,
+      ATTRIBUTE_NAME_CLASS,
+      "CDATA",
+      TOPIC_RELATED_LINKS.toString()
+    );
+    doStartElement(NULL_NS_URI, TOPIC_RELATED_LINKS.localName, TOPIC_RELATED_LINKS.localName, rlAtts);
+    inRelatedLinks = true;
+    relatedLinksSuppressDepth = 0;
+  }
+
+  private void startElementRelatedLinks(String uri, String localName, String qName, Attributes atts)
+    throws SAXException {
+    switch (localName) {
+      case "xref":
+        AttributesImpl linkAtts = new AttributesImpl();
+        linkAtts.addAttribute(NULL_NS_URI, ATTRIBUTE_NAME_CLASS, ATTRIBUTE_NAME_CLASS, "CDATA", TOPIC_LINK.toString());
+        final String href = atts.getValue(ATTRIBUTE_NAME_HREF);
+        if (href != null) {
+          linkAtts.addAttribute(NULL_NS_URI, ATTRIBUTE_NAME_HREF, ATTRIBUTE_NAME_HREF, "CDATA", href);
+        }
+        final String format = atts.getValue(ATTRIBUTE_NAME_FORMAT);
+        if (format != null) {
+          linkAtts.addAttribute(NULL_NS_URI, ATTRIBUTE_NAME_FORMAT, ATTRIBUTE_NAME_FORMAT, "CDATA", format);
+        }
+        final String scope = atts.getValue(ATTRIBUTE_NAME_SCOPE);
+        if (scope != null) {
+          linkAtts.addAttribute(NULL_NS_URI, ATTRIBUTE_NAME_SCOPE, ATTRIBUTE_NAME_SCOPE, "CDATA", scope);
+        }
+        doStartElement(NULL_NS_URI, TOPIC_LINK.localName, TOPIC_LINK.localName, linkAtts);
+        AttributesImpl ltAtts = new AttributesImpl();
+        ltAtts.addAttribute(
+          NULL_NS_URI,
+          ATTRIBUTE_NAME_CLASS,
+          ATTRIBUTE_NAME_CLASS,
+          "CDATA",
+          TOPIC_LINKTEXT.toString()
+        );
+        doStartElement(NULL_NS_URI, TOPIC_LINKTEXT.localName, TOPIC_LINKTEXT.localName, ltAtts);
+        inRelatedLinksXref = true;
+        break;
+      default:
+        relatedLinksSuppressDepth++;
+        break;
+    }
+  }
+
+  private void endElementRelatedLinks(String uri, String localName, String qName) throws SAXException {
+    if ("section".equals(localName) && relatedLinksSuppressDepth == 0) {
+      doEndElement(uri, TOPIC_RELATED_LINKS.localName, TOPIC_RELATED_LINKS.localName);
+      inRelatedLinks = false;
+      return;
+    }
+    if (inRelatedLinksXref && "xref".equals(localName)) {
+      doEndElement(uri, TOPIC_LINKTEXT.localName, TOPIC_LINKTEXT.localName);
+      doEndElement(uri, TOPIC_LINK.localName, TOPIC_LINK.localName);
+      inRelatedLinksXref = false;
+    } else if (relatedLinksSuppressDepth > 0) {
+      relatedLinksSuppressDepth--;
+    }
+  }
+
+  @Override
+  public void characters(char[] ch, int start, int length) throws SAXException {
+    if (inRelatedLinks && !inRelatedLinksXref) {
+      return;
+    }
+    super.characters(ch, start, length);
   }
 
   public void doStartElement(String uri, String localName, String qName, Attributes atts) throws SAXException {

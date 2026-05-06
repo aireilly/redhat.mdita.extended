@@ -107,3 +107,9 @@ oc admonish scc-subject-review -z widget-sa -n widgets
 ## Next steps
 
 Configure additional widgets by repeating this procedure with a new `widget.yaml`{.filepath} file.
+
+## Related information
+
+- [Understanding widgets](concept.md)
+- [Widget configuration reference](reference.md)
+- [Kubernetes documentation](https://kubernetes.io/docs/)

@@ -170,29 +170,26 @@ Profiling attributes are preserved in both directions:
 
 ## Domain element specialization
 
-The MDITA extended profile supports inline DITA domain elements through
-the `{.classname}` outputclass syntax. When a recognized domain element
-name is used as an outputclass, the plug-in promotes the generic element
-(bold, italic, code) to the correct specialized DITA element.
+The MDITA extended profile supports inline DITA domain elements through the `{.classname}` outputclass syntax. When a recognized domain element name is used as an outputclass, the plug-in promotes the generic element (bold, italic, code) to the correct specialized DITA element.
 
 ### Supported inline specializations
 
-| Markdown syntax                       | DITA element                      | Domain |
-|---------------------------------------|-----------------------------------|--------|
-| `**Save**{.uicontrol}`               | `<uicontrol>Save</uicontrol>`    | UI     |
-| `**Dashboard**{.wintitle}`            | `<wintitle>Dashboard</wintitle>`  | UI     |
-| `**File > Open**{.menucascade}`       | `<menucascade><uicontrol>File</uicontrol><uicontrol>Open</uicontrol></menucascade>` | UI |
-| `` `config.yaml`{.filepath} ``       | `<filepath>config.yaml</filepath>` | SW   |
-| `` `ansible`{.cmdname} ``            | `<cmdname>ansible</cmdname>`      | SW     |
-| `` `admin`{.userinput} ``            | `<userinput>admin</userinput>`    | SW     |
-| `` `OK`{.systemoutput} ``            | `<systemoutput>OK</systemoutput>` | SW     |
-| `` `MAX_RETRIES`{.varname} ``        | `<varname>MAX_RETRIES</varname>`  | SW     |
-| `` `ERR_404`{.msgph} ``              | `<msgph>ERR_404</msgph>`          | SW     |
-| `` `codeph`{.codeph} ``              | `<codeph>codeph</codeph>`         | PR     |
-| `` `verbose`{.option} ``             | `<option>verbose</option>`        | PR     |
-| `` `inventory`{.parmname} ``         | `<parmname>inventory</parmname>`  | PR     |
-| `` `getHosts`{.apiname} ``           | `<apiname>getHosts</apiname>`     | PR     |
-| `*Title*{.cite}`                     | `<cite>Title</cite>`              | Topic  |
+| Markdown syntax                 | DITA element                      | Domain |
+|---------------------------------|-----------------------------------|--------|
+| `**Save**{.uicontrol}`          | `<uicontrol>Save</uicontrol>`     | UI     |
+| `**Dashboard**{.wintitle}`      | `<wintitle>Dashboard</wintitle>`  | UI     |
+| `**File > Open**{.menucascade}` | `<menucascade><uicontrol>File</uicontrol><uicontrol>Open</uicontrol></menucascade>` | UI |
+| `` `config.yaml`{.filepath} ``  | `<filepath>config.yaml</filepath>`| SW     |
+| `` `ansible`{.cmdname} ``       | `<cmdname>ansible</cmdname>`      | SW     |
+| `` `admin`{.userinput} ``       | `<userinput>admin</userinput>`    | SW     |
+| `` `OK`{.systemoutput} ``       | `<systemoutput>OK</systemoutput>` | SW     |
+| `` `MAX_RETRIES`{.varname} ``   | `<varname>MAX_RETRIES</varname>`  | SW     |
+| `` `ERR_404`{.msgph} ``         | `<msgph>ERR_404</msgph>`          | SW     |
+| `` `codeph`{.codeph} ``         | `<codeph>codeph</codeph>`         | PR     |
+| `` `verbose`{.option} ``        | `<option>verbose</option>`        | PR     |
+| `` `inventory`{.parmname} ``    | `<parmname>inventory</parmname>`  | PR     |
+| `` `getHosts`{.apiname} ``      | `<apiname>getHosts</apiname>`     | PR     |
+| `*Title*{.cite}`                | `<cite>Title</cite>`              | Topic  |
 
 Bold and italic elements can also be specialized. The `{.classname}`
 attribute is applied directly after the closing marker with no space:
@@ -230,7 +227,7 @@ This produces:
 Within task steps, paragraphs with `{.stepresult}` or `{.stepxmp}` are
 wrapped in the corresponding DITA task elements:
 
-```markdown
+``````markdown
 1. Run the installation command.
 
    The installer downloads and configures the package.{.stepresult}
@@ -240,7 +237,7 @@ wrapped in the corresponding DITA task elements:
    ```
    Installing package... done.
    ```
-```
+``````
 
 This produces `<stepresult>` and `<stepxmp>` elements inside the step,
 alongside the standard `<cmd>` and `<info>` wrappers.
@@ -520,8 +517,20 @@ A ready-to-build demo is included under `demo/src/`. It contains an MDITA map
 and three topics (concept, reference, task) that exercise the plug-in's key
 features: YAML front matter, admonitions, tables, fenced code blocks, task
 sections, substeps, choices, choice tables, conditional processing attributes,
-relationship tables, and domain element specializations (uicontrol, filepath,
-cmdname, varname, stepresult).
+relationship tables, related links, and domain element specializations
+(uicontrol, filepath, cmdname, varname, stepresult).
+
+The task topic includes a `## Related information` section that produces
+`<related-links>` with `<link>` and `<linktext>` children when specialization
+is enabled:
+
+```markdown
+## Related information
+
+- [Understanding widgets](concept.md)
+- [Widget configuration reference](reference.md)
+- [Kubernetes documentation](https://kubernetes.io/docs/)
+```
 
 The MDITA map (`demo/src/example.mditamap`):
 

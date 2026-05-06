@@ -409,6 +409,87 @@ Other useful transtypes:
 | `dita`            | Normalized DITA XML        |
 | `pdf`             | PDF (requires PDF plug-in) |
 
+## Testing the demo
+
+After installing the plug-in, run through these steps to verify
+conditional processing, relationship tables, and the DITA-to-Markdown
+roundtrip.
+
+### Build and install
+
+``` shell
+./gradlew dist
+dita install build/distributions/redhat.mdita.extended-*.zip
+```
+
+### Full build (no filtering)
+
+``` shell
+dita -i demo/src/example.mditamap -f html5 -o out/full
+```
+
+All three topics should build without errors. Open `out/full/docs/concept.html`
+and confirm that both the "Kubernetes-specific considerations" and
+"OpenShift-specific considerations" sections are present.
+
+### Filtered build (DITAVAL)
+
+``` shell
+dita -i demo/src/example.mditamap -f html5 -o out/openshift \
+  --filter=demo/src/openshift.ditaval
+```
+
+Open `out/openshift/docs/concept.html` and confirm that the
+"Kubernetes-specific considerations" section is absent while
+"OpenShift-specific considerations" remains. The task topic should
+include the "Troubleshooting" section (which is OpenShift-only).
+
+### Verify profiling attributes in normalized DITA
+
+``` shell
+dita -i demo/src/example.mditamap -f dita -o out/dita
+```
+
+Inspect the generated DITA XML to confirm that profiling attributes
+landed on the correct elements:
+
+``` shell
+grep -E 'platform=|audience=' out/dita/docs/*.dita
+```
+
+You should see `platform="kubernetes"`, `platform="openshift"`, and
+`audience="expert"` on the corresponding `<section>`, `<b>`, and
+other elements.
+
+### Verify relationship table links
+
+``` shell
+grep -l "Related information" out/full/docs/*.html
+```
+
+The reltable in the map should cause DITA-OT to generate "Related
+information" links in the HTML output, connecting the concept,
+reference, and task topics to each other.
+
+### Compare filtered vs. unfiltered output
+
+``` shell
+grep -c "Kubernetes" out/full/docs/concept.html
+grep -c "Kubernetes" out/openshift/docs/concept.html
+```
+
+The first command should return a non-zero count; the second should
+return `0`.
+
+### Run the unit tests
+
+``` shell
+./gradlew test
+```
+
+All tests should pass. The test suite covers both the Markdown-to-DITA
+and DITA-to-Markdown directions, including profiling attribute roundtrip.
+
 ## Install
 
 ### From a release

@@ -8,6 +8,6 @@ $schema: urn:oasis:names:tc:dita:xsd:map.xsd
 - [Widget configuration reference](docs/reference.md)
 - [Installing the widget](docs/task.md)
 
-| [Understanding widgets](docs/concept.md) | [Widget configuration reference](docs/reference.md) |
-|------------------------------------------|------------------------------------------------------|
-| [Installing the widget](docs/task.md)    | [Widget configuration reference](docs/reference.md) |
+| [Understanding widgets](docs/concept.md)             | [Widget configuration reference](docs/reference.md) |
+|------------------------------------------------------|------------------------------------------------------|
+| [Installing the widget](docs/task.md)                |                                                      |

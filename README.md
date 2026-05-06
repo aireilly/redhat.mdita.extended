@@ -367,14 +367,14 @@ $schema: urn:oasis:names:tc:dita:xsd:map.xsd
 - [Widget configuration reference](docs/reference.md)
 - [Installing the widget](docs/task.md)
 
-| [Understanding widgets](docs/concept.md) | [Widget configuration reference](docs/reference.md) |
-|------------------------------------------|------------------------------------------------------|
-| [Installing the widget](docs/task.md)    | [Widget configuration reference](docs/reference.md) |
+| [Understanding widgets](docs/concept.md)             | [Widget configuration reference](docs/reference.md) |
+|------------------------------------------------------|------------------------------------------------------|
+| [Installing the widget](docs/task.md)                |                                                      |
 ```
 
-The relationship table at the bottom links the task topic to the
-reference topic, so DITA-OT generates "Related information" links
-in the output.
+The relationship table at the bottom links concepts to references (header
+row) and the task topic to other topics (body row), so DITA-OT generates
+"Related information" links in the output.
 
 The demo topics use conditional processing attributes to mark
 platform-specific content. A sample DITAVAL file is included at

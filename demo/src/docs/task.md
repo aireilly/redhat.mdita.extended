@@ -92,7 +92,7 @@ oc get widgets -n widgets -o wide
 
 The `STATUS` column should show `Running` and `READY` should show `1/1`.
 
-## Troubleshooting {platform="openshift"}
+## Troubleshooting {.tasktroubleshooting platform="openshift"}
 
 If the widget fails to start on OpenShift, check the Security Context Constraints:
 

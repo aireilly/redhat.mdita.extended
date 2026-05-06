@@ -1,0 +1,95 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<topic xmlns:ditaarch="http://dita.oasis-open.org/architecture/2005/" class="- topic/topic "
+  ditaarch:DITAArchVersion="2.0"
+  specializations="(topic hi-d)(topic em-d) @props/audience @props/deliveryTarget @props/otherprops @props/platform @props/product"
+  id="bullet-list">
+  <title class="- topic/title ">Bullet list</title>
+  <shortdesc class="- topic/shortdesc ">Hyphen:</shortdesc>
+  <body class="- topic/body ">
+    <ul class="- topic/ul ">
+      <li class="- topic/li ">
+        <p class="- topic/p ">hyphen list list list list list list list list list list list list
+          list list list list list list list list list list list</p>
+      </li>
+      <li class="- topic/li ">
+        <p class="- topic/p ">list</p>
+        <ul class="- topic/ul ">
+          <li class="- topic/li ">
+            <p class="- topic/p ">item</p>
+            <ul class="- topic/ul ">
+              <li class="- topic/li ">
+                <p class="- topic/p ">four</p>
+              </li>
+            </ul>
+          </li>
+          <li class="- topic/li ">
+            <p class="- topic/p ">fifth</p>
+            <ul class="- topic/ul ">
+              <li class="- topic/li ">
+                <p class="- topic/p ">sixth</p>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </li>
+    </ul>
+    <p class="- topic/p ">Asterix:</p>
+    <ul class="- topic/ul ">
+      <li class="- topic/li ">
+        <p class="- topic/p ">inline <i class="+ topic/ph hi-d/i ">bold</i> normal</p>
+        <ul class="- topic/ul ">
+          <li class="- topic/li ">
+            <p class="- topic/p ">inline</p>
+          </li>
+        </ul>
+      </li>
+      <li class="- topic/li ">
+        <p class="- topic/p ">para</p>
+        <ul class="- topic/ul ">
+          <li class="- topic/li ">
+            <p class="- topic/p ">inline</p>
+          </li>
+        </ul>
+      </li>
+      <li class="- topic/li ">
+        <p class="- topic/p ">para</p>
+        <p class="- topic/p ">para</p>
+      </li>
+      <li class="- topic/li ">
+        <p class="- topic/p ">para</p>
+        <p class="- topic/p ">para</p>
+        <ul class="- topic/ul ">
+          <li class="- topic/li ">
+            <p class="- topic/p ">below this will not work</p>
+          </li>
+        </ul>
+      </li>
+      <li class="- topic/li ">
+        <p class="- topic/p ">para</p>
+        <ul class="- topic/ul ">
+          <li class="- topic/li ">
+            <p class="- topic/p ">para</p>
+          </li>
+        </ul>
+      </li>
+    </ul>
+    <p class="- topic/p ">Loose:</p>
+    <ul class="- topic/ul ">
+      <li class="- topic/li ">
+        <p class="- topic/p ">Item</p>
+      </li>
+      <li class="- topic/li ">
+        <p class="- topic/p ">Item</p>
+      </li>
+    </ul>
+    <p class="- topic/p ">Tight:</p>
+    <ul class="- topic/ul ">
+      <li class="- topic/li ">
+        <p class="- topic/p ">Item</p>
+      </li>
+      <li class="- topic/li ">
+        <p class="- topic/p ">Item</p>
+      </li>
+    </ul>
+  </body>
+</topic>

@@ -23,7 +23,7 @@ public class MDitaReaderExtendedTest extends AbstractReaderTest {
 
   @Override
   public String getExp() {
-    return "xdita/";
+    return "xdita-ext/";
   }
 
   @Override
@@ -60,6 +60,7 @@ public class MDitaReaderExtendedTest extends AbstractReaderTest {
       "multiple_top_level_specialized.md",
       "note.md",
       "ol.md",
+      "profiling.md",
       "quote.md",
       "reference.md",
       "short.md",
@@ -125,7 +126,7 @@ public class MDitaReaderExtendedTest extends AbstractReaderTest {
         new Event("startDocument", 1, 1),
         new Event("startElement", "topic", 1, 1),
         new Event("startElement", "title", 1, 1),
-        new Event("characters", "Task {.task}", 1, 1),
+        new Event("characters", "Task", 1, 1),
         new Event("endElement", "title", 1, 1),
         new Event("startElement", "shortdesc", 3, 1),
         new Event("characters", "Context", 3, 1),

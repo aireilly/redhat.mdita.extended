@@ -14,6 +14,8 @@ It contains:
 - a custom SAX parser for Markdown and HTML to allow using Markdown and HDITA
   as source document formats,
 - a transtype to generate Markdown from DITA source,
+- conditional processing attribute support for MDITA extended profile,
+- relationship table support in MDITA maps,
 - and extended DITA task element support (substeps, choices, choicetables,
   task sections via heading inference).
 
@@ -28,6 +30,230 @@ Two different Markdown source formats are supported:
 - [MDITA (LwDITA)](https://github.com/jelovirt/org.lwdita/wiki/MDITA-syntax)
 
 For a comparison of these two formats, see [Format comparison](https://github.com/jelovirt/org.lwdita/wiki/Format-comparison) in the LwDITA Wiki.
+
+## Conditional processing (DITAVAL filtering)
+
+The MDITA extended profile supports DITA conditional processing attributes.
+You can add profiling attributes such as `audience`, `platform`, `product`,
+`otherprops`, `deliveryTarget`, `props`, and `rev` to headings, block elements,
+and inline elements using the flexmark `{key="value"}` attribute syntax.
+
+DITA-OT then uses standard `.ditaval` files to include, exclude, or flag
+content based on these attributes.
+
+### Attributes on headings (sections)
+
+Append `{key="value"}` after a heading to apply attributes to the
+generated `<section>` or `<topic>` element:
+
+```markdown
+## Installing on Linux {platform="linux"}
+
+Use the package manager to install.
+
+## Installing on macOS {platform="macos"}
+
+Use Homebrew to install.
+```
+
+This produces `<section platform="linux">` and `<section platform="macos">`
+in the DITA output. Multiple attributes can be combined:
+
+```markdown
+## Advanced setup {platform="linux" audience="expert"}
+```
+
+### Attributes on block elements
+
+Place `{key="value"}` on a standalone line immediately before a block element
+(list, table, definition list) to apply attributes to that element:
+
+```markdown
+{audience="novice"}
+
+- Step one
+- Step two
+```
+
+This produces `<ul audience="novice">` in the DITA output.
+
+The same syntax works for ordered lists, definition lists, and tables:
+
+```markdown
+{platform="linux"}
+
+| Package   | Version |
+|-----------|---------|
+| glibc     | 2.38    |
+| openssl   | 3.1     |
+```
+
+For code blocks, add the attributes directly on the opening fence:
+
+````markdown
+``` {.yaml platform="kubernetes"}
+apiVersion: v1
+kind: ConfigMap
+```
+````
+
+### Attributes on inline elements
+
+Append `{key="value"}` immediately after an inline element (bold, italic,
+code) with no space between the closing marker and the opening brace:
+
+```markdown
+For **expert users**{audience="expert"}, compile from source.
+```
+
+This produces `<b audience="expert">expert users</b>` in the DITA output.
+
+You can also use `outputclass` via the `.classname` shorthand and `id`
+via `#name`:
+
+```markdown
+This is **important**{.highlight}.
+
+See the *overview*{#intro-section}.
+```
+
+### Filtering with DITAVAL
+
+Create a standard `.ditaval` file to control which profiled content appears
+in the output:
+
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<val>
+  <prop action="exclude" att="platform" val="kubernetes"/>
+  <prop action="include" att="platform" val="openshift"/>
+</val>
+```
+
+Apply the filter at build time with the `--filter` flag:
+
+```shell
+dita -i example.mditamap -f html5 -o out --filter=openshift.ditaval
+```
+
+Content marked with `platform="kubernetes"` is excluded from the output,
+while `platform="openshift"` content is included.
+
+### Supported profiling attributes
+
+Any attribute can be passed through, but the following DITA profiling
+attributes are declared in the `specializations` string and recognized
+by DITA-OT conditional processing:
+
+| Attribute        | Purpose                                 |
+|------------------|-----------------------------------------|
+| `audience`       | Target audience (e.g., novice, expert)  |
+| `platform`       | Target platform (e.g., linux, macos)    |
+| `product`        | Product name or variant                 |
+| `otherprops`     | Custom profiling values                 |
+| `deliveryTarget` | Output format (e.g., html, pdf)         |
+| `props`          | Generic profiling attribute             |
+| `rev`            | Revision identifier for flagging        |
+
+### Roundtrip support
+
+Profiling attributes are preserved in both directions:
+
+- **Markdown to DITA**: `{platform="linux"}` in MDITA becomes
+  `platform="linux"` on the corresponding DITA XML element.
+- **DITA to Markdown**: `platform="linux"` in DITA XML becomes
+  `{platform="linux"}` in the generated Markdown output.
+
+## Relationship tables in MDITA maps
+
+MDITA map files (`.mditamap`) support relationship tables. A Markdown table
+placed after the topic list in a map is converted to a DITA `<reltable>`.
+
+Relationship tables define links between topics that are not part of the
+hierarchical table of contents. DITA-OT uses them to generate "Related
+information" links in the output.
+
+### Syntax
+
+Write a standard Markdown table in your `.mditamap` file. Each cell
+contains a link to a topic. The table header row becomes `<relheader>`
+with `<relcolspec>` entries, and body rows become `<relrow>` with
+`<relcell>` entries:
+
+```markdown
+---
+$schema: urn:oasis:names:tc:dita:xsd:map.xsd
+---
+
+# Product documentation
+
+- [Overview](overview.md)
+- [Configuration](config.md)
+- [Installation](install.md)
+- [Troubleshooting](troubleshoot.md)
+
+| [Overview](overview.md)      | [Configuration](config.md)       |
+|------------------------------|----------------------------------|
+| [Installation](install.md)   | [Troubleshooting](troubleshoot.md) |
+```
+
+This produces the following DITA structure:
+
+```xml
+<reltable toc="no">
+  <relheader>
+    <relcolspec toc="no">
+      <topicref href="overview.md" format="md">...</topicref>
+    </relcolspec>
+    <relcolspec toc="no">
+      <topicref href="config.md" format="md">...</topicref>
+    </relcolspec>
+  </relheader>
+  <relrow>
+    <relcell>
+      <topicref href="install.md" format="md">...</topicref>
+    </relcell>
+    <relcell>
+      <topicref href="troubleshoot.md" format="md">...</topicref>
+    </relcell>
+  </relrow>
+</reltable>
+```
+
+### How relationship tables work
+
+Each column in the reltable defines a group of related topics. DITA-OT
+links each topic in a row to all other topics in the same row but in
+different columns:
+
+- In the example above, `install.md` gets a related link to
+  `troubleshoot.md`, and vice versa.
+- The header row defines the column types. Topics listed in the header
+  cells establish the default relationship pattern for that column.
+
+You can add multiple body rows to define additional relationships:
+
+```markdown
+| Concepts                     | Tasks                           |
+|------------------------------|---------------------------------|
+| [Overview](overview.md)      | [Installation](install.md)      |
+| [Architecture](arch.md)      | [Configuration](config.md)      |
+```
+
+### Reference links
+
+You can use Markdown reference-style links in reltable cells:
+
+```markdown
+- [Install guide]
+- [Config ref]
+
+| [Install guide] | [Config ref] |
+|-----------------|--------------|
+
+[Install guide]: install.md
+[Config ref]: config.md
+```
 
 ## Task topic support
 
@@ -125,7 +351,8 @@ automatically specialized:
 A ready-to-build demo is included under `demo/src/`. It contains an MDITA map
 and three topics (concept, reference, task) that exercise the plug-in's key
 features: YAML front matter, admonitions, tables, fenced code blocks, task
-sections, substeps, choices, and choice tables.
+sections, substeps, choices, choice tables, conditional processing attributes,
+and relationship tables.
 
 The MDITA map (`demo/src/example.mditamap`):
 
@@ -139,12 +366,38 @@ $schema: urn:oasis:names:tc:dita:xsd:map.xsd
 - [Understanding widgets](docs/concept.md)
 - [Widget configuration reference](docs/reference.md)
 - [Installing the widget](docs/task.md)
+
+| [Understanding widgets](docs/concept.md) | [Widget configuration reference](docs/reference.md) |
+|------------------------------------------|------------------------------------------------------|
+| [Installing the widget](docs/task.md)    | [Widget configuration reference](docs/reference.md) |
 ```
 
-Build the demo to XHTML:
+The relationship table at the bottom links the task topic to the
+reference topic, so DITA-OT generates "Related information" links
+in the output.
 
-``` shell
-dita -i demo/src/example.mditamap -f xhtml -o out
+The demo topics use conditional processing attributes to mark
+platform-specific content. A sample DITAVAL file is included at
+`demo/src/openshift.ditaval` to filter for OpenShift content:
+
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<val>
+  <prop action="exclude" att="platform" val="kubernetes"/>
+  <prop action="include" att="platform" val="openshift"/>
+</val>
+```
+
+Build the demo to HTML5:
+
+```shell
+dita -i demo/src/example.mditamap -f html5 -o out
+```
+
+Build with DITAVAL filtering to exclude Kubernetes-specific content:
+
+```shell
+dita -i demo/src/example.mditamap -f html5 -o out --filter=demo/src/openshift.ditaval
 ```
 
 Other useful transtypes:

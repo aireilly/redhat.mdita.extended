@@ -271,8 +271,13 @@ public class TopicRenderer extends AbstractRenderer {
           "CDATA",
           "2.0"
         );
-      if (mditaCoreProfile || mditaExtendedProfile) {
+      if (mditaCoreProfile) {
         atts.add(ATTRIBUTE_NAME_SPECIALIZATIONS, "(topic hi-d)(topic em-d)");
+      } else if (mditaExtendedProfile) {
+        atts.add(
+          ATTRIBUTE_NAME_SPECIALIZATIONS,
+          "(topic hi-d)(topic em-d) @props/audience @props/deliveryTarget @props/otherprops @props/platform @props/product"
+        );
       } else {
         atts.add(
           ATTRIBUTE_NAME_SPECIALIZATIONS,
@@ -627,6 +632,9 @@ public class TopicRenderer extends AbstractRenderer {
         if (!classes.isEmpty()) {
           atts.add("outputclass", String.join(" ", classes));
         }
+        for (Entry<String, String> attr : header.attributes.entrySet()) {
+          atts.add(attr.getKey(), attr.getValue());
+        }
       }
       html.startElement(node, cls, atts.build());
       inSection = true;
@@ -642,13 +650,24 @@ public class TopicRenderer extends AbstractRenderer {
       }
       headerLevel = node.getLevel();
 
-      final AttributesBuilder atts = mditaCoreProfile || mditaExtendedProfile
-        ? new AttributesBuilder(TOPIC_ATTS).add(ATTRIBUTE_NAME_SPECIALIZATIONS, "(topic hi-d)(topic em-d)")
-        : new AttributesBuilder(TOPIC_ATTS)
-          .add(
-            ATTRIBUTE_NAME_SPECIALIZATIONS,
-            "@props/audience @props/deliveryTarget @props/otherprops @props/platform @props/product"
-          );
+      final AttributesBuilder atts;
+      if (mditaCoreProfile) {
+        atts = new AttributesBuilder(TOPIC_ATTS).add(ATTRIBUTE_NAME_SPECIALIZATIONS, "(topic hi-d)(topic em-d)");
+      } else if (mditaExtendedProfile) {
+        atts =
+          new AttributesBuilder(TOPIC_ATTS)
+            .add(
+              ATTRIBUTE_NAME_SPECIALIZATIONS,
+              "(topic hi-d)(topic em-d) @props/audience @props/deliveryTarget @props/otherprops @props/platform @props/product"
+            );
+      } else {
+        atts =
+          new AttributesBuilder(TOPIC_ATTS)
+            .add(
+              ATTRIBUTE_NAME_SPECIALIZATIONS,
+              "@props/audience @props/deliveryTarget @props/otherprops @props/platform @props/product"
+            );
+      }
 
       final String id = getTopicId(node, header);
       if (id != null) {
@@ -1201,7 +1220,7 @@ public class TopicRenderer extends AbstractRenderer {
   private void renderSimpleTableBlock(final TableBlock node, final NodeRendererContext context, final SaxWriter html) {
     //    currentTableNode = node;
     final Attributes tableAtts;
-    if (!mditaExtendedProfile && isAttributesParagraph(node.getNext())) {
+    if (isAttributesParagraph(node.getNext())) {
       final Title header = Title.getFromChildren(node.getNext());
       final AttributesBuilder builder = new AttributesBuilder(SIMPLETABLE_ATTS);
       tableAtts = readAttributes(header, builder).build();
@@ -1386,7 +1405,7 @@ public class TopicRenderer extends AbstractRenderer {
   // helpers
 
   private Attributes getAttributesFromAttributesNode(Node node, Attributes base) {
-    if (!mditaExtendedProfile && isAttributesParagraph(node.getNext())) {
+    if (isAttributesParagraph(node.getNext())) {
       final Title header = Title.getFromChildren(node.getNext());
       final AttributesBuilder builder = new AttributesBuilder(base);
       return readAttributes(header, builder).build();

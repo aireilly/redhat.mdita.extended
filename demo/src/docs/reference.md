@@ -60,3 +60,8 @@ Each variable is prefixed with `WIDGET_` and uses uppercase with underscores:
 
 !!! important
     Environment variables take precedence over values in `widget.yaml`.
+
+## Advanced configuration {audience="expert"}
+
+For **expert users**{audience="expert"}, the widget runtime accepts additional low-level tuning parameters through a `widget-advanced.yaml` file.
+These settings are unsupported and may change between releases.

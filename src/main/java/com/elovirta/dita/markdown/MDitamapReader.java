@@ -3,6 +3,7 @@ package com.elovirta.dita.markdown;
 import static java.util.Arrays.asList;
 
 import com.vladsch.flexmark.ext.anchorlink.AnchorLinkExtension;
+import com.vladsch.flexmark.ext.attributes.AttributesExtension;
 import com.vladsch.flexmark.ext.yaml.front.matter.YamlFrontMatterExtension;
 import com.vladsch.flexmark.parser.Parser;
 import com.vladsch.flexmark.util.data.DataSet;
@@ -22,7 +23,7 @@ public class MDitamapReader extends MarkdownReader {
     .toImmutable();
 
   public static final DataSet EXTENDED_PROFILE = new MutableDataSet()
-    .set(Parser.EXTENSIONS, asList(AnchorLinkExtension.create(), YamlFrontMatterExtension.create()))
+    .set(Parser.EXTENSIONS, asList(AnchorLinkExtension.create(), AttributesExtension.create(), YamlFrontMatterExtension.create()))
     .set(DitaRenderer.MAP, true)
     .set(DitaRenderer.ID_FROM_YAML, true)
     .set(DitaRenderer.LW_DITA, true)

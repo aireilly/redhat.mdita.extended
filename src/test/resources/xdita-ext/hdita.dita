@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<topic xmlns:ditaarch="http://dita.oasis-open.org/architecture/2005/"
+  class="- topic/topic " ditaarch:DITAArchVersion="2.0" id="how-to-do-something"
+       specializations="(topic hi-d)(topic em-d) @props/audience @props/deliveryTarget @props/otherprops @props/platform @props/product">
+  <title class="- topic/title ">How to do something</title>
+  <shortdesc class="- topic/shortdesc ">Introduction to this specific task</shortdesc>
+  <body class="- topic/body ">
+    <section class="- topic/section ">
+      <p class="- topic/p ">Use only when ready</p>
+    </section>
+    <section class="- topic/section ">
+      <ol class="- topic/ol ">
+        <li class="- topic/li ">
+          <p class="- topic/p ">Plan something</p>
+        </li>
+        <li class="- topic/li ">
+          <p class="- topic/p ">Do something</p>
+        </li>
+        <li class="- topic/li ">
+          <p class="- topic/p ">Evaluate something</p>
+        </li>
+      </ol>
+    </section>
+    <section class="- topic/section ">
+      <p class="- topic/p ">Like this</p>
+    </section>
+  </body>
+</topic>

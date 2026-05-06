@@ -15,7 +15,7 @@ public class MDitamapReaderTest extends AbstractReaderTest {
 
   @Override
   public String getExp() {
-    return "xdita/";
+    return "xdita-ext/";
   }
 
   @Override

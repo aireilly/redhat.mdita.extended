@@ -46,5 +46,15 @@ The following table summarizes the trade-offs between widget types:
     Mixing inline and sidecar widgets in the same namespace can cause port conflicts.
     Always assign unique port ranges to each widget type.
 
+## Kubernetes-specific considerations {platform="kubernetes"}
+
+When running on Kubernetes, widgets are deployed as pods.
+Sidecar widgets use a sidecar container pattern, sharing the pod network namespace with the main application container.
+
+## OpenShift-specific considerations {platform="openshift"}
+
+On OpenShift, widgets can take advantage of the built-in service mesh.
+Use **Routes**{platform="openshift"} to expose widget endpoints externally.
+
 For configuration details, see *Widget configuration reference*.
 For installation steps, see *Installing the widget*.

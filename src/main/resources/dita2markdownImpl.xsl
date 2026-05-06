@@ -1614,6 +1614,7 @@
   <xsl:apply-templates select="." mode="set-output-class">
     <xsl:with-param name="default" select="$default-output-class"/>
   </xsl:apply-templates>
+  <xsl:copy-of select="@audience | @platform | @product | @otherprops | @deliveryTarget | @props | @rev"/>
 </xsl:template>
 
 <!-- Set the class attribute on the resulting output element. The default for a class of elements

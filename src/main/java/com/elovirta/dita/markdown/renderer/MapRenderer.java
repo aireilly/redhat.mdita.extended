@@ -134,13 +134,24 @@ public class MapRenderer extends AbstractRenderer {
     if (isCompound) {
       throw new ParseException(String.format("Map file cannot have multiple top level headers"));
     }
-    final AttributesBuilder atts = mditaCoreProfile || mditaExtendedProfile
-      ? new AttributesBuilder(MAP_ATTS).add(ATTRIBUTE_NAME_SPECIALIZATIONS, "")
-      : new AttributesBuilder(MAP_ATTS)
-        .add(
-          ATTRIBUTE_NAME_SPECIALIZATIONS,
-          "@props/audience @props/deliveryTarget @props/otherprops @props/platform @props/product"
-        );
+    final AttributesBuilder atts;
+    if (mditaCoreProfile) {
+      atts = new AttributesBuilder(MAP_ATTS).add(ATTRIBUTE_NAME_SPECIALIZATIONS, "");
+    } else if (mditaExtendedProfile) {
+      atts =
+        new AttributesBuilder(MAP_ATTS)
+          .add(
+            ATTRIBUTE_NAME_SPECIALIZATIONS,
+            "@props/audience @props/deliveryTarget @props/otherprops @props/platform @props/product"
+          );
+    } else {
+      atts =
+        new AttributesBuilder(MAP_ATTS)
+          .add(
+            ATTRIBUTE_NAME_SPECIALIZATIONS,
+            "@props/audience @props/deliveryTarget @props/otherprops @props/platform @props/product"
+          );
+    }
 
     String id = null;
     final Heading heading = (Heading) node.getChildOfType(Heading.class);
@@ -621,7 +632,7 @@ public class MapRenderer extends AbstractRenderer {
   private void renderSimpleTableBlock(final TableBlock node, final NodeRendererContext context, final SaxWriter html) {
     //        currentTableNode = node;
     final Attributes tableAtts;
-    if (!mditaExtendedProfile && isAttributesParagraph(node.getNext())) {
+    if (isAttributesParagraph(node.getNext())) {
       final Title header = Title.getFromChildren(node.getNext());
       final AttributesBuilder builder = new AttributesBuilder(RELTABLE_ATTS);
       tableAtts = readAttributes(header, builder).build();

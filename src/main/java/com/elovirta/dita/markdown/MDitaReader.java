@@ -3,6 +3,7 @@ package com.elovirta.dita.markdown;
 import static java.util.Arrays.asList;
 
 import com.vladsch.flexmark.ext.anchorlink.AnchorLinkExtension;
+import com.vladsch.flexmark.ext.attributes.AttributesExtension;
 import com.vladsch.flexmark.ext.definition.DefinitionExtension;
 import com.vladsch.flexmark.ext.footnotes.FootnoteExtension;
 import com.vladsch.flexmark.ext.jekyll.tag.JekyllTagExtension;
@@ -54,6 +55,7 @@ public class MDitaReader extends MarkdownReader {
       asList(
         //                    AbbreviationExtension.create(),
         AnchorLinkExtension.create(),
+        AttributesExtension.create(),
         FootnoteExtension.create(),
         //                    InsExtension.create(),
         JekyllTagExtension.create(),

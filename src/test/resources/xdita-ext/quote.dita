@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<topic xmlns:ditaarch="http://dita.oasis-open.org/architecture/2005/" class="- topic/topic "
+  ditaarch:DITAArchVersion="2.0"
+  specializations="(topic hi-d)(topic em-d) @props/audience @props/deliveryTarget @props/otherprops @props/platform @props/product"
+  id="quote">
+  <title class="- topic/title ">Quote</title>
+  <body class="- topic/body ">
+    <p class="- topic/p ">This is email And so it this</p>
+    <p class="- topic/p ">Again.</p>
+    <ul class="- topic/ul ">
+      <li class="- topic/li ">
+        <p class="- topic/p ">List</p>
+        <p class="- topic/p ">Quote in list</p>
+      </li>
+      <li class="- topic/li ">
+        <p class="- topic/p ">Second list</p>
+      </li>
+    </ul>
+  </body>
+</topic>

@@ -92,6 +92,15 @@ oc get widgets -n widgets -o wide
 
 The `STATUS` column should show `Running` and `READY` should show `1/1`.
 
+## Troubleshooting {platform="openshift"}
+
+If the widget fails to start on OpenShift, check the Security Context Constraints:
+
+```bash
+oc get scc -o name
+oc admonish scc-subject-review -z widget-sa -n widgets
+```
+
 ## Next steps
 
 Configure additional widgets by repeating this procedure with a new `widget.yaml` file.

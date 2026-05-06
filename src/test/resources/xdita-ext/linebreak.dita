@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <topic xmlns:ditaarch="http://dita.oasis-open.org/architecture/2005/"
        ditaarch:DITAArchVersion="2.0"
-       specializations="(topic hi-d)(topic em-d) @props/audience @props/deliveryTarget @props/otherprops @props/platform @props/product" class="- topic/topic " id="line-break">
+       specializations="(topic hi-d)(topic em-d)(topic ui-d)(topic sw-d)(topic pr-d) @props/audience @props/deliveryTarget @props/otherprops @props/platform @props/product" class="- topic/topic " id="line-break">
   <title class="- topic/title ">Line break</title>
   <shortdesc class="- topic/shortdesc ">Line<?linebreak?>break.</shortdesc>
   <body class="- topic/body "/>

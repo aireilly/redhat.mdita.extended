@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <dita xmlns:ditaarch="http://dita.oasis-open.org/architecture/2005/"
-      specializations="(topic hi-d)(topic em-d) @props/audience @props/deliveryTarget @props/otherprops @props/platform @props/product"
+      specializations="(topic hi-d)(topic em-d)(topic ui-d)(topic sw-d)(topic pr-d) @props/audience @props/deliveryTarget @props/otherprops @props/platform @props/product"
       ditaarch:DITAArchVersion="2.0">
   <topic class="- topic/topic " ditaarch:DITAArchVersion="2.0"
-    specializations="(topic hi-d)(topic em-d) @props/audience @props/deliveryTarget @props/otherprops @props/platform @props/product"
+    specializations="(topic hi-d)(topic em-d)(topic ui-d)(topic sw-d)(topic pr-d) @props/audience @props/deliveryTarget @props/otherprops @props/platform @props/product"
     id="concept"
     outputclass="concept">
     <title class="- topic/title ">Concept</title>
@@ -16,7 +16,7 @@
     </body>
   </topic>
   <topic class="- topic/topic " ditaarch:DITAArchVersion="2.0"
-    specializations="(topic hi-d)(topic em-d) @props/audience @props/deliveryTarget @props/otherprops @props/platform @props/product"
+    specializations="(topic hi-d)(topic em-d)(topic ui-d)(topic sw-d)(topic pr-d) @props/audience @props/deliveryTarget @props/otherprops @props/platform @props/product"
     id="task"
     outputclass="task">
     <title class="- topic/title ">Task</title>
@@ -29,7 +29,7 @@
     </body>
   </topic>
   <topic class="- topic/topic " ditaarch:DITAArchVersion="2.0"
-    specializations="(topic hi-d)(topic em-d) @props/audience @props/deliveryTarget @props/otherprops @props/platform @props/product"
+    specializations="(topic hi-d)(topic em-d)(topic ui-d)(topic sw-d)(topic pr-d) @props/audience @props/deliveryTarget @props/otherprops @props/platform @props/product"
     id="reference"
     outputclass="reference">
     <title class="- topic/title ">Reference</title>
@@ -43,7 +43,7 @@
   </topic>
   <topic class="- topic/topic "
     ditaarch:DITAArchVersion="2.0"
-    specializations="(topic hi-d)(topic em-d) @props/audience @props/deliveryTarget @props/otherprops @props/platform @props/product"
+    specializations="(topic hi-d)(topic em-d)(topic ui-d)(topic sw-d)(topic pr-d) @props/audience @props/deliveryTarget @props/otherprops @props/platform @props/product"
     id="topic">
     <title class="- topic/title ">Topic</title>
     <shortdesc class="- topic/shortdesc ">Content D.</shortdesc>

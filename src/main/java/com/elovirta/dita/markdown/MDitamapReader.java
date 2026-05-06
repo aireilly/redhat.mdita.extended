@@ -23,7 +23,10 @@ public class MDitamapReader extends MarkdownReader {
     .toImmutable();
 
   public static final DataSet EXTENDED_PROFILE = new MutableDataSet()
-    .set(Parser.EXTENSIONS, asList(AnchorLinkExtension.create(), AttributesExtension.create(), YamlFrontMatterExtension.create()))
+    .set(
+      Parser.EXTENSIONS,
+      asList(AnchorLinkExtension.create(), AttributesExtension.create(), YamlFrontMatterExtension.create())
+    )
     .set(DitaRenderer.MAP, true)
     .set(DitaRenderer.ID_FROM_YAML, true)
     .set(DitaRenderer.LW_DITA, true)

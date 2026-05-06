@@ -76,6 +76,8 @@ public class MapRenderer extends AbstractRenderer {
   private static final Attributes RELROW_ATTS = buildAtts(MAP_RELROW);
   private static final Attributes RELCELL_ATTS = buildAtts(MAP_RELCELL);
   private static final Attributes KEYDEF_ATTS = buildAtts(MAPGROUP_D_KEYDEF);
+  private static final DitaClass MAPGROUP_D_MAPREF = DitaClass.getInstance("+ map/topicref mapgroup-d/mapref ");
+  private static final Attributes MAPREF_ATTS = buildAtts(MAPGROUP_D_MAPREF);
 
   private final boolean idFromYaml;
 
@@ -142,7 +144,7 @@ public class MapRenderer extends AbstractRenderer {
         new AttributesBuilder(MAP_ATTS)
           .add(
             ATTRIBUTE_NAME_SPECIALIZATIONS,
-            "@props/audience @props/deliveryTarget @props/otherprops @props/platform @props/product"
+            "(topic ui-d)(topic sw-d)(topic pr-d) @props/audience @props/deliveryTarget @props/otherprops @props/platform @props/product"
           );
     } else {
       atts =
@@ -441,10 +443,21 @@ public class MapRenderer extends AbstractRenderer {
     final AttributesBuilder atts;
     List<Node> navtitle = null;
     if (link != null || linkRef != null) {
-      name = MAP_TOPICREF;
-      atts = new AttributesBuilder(TOPICREF_ATTS);
+      final String linkUrl = link != null ? link.getUrl().toString() : null;
+      final boolean isMapRef = linkUrl != null && linkUrl.endsWith(".ditamap");
+      if (isMapRef) {
+        name = MAPGROUP_D_MAPREF;
+        atts = new AttributesBuilder(MAPREF_ATTS);
+      } else {
+        name = MAP_TOPICREF;
+        atts = new AttributesBuilder(TOPICREF_ATTS);
+      }
       if (link != null) {
-        atts.addAll(getLinkAttributes(link.getUrl().toString(), TOPICREF_ATTS).build());
+        final Attributes baseAtts = isMapRef ? MAPREF_ATTS : TOPICREF_ATTS;
+        atts.addAll(getLinkAttributes(linkUrl, baseAtts).build());
+        if (isMapRef) {
+          atts.add(ATTRIBUTE_NAME_FORMAT, "ditamap");
+        }
         final String text = link.getText().toString();
         if (!text.isEmpty()) {
           navtitle = childList(link);

@@ -129,9 +129,21 @@ public abstract class AbstractRenderer {
 
   private void render(final Code node, final NodeRendererContext context, final SaxWriter html) {
     if (mditaExtendedProfile) {
-      printTag(node, context, html, HI_D_TT, TT_ATTS);
+      final Attributes atts = getInlineAttributes(node, TT_ATTS);
+      final DitaClass specialized = getSpecializedClass(atts);
+      if (specialized != null) {
+        printTag(node, context, html, specialized, promoteAttributes(atts, specialized));
+      } else {
+        printTag(node, context, html, HI_D_TT, atts);
+      }
     } else {
-      printTag(node, context, html, PR_D_CODEPH, getInlineAttributes(node, CODEPH_ATTS));
+      final Attributes atts = getInlineAttributes(node, CODEPH_ATTS);
+      final DitaClass specialized = getSpecializedClass(atts);
+      if (specialized != null) {
+        printTag(node, context, html, specialized, promoteAttributes(atts, specialized));
+      } else {
+        printTag(node, context, html, PR_D_CODEPH, atts);
+      }
     }
   }
 
@@ -140,11 +152,31 @@ public abstract class AbstractRenderer {
   }
 
   protected void render(final Emphasis node, final NodeRendererContext context, final SaxWriter html) {
-    printTag(node, context, html, HI_D_I, getInlineAttributes(node, I_ATTS));
+    final Attributes atts = getInlineAttributes(node, I_ATTS);
+    final DitaClass specialized = getSpecializedClass(atts);
+    if (specialized != null) {
+      if (isMenucascade(atts)) {
+        renderMenucascade(node, context, html);
+      } else {
+        printTag(node, context, html, specialized, promoteAttributes(atts, specialized));
+      }
+    } else {
+      printTag(node, context, html, HI_D_I, atts);
+    }
   }
 
   protected void render(final StrongEmphasis node, final NodeRendererContext context, final SaxWriter html) {
-    printTag(node, context, html, HI_D_B, getInlineAttributes(node, B_ATTS));
+    final Attributes atts = getInlineAttributes(node, B_ATTS);
+    final DitaClass specialized = getSpecializedClass(atts);
+    if (specialized != null) {
+      if (isMenucascade(atts)) {
+        renderMenucascade(node, context, html);
+      } else {
+        printTag(node, context, html, specialized, promoteAttributes(atts, specialized));
+      }
+    } else {
+      printTag(node, context, html, HI_D_B, atts);
+    }
   }
 
   protected void render(final Superscript node, final NodeRendererContext context, final SaxWriter html) {
@@ -294,5 +326,72 @@ public abstract class AbstractRenderer {
     }
     header.id.ifPresent(id -> builder.add(ATTRIBUTE_NAME_ID, id));
     return builder;
+  }
+
+  private static final Map<String, DitaClass> INLINE_SPECIALIZATIONS = Map.ofEntries(
+    Map.entry("uicontrol", DitaClass.getInstance("+ topic/ph ui-d/uicontrol ")),
+    Map.entry("wintitle", DitaClass.getInstance("+ topic/keyword ui-d/wintitle ")),
+    Map.entry("menucascade", DitaClass.getInstance("+ topic/ph ui-d/menucascade ")),
+    Map.entry("filepath", DitaClass.getInstance("+ topic/ph sw-d/filepath ")),
+    Map.entry("userinput", DitaClass.getInstance("+ topic/ph sw-d/userinput ")),
+    Map.entry("systemoutput", DitaClass.getInstance("+ topic/ph sw-d/systemoutput ")),
+    Map.entry("cmdname", DitaClass.getInstance("+ topic/keyword sw-d/cmdname ")),
+    Map.entry("varname", DitaClass.getInstance("+ topic/keyword sw-d/varname ")),
+    Map.entry("msgph", DitaClass.getInstance("+ topic/ph sw-d/msgph ")),
+    Map.entry("codeph", DitaClass.getInstance("+ topic/ph pr-d/codeph ")),
+    Map.entry("option", DitaClass.getInstance("+ topic/keyword pr-d/option ")),
+    Map.entry("parmname", DitaClass.getInstance("+ topic/keyword pr-d/parmname ")),
+    Map.entry("apiname", DitaClass.getInstance("+ topic/keyword pr-d/apiname "))
+  );
+
+  private static final DitaClass UI_D_UICONTROL = DitaClass.getInstance("+ topic/ph ui-d/uicontrol ");
+
+  private DitaClass getSpecializedClass(Attributes atts) {
+    final int idx = atts.getIndex(ATTRIBUTE_NAME_OUTPUTCLASS);
+    if (idx < 0) return null;
+    final String oc = atts.getValue(idx);
+    return INLINE_SPECIALIZATIONS.get(oc);
+  }
+
+  private boolean isMenucascade(Attributes atts) {
+    final int idx = atts.getIndex(ATTRIBUTE_NAME_OUTPUTCLASS);
+    return idx >= 0 && "menucascade".equals(atts.getValue(idx));
+  }
+
+  private Attributes promoteAttributes(Attributes original, DitaClass specialized) {
+    final AttributesBuilder builder = new AttributesBuilder();
+    builder.add(ATTRIBUTE_NAME_CLASS, specialized.toString());
+    for (int i = 0; i < original.getLength(); i++) {
+      final String name = original.getQName(i);
+      if (!ATTRIBUTE_NAME_OUTPUTCLASS.equals(name) && !ATTRIBUTE_NAME_CLASS.equals(name)) {
+        builder.add(name, original.getType(i), original.getValue(i));
+      }
+    }
+    return builder.build();
+  }
+
+  private void renderMenucascade(final Node node, final NodeRendererContext context, final SaxWriter html) {
+    final DitaClass menucascade = INLINE_SPECIALIZATIONS.get("menucascade");
+    final Attributes menuAtts = buildAtts(menucascade);
+    final Attributes uicAtts = buildAtts(UI_D_UICONTROL);
+
+    StringBuilder sb = new StringBuilder();
+    for (Node child : node.getChildren()) {
+      if (child instanceof Text) {
+        sb.append(child.getChars().toString());
+      }
+    }
+    String[] parts = sb.toString().split("\\s*>\\s*");
+
+    html.startElement(node, menucascade, menuAtts);
+    for (String part : parts) {
+      String trimmed = part.trim();
+      if (!trimmed.isEmpty()) {
+        html.startElement(node, UI_D_UICONTROL, uicAtts);
+        html.characters(trimmed);
+        html.endElement();
+      }
+    }
+    html.endElement();
   }
 }

@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <dita xmlns:ditaarch="http://dita.oasis-open.org/architecture/2005/"
       ditaarch:DITAArchVersion="2.0"
-      specializations="(topic hi-d)(topic em-d) @props/audience @props/deliveryTarget @props/otherprops @props/platform @props/product">
+      specializations="(topic hi-d)(topic em-d)(topic ui-d)(topic sw-d)(topic pr-d) @props/audience @props/deliveryTarget @props/otherprops @props/platform @props/product">
   <topic class="- topic/topic "
     ditaarch:DITAArchVersion="2.0"
-    specializations="(topic hi-d)(topic em-d) @props/audience @props/deliveryTarget @props/otherprops @props/platform @props/product"
+    specializations="(topic hi-d)(topic em-d)(topic ui-d)(topic sw-d)(topic pr-d) @props/audience @props/deliveryTarget @props/otherprops @props/platform @props/product"
     id="heading-a">
     <title class="- topic/title ">Heading A</title>
     <shortdesc class="- topic/shortdesc ">Content A.</shortdesc>
@@ -17,7 +17,7 @@
   </topic>
   <topic class="- topic/topic "
     ditaarch:DITAArchVersion="2.0"
-    specializations="(topic hi-d)(topic em-d) @props/audience @props/deliveryTarget @props/otherprops @props/platform @props/product"
+    specializations="(topic hi-d)(topic em-d)(topic ui-d)(topic sw-d)(topic pr-d) @props/audience @props/deliveryTarget @props/otherprops @props/platform @props/product"
     id="heading-b">
     <title class="- topic/title ">Heading B</title>
     <shortdesc class="- topic/shortdesc ">Content B.</shortdesc>

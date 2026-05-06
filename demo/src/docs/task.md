@@ -12,9 +12,9 @@ You can install and configure a widget on your cluster using the CLI.
 
 ## Prerequisites
 
-- You have installed the `oc` CLI tool.
+- You have installed the `oc`{.cmdname} CLI tool.
 - You have logged in as a user with `cluster-admin` privileges.
-- You have created a `widget.yaml` configuration file.
+- You have created a `widget.yaml`{.filepath} configuration file.
 
 ## About this task
 
@@ -76,7 +76,10 @@ The widget is available to all projects in the cluster after installation.
       oc apply -f network-policy.yaml -n widgets
       ```
 
-6. Verify that the widget pod is running:
+6. Verify that the widget pod is running.
+
+   The output shows the pod status.{.stepresult}
+
 
    ```bash
    oc get pods -n widgets
@@ -103,4 +106,4 @@ oc admonish scc-subject-review -z widget-sa -n widgets
 
 ## Next steps
 
-Configure additional widgets by repeating this procedure with a new `widget.yaml` file.
+Configure additional widgets by repeating this procedure with a new `widget.yaml`{.filepath} file.

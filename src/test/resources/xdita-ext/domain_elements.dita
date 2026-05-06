@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<topic xmlns:ditaarch="http://dita.oasis-open.org/architecture/2005/"
+       ditaarch:DITAArchVersion="2.0" class="- topic/topic " id="domain-elements"
+       specializations="(topic hi-d)(topic em-d)(topic ui-d)(topic sw-d)(topic pr-d) @props/audience @props/deliveryTarget @props/otherprops @props/platform @props/product">
+  <title class="- topic/title ">Domain elements</title>
+  <shortdesc class="- topic/shortdesc ">Click <uicontrol class="+ topic/ph ui-d/uicontrol ">Save</uicontrol> to save
+    the file.
+  </shortdesc>
+  <body class="- topic/body ">
+    <p class="- topic/p ">The <wintitle class="+ topic/keyword ui-d/wintitle ">Dashboard</wintitle> window opens.</p>
+    <p class="- topic/p ">Navigate to
+      <menucascade class="+ topic/ph ui-d/menucascade ">
+        <uicontrol class="+ topic/ph ui-d/uicontrol ">File</uicontrol>
+        <uicontrol class="+ topic/ph ui-d/uicontrol ">Open</uicontrol>
+        <uicontrol class="+ topic/ph ui-d/uicontrol ">Recent</uicontrol>
+      </menucascade> to see recent files.
+    </p>
+    <p class="- topic/p ">Edit the <filepath class="+ topic/ph sw-d/filepath ">config.yaml</filepath> file.</p>
+    <p class="- topic/p ">Run the <cmdname class="+ topic/keyword sw-d/cmdname ">ansible-playbook</cmdname> command.
+    </p>
+    <p class="- topic/p ">Enter <userinput class="+ topic/ph sw-d/userinput ">admin</userinput> as the username.</p>
+    <p class="- topic/p ">The system returns <systemoutput class="+ topic/ph sw-d/systemoutput ">OK</systemoutput>.
+    </p>
+    <p class="- topic/p ">Set the <option class="+ topic/keyword pr-d/option ">verbose</option> option.</p>
+    <p class="- topic/p ">Use the <parmname class="+ topic/keyword pr-d/parmname ">inventory</parmname> parameter.</p>
+    <p class="- topic/p ">Call the <apiname class="+ topic/keyword pr-d/apiname ">getHosts</apiname> API.</p>
+    <p class="- topic/p ">Set the <varname class="+ topic/keyword sw-d/varname ">MAX_RETRIES</varname> variable.</p>
+    <p class="- topic/p ">Check the <msgph class="+ topic/ph sw-d/msgph ">ERR_TIMEOUT</msgph> message.</p>
+    <p class="- topic/p ">Use <codeph class="+ topic/ph pr-d/codeph ">codeph</codeph> for code phrases.</p>
+  </body>
+</topic>

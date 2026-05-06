@@ -72,6 +72,27 @@
     </xsl:if>
   </xsl:template>
 
+  <xsl:variable name="domain-class-names" select="('uicontrol', 'wintitle', 'menucascade', 'filepath', 'userinput', 'systemoutput', 'sysout', 'cmdname', 'varname', 'msgph', 'codeph', 'option', 'parmname', 'apiname')" as="xs:string*"/>
+
+  <xsl:template name="inline-class-attribute">
+    <xsl:if test="@class and tokenize(@class, '\s+')[. = $domain-class-names]">
+      <xsl:text>{.</xsl:text>
+      <xsl:value-of select="tokenize(@class, '\s+')[. = $domain-class-names][1]"/>
+      <xsl:text>}</xsl:text>
+    </xsl:if>
+  </xsl:template>
+
+  <xsl:template match="span[@class = 'menucascade']" mode="ast">
+    <xsl:text>**</xsl:text>
+    <xsl:for-each select=".//strong[@class = 'uicontrol']">
+      <xsl:if test="position() > 1">
+        <xsl:text> > </xsl:text>
+      </xsl:if>
+      <xsl:apply-templates mode="ast"/>
+    </xsl:for-each>
+    <xsl:text>**{.menucascade}</xsl:text>
+  </xsl:template>
+
   <xsl:template name="block-attributes">
     <xsl:variable name="profiling-attrs" select="@*[local-name() = $profiling-attr-names]"/>
     <xsl:if test="$profiling-attrs">
@@ -384,6 +405,7 @@
       <xsl:with-param name="escape" select="concat($char, $escape)" as="xs:string?" tunnel="yes"/>
     </xsl:apply-templates>
     <xsl:value-of select="$char"/>
+    <xsl:call-template name="inline-class-attribute"/>
   </xsl:template>
 
   <xsl:template match="emph" mode="ast">
@@ -395,6 +417,7 @@
       <xsl:with-param name="escape" select="concat($char, $escape)" as="xs:string?" tunnel="yes"/>
     </xsl:apply-templates>
     <xsl:value-of select="$char"/>
+    <xsl:call-template name="inline-class-attribute"/>
   </xsl:template>
 
   <xsl:template match="cite" mode="ast">
@@ -412,6 +435,7 @@
     <xsl:text>`</xsl:text>
     <xsl:apply-templates mode="ast"/>
     <xsl:text>`</xsl:text>
+    <xsl:call-template name="inline-class-attribute"/>
   </xsl:template>
 
   <xsl:template match="link[empty(@href | @keyref)]" mode="ast">

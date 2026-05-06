@@ -8,7 +8,7 @@ keyword:
 
 # Widget configuration reference {.reference}
 
-The `widget.yaml` configuration file controls widget behavior, resource limits, and connectivity.
+The `widget.yaml`{.filepath} configuration file controls widget behavior, resource limits, and connectivity.
 All fields are optional unless marked **required**.
 
 ## Configuration fields
@@ -26,7 +26,7 @@ All fields are optional unless marked **required**.
 
 ## Example configuration
 
-The following `widget.yaml` file configures a sidecar widget with custom resource limits:
+The following `widget.yaml`{.filepath} file configures a sidecar widget with custom resource limits:
 
 ```yaml
 name: payment-processor
@@ -47,7 +47,7 @@ resources:
 ## Environment variables
 
 You can override configuration fields using environment variables.
-Each variable is prefixed with `WIDGET_` and uses uppercase with underscores:
+Each variable is prefixed with `WIDGET_`{.varname} and uses uppercase with underscores:
 
 | Variable             | Overrides       | Example          |
 |----------------------|-----------------|------------------|
@@ -59,7 +59,7 @@ Each variable is prefixed with `WIDGET_` and uses uppercase with underscores:
 | `WIDGET_LOG_LEVEL`   | `logLevel`      | `debug`          |
 
 !!! important
-    Environment variables take precedence over values in `widget.yaml`.
+    Environment variables take precedence over values in `widget.yaml`{.filepath}.
 
 ## Advanced configuration {audience="expert"}
 

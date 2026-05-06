@@ -276,7 +276,7 @@ public class TopicRenderer extends AbstractRenderer {
       } else if (mditaExtendedProfile) {
         atts.add(
           ATTRIBUTE_NAME_SPECIALIZATIONS,
-          "(topic hi-d)(topic em-d) @props/audience @props/deliveryTarget @props/otherprops @props/platform @props/product"
+          "(topic hi-d)(topic em-d)(topic ui-d)(topic sw-d)(topic pr-d) @props/audience @props/deliveryTarget @props/otherprops @props/platform @props/product"
         );
       } else {
         atts.add(
@@ -658,7 +658,7 @@ public class TopicRenderer extends AbstractRenderer {
           new AttributesBuilder(TOPIC_ATTS)
             .add(
               ATTRIBUTE_NAME_SPECIALIZATIONS,
-              "(topic hi-d)(topic em-d) @props/audience @props/deliveryTarget @props/otherprops @props/platform @props/product"
+              "(topic hi-d)(topic em-d)(topic ui-d)(topic sw-d)(topic pr-d) @props/audience @props/deliveryTarget @props/otherprops @props/platform @props/product"
             );
       } else {
         atts =

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <topic xmlns:ditaarch="http://dita.oasis-open.org/architecture/2005/"
   class="- topic/topic " ditaarch:DITAArchVersion="2.0" id="how-to-do-something"
-       specializations="(topic hi-d)(topic em-d) @props/audience @props/deliveryTarget @props/otherprops @props/platform @props/product">
+       specializations="(topic hi-d)(topic em-d)(topic ui-d)(topic sw-d)(topic pr-d) @props/audience @props/deliveryTarget @props/otherprops @props/platform @props/product">
   <title class="- topic/title ">How to do something</title>
   <shortdesc class="- topic/shortdesc ">Introduction to this specific task</shortdesc>
   <body class="- topic/body ">

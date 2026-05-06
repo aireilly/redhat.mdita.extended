@@ -54,7 +54,7 @@ Sidecar widgets use a sidecar container pattern, sharing the pod network namespa
 ## OpenShift-specific considerations {platform="openshift"}
 
 On OpenShift, widgets can take advantage of the built-in service mesh.
-Use **Routes**{platform="openshift"} to expose widget endpoints externally.
+Use **Routes**{.uicontrol platform="openshift"} to expose widget endpoints externally.
 
 For configuration details, see *Widget configuration reference*.
 For installation steps, see *Installing the widget*.

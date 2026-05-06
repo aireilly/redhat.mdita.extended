@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <map xmlns:ditaarch="http://dita.oasis-open.org/architecture/2005/" class="- map/map " ditaarch:DITAArchVersion="2.0"
-     id="title" specializations="@props/audience @props/deliveryTarget @props/otherprops @props/platform @props/product">
+     id="title" specializations="(topic ui-d)(topic sw-d)(topic pr-d) @props/audience @props/deliveryTarget @props/otherprops @props/platform @props/product">
   <title class="- topic/title ">Title</title>
   <topicref class="- map/topicref " format="md" href="topic-1.md">
     <topicmeta class="- map/topicmeta ">

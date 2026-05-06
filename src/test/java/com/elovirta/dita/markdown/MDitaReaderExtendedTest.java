@@ -74,6 +74,7 @@ public class MDitaReaderExtendedTest extends AbstractReaderTest {
       "testNoBOM.md",
       "ul.md",
       "yaml.md",
+      "domain_elements.md",
     }
   )
   public void test(String file) throws Exception {

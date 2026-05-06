@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <map xmlns:ditaarch="http://dita.oasis-open.org/architecture/2005/" class="- map/map " ditaarch:DITAArchVersion="2.0"
-     specializations="@props/audience @props/deliveryTarget @props/otherprops @props/platform @props/product">
+     specializations="(topic ui-d)(topic sw-d)(topic pr-d) @props/audience @props/deliveryTarget @props/otherprops @props/platform @props/product">
   <topicmeta class="- map/topicmeta ">
     <author class="- topic/author ">Author One</author>
     <author class="- topic/author ">Author Two</author>

@@ -36,6 +36,8 @@ public class SpecializeFilter extends XMLFilterImpl {
     STEPS,
     STEP,
     INFO,
+    STEPRESULT,
+    STEPXMP,
     SUBSTEPS,
     SUBSTEP,
     SUBINFO,
@@ -44,6 +46,9 @@ public class SpecializeFilter extends XMLFilterImpl {
     RESULT,
     POST_STEPS,
   }
+
+  private static final DitaClass TASK_STEPRESULT = DitaClass.getInstance("- topic/itemgroup task/stepresult ");
+  private static final DitaClass TASK_STEPXMP = DitaClass.getInstance("- topic/itemgroup task/stepxmp ");
 
   private final Type forceType;
 
@@ -285,44 +290,78 @@ public class SpecializeFilter extends XMLFilterImpl {
         if (depth == DEPTH_IN_BODY) {
           openImplicitSection(uri);
           doStartElement(uri, localName, qName, atts);
-        } else if ((taskState == TaskState.STEP || taskState == TaskState.INFO) && depth == 5) {
-          switch (localName) {
-            case "p":
-            case TIGHT_LIST_P:
-              paragraphCountInStep++;
-              if (paragraphCountInStep == 1) {
-                renameStartElement(TASK_CMD, atts);
-              } else if (paragraphCountInStep == 2 && taskState != TaskState.INFO) {
-                AttributesImpl infoAtts = new AttributesImpl();
-                infoAtts.addAttribute(
-                  NULL_NS_URI,
-                  ATTRIBUTE_NAME_CLASS,
-                  ATTRIBUTE_NAME_CLASS,
-                  "CDATA",
-                  TASK_INFO.toString()
-                );
-                doStartElement(NULL_NS_URI, TASK_INFO.localName, TASK_INFO.localName, infoAtts);
-                taskState = TaskState.INFO;
+        } else if (
+          (
+            taskState == TaskState.STEP ||
+            taskState == TaskState.INFO ||
+            taskState == TaskState.STEPRESULT ||
+            taskState == TaskState.STEPXMP
+          ) &&
+          depth == 5
+        ) {
+          final String outputclass = atts.getValue(ATTRIBUTE_NAME_OUTPUTCLASS);
+          if ("stepresult".equals(outputclass) || "stepxmp".equals(outputclass)) {
+            if (taskState == TaskState.INFO) {
+              doEndElement(NULL_NS_URI, TASK_INFO.localName, TASK_INFO.localName);
+            } else if (taskState == TaskState.STEPRESULT) {
+              doEndElement(NULL_NS_URI, TASK_STEPRESULT.localName, TASK_STEPRESULT.localName);
+            } else if (taskState == TaskState.STEPXMP) {
+              doEndElement(NULL_NS_URI, TASK_STEPXMP.localName, TASK_STEPXMP.localName);
+            }
+            final DitaClass wrapperClass = "stepresult".equals(outputclass) ? TASK_STEPRESULT : TASK_STEPXMP;
+            final TaskState newState = "stepresult".equals(outputclass) ? TaskState.STEPRESULT : TaskState.STEPXMP;
+            AttributesImpl wrapperAtts = new AttributesImpl();
+            wrapperAtts.addAttribute(
+              NULL_NS_URI,
+              ATTRIBUTE_NAME_CLASS,
+              ATTRIBUTE_NAME_CLASS,
+              "CDATA",
+              wrapperClass.toString()
+            );
+            doStartElement(NULL_NS_URI, wrapperClass.localName, wrapperClass.localName, wrapperAtts);
+            taskState = newState;
+            doStartElement(uri, localName, qName, stripOutputclass(atts));
+          } else if (taskState == TaskState.STEPRESULT || taskState == TaskState.STEPXMP) {
+            doStartElement(uri, localName, qName, atts);
+          } else {
+            switch (localName) {
+              case "p":
+              case TIGHT_LIST_P:
+                paragraphCountInStep++;
+                if (paragraphCountInStep == 1) {
+                  renameStartElement(TASK_CMD, atts);
+                } else if (paragraphCountInStep == 2 && taskState != TaskState.INFO) {
+                  AttributesImpl infoAtts = new AttributesImpl();
+                  infoAtts.addAttribute(
+                    NULL_NS_URI,
+                    ATTRIBUTE_NAME_CLASS,
+                    ATTRIBUTE_NAME_CLASS,
+                    "CDATA",
+                    TASK_INFO.toString()
+                  );
+                  doStartElement(NULL_NS_URI, TASK_INFO.localName, TASK_INFO.localName, infoAtts);
+                  taskState = TaskState.INFO;
+                  doStartElement(uri, localName, qName, atts);
+                } else {
+                  doStartElement(uri, localName, qName, atts);
+                }
+                break;
+              default:
+                if (taskState != TaskState.INFO) {
+                  AttributesImpl infoAtts = new AttributesImpl();
+                  infoAtts.addAttribute(
+                    NULL_NS_URI,
+                    ATTRIBUTE_NAME_CLASS,
+                    ATTRIBUTE_NAME_CLASS,
+                    "CDATA",
+                    TASK_INFO.toString()
+                  );
+                  doStartElement(NULL_NS_URI, TASK_INFO.localName, TASK_INFO.localName, infoAtts);
+                  taskState = TaskState.INFO;
+                }
                 doStartElement(uri, localName, qName, atts);
-              } else {
-                doStartElement(uri, localName, qName, atts);
-              }
-              break;
-            default:
-              if (taskState != TaskState.INFO) {
-                AttributesImpl infoAtts = new AttributesImpl();
-                infoAtts.addAttribute(
-                  NULL_NS_URI,
-                  ATTRIBUTE_NAME_CLASS,
-                  ATTRIBUTE_NAME_CLASS,
-                  "CDATA",
-                  TASK_INFO.toString()
-                );
-                doStartElement(NULL_NS_URI, TASK_INFO.localName, TASK_INFO.localName, infoAtts);
-                taskState = TaskState.INFO;
-              }
-              doStartElement(uri, localName, qName, atts);
-              break;
+                break;
+            }
           }
         } else if ((taskState == TaskState.SUBSTEP || taskState == TaskState.SUBINFO) && depth == 7) {
           switch (localName) {
@@ -443,6 +482,14 @@ public class SpecializeFilter extends XMLFilterImpl {
         if (taskState == TaskState.SUBSTEP && depth == 6) {
           paragraphCountInSubstep = 0;
           taskState = TaskState.SUBSTEPS;
+        }
+        if (taskState == TaskState.STEPRESULT && depth == 4) {
+          doEndElement(NULL_NS_URI, TASK_STEPRESULT.localName, TASK_STEPRESULT.localName);
+          taskState = TaskState.STEP;
+        }
+        if (taskState == TaskState.STEPXMP && depth == 4) {
+          doEndElement(NULL_NS_URI, TASK_STEPXMP.localName, TASK_STEPXMP.localName);
+          taskState = TaskState.STEP;
         }
         if (taskState == TaskState.INFO && depth == 4) {
           doEndElement(NULL_NS_URI, TASK_INFO.localName, TASK_INFO.localName);
@@ -575,5 +622,14 @@ public class SpecializeFilter extends XMLFilterImpl {
       return Collections.emptyList();
     }
     return Arrays.asList(outputclass.trim().split("\\s+"));
+  }
+
+  private Attributes stripOutputclass(Attributes atts) {
+    final AttributesImpl result = new AttributesImpl(atts);
+    final int idx = result.getIndex(ATTRIBUTE_NAME_OUTPUTCLASS);
+    if (idx >= 0) {
+      result.removeAttribute(idx);
+    }
+    return result;
   }
 }

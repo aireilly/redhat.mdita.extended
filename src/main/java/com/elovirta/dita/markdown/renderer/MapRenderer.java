@@ -444,7 +444,7 @@ public class MapRenderer extends AbstractRenderer {
     List<Node> navtitle = null;
     if (link != null || linkRef != null) {
       final String linkUrl = link != null ? link.getUrl().toString() : null;
-      final boolean isMapRef = linkUrl != null && linkUrl.endsWith(".ditamap");
+      final boolean isMapRef = linkUrl != null && (linkUrl.endsWith(".ditamap") || linkUrl.endsWith(".mditamap"));
       if (isMapRef) {
         name = MAPGROUP_D_MAPREF;
         atts = new AttributesBuilder(MAPREF_ATTS);

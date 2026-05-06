@@ -244,17 +244,19 @@ alongside the standard `<cmd>` and `<info>` wrappers.
 
 ### Sub-map references (mapref)
 
-In MDITA maps, links to `.ditamap` files automatically produce
-`<mapref>` elements instead of `<topicref>`:
+In MDITA maps, links to `.ditamap` or `.mditamap` files automatically
+produce `<mapref>` elements instead of `<topicref>`:
 
 ```markdown
 - [Sub-map](submap.ditamap)
+- [MDITA sub-map](submap.mditamap)
 ```
 
 This produces:
 
 ```xml
 <mapref href="submap.ditamap" format="ditamap"/>
+<mapref href="submap.mditamap" format="ditamap"/>
 ```
 
 ### Roundtrip support

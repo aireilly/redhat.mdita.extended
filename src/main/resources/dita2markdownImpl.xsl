@@ -396,31 +396,9 @@
 
   <xsl:template match="*" mode="process.note.common-processing">
     <xsl:param name="type" select="@type"/>
-    <xsl:param name="title">
-      <xsl:call-template name="getVariable">
-        <xsl:with-param name="id" select="concat(upper-case(substring($type, 1, 1)),
-                                                         substring($type, 2))"/>
-      </xsl:call-template>
-    </xsl:param>
-    <div>
-      <xsl:call-template name="commonattributes">
-        <xsl:with-param name="default-output-class" select="$type"/>
-      </xsl:call-template>
-      <xsl:call-template name="setidaname"/>
-      <!-- Normal flags go before the generated title; revision flags only go on the content. -->
-      <xsl:apply-templates select="*[contains(@class, ' ditaot-d/ditaval-startprop ')]/prop" mode="ditaval-outputflag"/>
-      <strong>
-        <xsl:value-of select="$title"/>
-        <xsl:call-template name="getVariable">
-          <xsl:with-param name="id" select="'ColonSymbol'"/>
-        </xsl:call-template>
-      </strong>
-      <xsl:text> </xsl:text>
-      <xsl:apply-templates select="*[contains(@class, ' ditaot-d/ditaval-startprop ')]/revprop" mode="ditaval-outputflag"/>
+    <note type="{$type}">
       <xsl:apply-templates/>
-      <!-- Normal end flags and revision end flags both go out after the content. -->
-      <xsl:apply-templates select="*[contains(@class, ' ditaot-d/ditaval-endprop ')]" mode="out-of-line"/>
-    </div>
+    </note>
   </xsl:template>
 
   <xsl:template match="*" mode="process.note">
@@ -479,58 +457,17 @@
    </xsl:choose>
  </xsl:template>
 
-  <!-- Caution and Danger both use a div for the title, so they do not
-       use the common note processing template. -->
   <xsl:template match="*" mode="process.note.caution">
-    <div>
-      <xsl:call-template name="commonattributes">
-        <xsl:with-param name="default-output-class">cautiontitle</xsl:with-param>
-      </xsl:call-template>
-      <xsl:call-template name="setidaname"/>
-      <!-- Normal flags go before the generated title; revision flags only go on the content. -->
-      <xsl:apply-templates select="*[contains(@class, ' ditaot-d/ditaval-startprop ')]/prop" mode="ditaval-outputflag"/>
-      <strong>
-        <xsl:call-template name="getVariable">
-          <xsl:with-param name="id" select="'Caution'"/>
-        </xsl:call-template>
-        <xsl:call-template name="getVariable">
-          <xsl:with-param name="id" select="'ColonSymbol'"/>
-        </xsl:call-template>
-      </strong>
-    </div>
-    <div>
-      <xsl:call-template name="commonattributes">
-        <xsl:with-param name="default-output-class">caution</xsl:with-param>
-      </xsl:call-template>
-      <xsl:apply-templates select="*[contains(@class, ' ditaot-d/ditaval-startprop ')]/revprop" mode="ditaval-outputflag"/>
+    <note type="caution">
       <xsl:apply-templates/>
-      <xsl:apply-templates select="*[contains(@class, ' ditaot-d/ditaval-endprop ')]" mode="out-of-line"/>
-    </div>  
+    </note>
   </xsl:template>
 
- <xsl:template match="*" mode="process.note.danger">
-   <div>
-     <xsl:call-template name="commonattributes">
-       <xsl:with-param name="default-output-class">dangertitle</xsl:with-param>
-     </xsl:call-template>
-     <xsl:call-template name="setidaname"/>
-     <!-- Normal flags go before the generated title; revision flags only go on the content. -->
-     <xsl:apply-templates select="*[contains(@class, ' ditaot-d/ditaval-startprop ')]/prop" mode="ditaval-outputflag"/>
-     <strong>
-       <xsl:call-template name="getVariable">
-         <xsl:with-param name="id" select="'Danger'"/>
-       </xsl:call-template>
-     </strong>
-   </div>
-   <div>
-     <xsl:call-template name="commonattributes">
-       <xsl:with-param name="default-output-class">danger</xsl:with-param>
-     </xsl:call-template>
-     <xsl:apply-templates select="*[contains(@class, ' ditaot-d/ditaval-startprop ')]/revprop" mode="ditaval-outputflag"/>
-     <xsl:apply-templates/>
-     <xsl:apply-templates select="*[contains(@class, ' ditaot-d/ditaval-endprop ')]" mode="out-of-line"/>
-   </div>
- </xsl:template>
+  <xsl:template match="*" mode="process.note.danger">
+    <note type="danger">
+      <xsl:apply-templates/>
+    </note>
+  </xsl:template>
 
   <!-- long quote (bibliographic association).
        @reftitle contains the citation for the excerpt.

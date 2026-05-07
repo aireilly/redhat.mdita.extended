@@ -226,6 +226,18 @@
     <xsl:value-of select="$linefeed"/>
   </xsl:template>
   
+  <xsl:template match="note" mode="ast">
+    <xsl:param name="indent" tunnel="yes" as="xs:string" select="''"/>
+    <xsl:variable name="type" select="if (@type) then @type else 'note'" as="xs:string"/>
+    <xsl:value-of select="$indent"/>
+    <xsl:text>!!! </xsl:text>
+    <xsl:value-of select="$type"/>
+    <xsl:value-of select="$linefeed"/>
+    <xsl:apply-templates mode="ast">
+      <xsl:with-param name="indent" tunnel="yes" select="concat($indent, '    ')"/>
+    </xsl:apply-templates>
+  </xsl:template>
+
   <xsl:template match="blockquote" mode="ast">
     <xsl:param name="prefix" tunnel="yes" as="xs:string?" select="()"/>
     <xsl:apply-templates mode="ast">
@@ -579,6 +591,7 @@
   
   <xsl:template match="pandoc/text() |
                        div/text() |
+                       note/text() |
                        bulletlist/text() |
                        orderedlist/text() |
                        definitionlist/text() |
@@ -622,6 +635,7 @@
     <xsl:param name="node" as="node()"/>
     <xsl:sequence select="$node/self::rawblock or
       $node/self::blockquote or
+      $node/self::note or
       (:$node/self::orderedlist or
       $node/self::bulletlist or:)
       $node/self::li or
@@ -638,6 +652,7 @@
       $node/self::codeblock or
       $node/self::rawblock or
       $node/self::blockquote or
+      $node/self::note or
       $node/self::orderedlist or
       $node/self::bulletlist or
       $node/self::definitionlist or $node/self::dlentry or $node/self::dt or $node/self::dd or

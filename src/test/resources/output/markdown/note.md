@@ -5,21 +5,24 @@ id: note
 
 # Note {#note}
 
-**Note:** Note
+!!! note
+    Note
 
-**Caution:**
+!!! caution
+    Caution
 
-Caution
+!!! danger
+    Danger
 
-**Danger**
+!!! note
+    Note
 
-Danger
+!!! note
+    Notice
 
-**Note:** Note
+!!! trouble
+    Trouble
 
-**Note:** Notice
-
-**Trouble:** Trouble
-
-**Warning:** Warning
+!!! warning
+    Warning
 

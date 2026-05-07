@@ -7,98 +7,79 @@ id: admonition
 
 Block-Styled Side Content
 
-**qualifier:**
+!!! note
+    Optional Title
 
-Optional Title
+    block content
 
-block content
-
-block content
+    block content
 
 No-Heading Content
 
-**qualifier:**
+!!! note
+    block content
 
-block content
-
-**qualifier:**
-
-block content
+!!! note
+    block content
 
 Collapsible Block-Styled Side Content:
 
 Collapsed by default
 
-**qualifier:**
+!!! note
+    Optional Title
 
-Optional Title
-
-block content
+    block content
 
 Open by default
 
-**qualifier:**
+!!! note
+    Optional Title
 
-Optional Title
+    block content
 
-block content
+!!! note
+    block content
 
-**Note:**
+!!! tip
+    block content
 
-block content
+!!! fastpath
+    block content
 
-**Tip:**
+!!! restriction
+    block content
 
-block content
+!!! important
+    block content
 
-**Fastpath:**
+!!! remember
+    block content
 
-block content
+!!! attention
+    block content
 
-**Restriction:**
+!!! caution
+    block content
 
-block content
+!!! note
+    block content
 
-**Important:**
+!!! danger
+    block content
 
-block content
+!!! warning
+    block content
 
-**Remember:**
+!!! trouble
+    block content
 
-block content
-
-**Attention:**
-
-block content
-
-**Caution:**
-
-block content
-
-**Note:**
-
-block content
-
-**Danger**
-
-block content
-
-**Warning:**
-
-block content
-
-**Trouble:**
-
-block content
-
-**Caution:**
-
-Uppercase type
+!!! caution
+    Uppercase type
 
 1.  List item
 
-    **Note:**
-
-    block content
+    !!! note
+        block content
 
 

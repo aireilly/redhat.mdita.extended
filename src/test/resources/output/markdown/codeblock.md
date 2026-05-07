@@ -3,7 +3,7 @@ $schema: urn:oasis:names:tc:dita:xsd:topic.xsd
 id: codeblock
 ---
 
-# Codeblock {#codeblock}
+# Codeblock
 
 Code example on `for` loop:
 
@@ -15,7 +15,7 @@ for i in items:
 
 Fenced block:
 
-``` {#foreach-example .scala}
+```
 items.foreach(println)
 
 ```

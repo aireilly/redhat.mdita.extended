@@ -11,7 +11,7 @@ keyword: [Keyword1, Keyword2]
 resourceid: [Resourceid1, Resourceid2]
 ---
 
-# Test {#test}
+# Test
 
 Paragraph *test* and **list list list list list list list list list list list list list list list list list list list list list list list** or `code`. This is a very long line. This is a very long line. This is a very long line. This is a very long line. This is a very long line. This is a very long line. This is a very long line. This is a very long line. This is a very long line. This is a very long line. This is a very long line.
 
@@ -124,7 +124,7 @@ Ordered:
 15. foo
 
 
-## Example {#example .section}
+## Example
 
 Code example on `for` loop:
 
@@ -136,12 +136,12 @@ for i in items:
 
 Fenced:
 
-``` {#test__scala-example .scala}
+```
 items.foreach(println)
 
 ```
 
-## Images {#images}
+## Images
 
 An inline ![Alt](test.jpg).
 
@@ -149,11 +149,11 @@ An inline ![Alt](test.jpg).
 
 ![Alt](test.jpg "Title")
 
-### Key references {#key_references}
+### Key references
 
 ![]()
 
-## Links {#links}
+## Links
 
 -   [Markdown](test.md.md)
 
@@ -164,7 +164,7 @@ An inline ![Alt](test.jpg).
 -   [External](http://www.example.com/test.html)
 
 -   
-## Tables {#tables}
+## Tables
 
 |Right|Left|Default|Center|
 |-----|----|-------|------|
@@ -179,7 +179,7 @@ PHP Table:
 |First row|Data|Very long data entry Very long data entry Very long data entry Very long data entry Very long data entry Very long data entry Very long data entry Very long data entry Very long data entry Very long data entry|
 |Second row|**Cell**|*Cell*|
 
-## Definition list {#definition_list}
+## Definition list
 
 Apple
 :   Pomaceous fruit of plants of the genus Malus in the family Rosaceae. Orange
@@ -188,7 +188,7 @@ Apple
 
     The fruit of an evergreen tree of the genus Citrus.
 
-## Quote {#quote}
+## Quote
 
 > This is email And so it this Again.
 

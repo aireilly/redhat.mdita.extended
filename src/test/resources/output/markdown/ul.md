@@ -3,7 +3,7 @@ $schema: urn:oasis:names:tc:dita:xsd:topic.xsd
 id: bullet-list
 ---
 
-# Bullet list {#bullet-list}
+# Bullet list
 
 Hyphen:
 

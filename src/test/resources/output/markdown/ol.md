@@ -3,7 +3,7 @@ $schema: urn:oasis:names:tc:dita:xsd:topic.xsd
 id: numbered-list
 ---
 
-# Numbered list {#numbered-list}
+# Numbered list
 
 Ordered:
 

@@ -4,13 +4,10 @@ import static com.google.common.io.CharStreams.copy;
 import static java.util.Arrays.asList;
 
 import com.google.common.annotations.VisibleForTesting;
-import com.vladsch.flexmark.ext.abbreviation.AbbreviationExtension;
 import com.vladsch.flexmark.ext.admonition.AdmonitionExtension;
 import com.vladsch.flexmark.ext.anchorlink.AnchorLinkExtension;
-import com.vladsch.flexmark.ext.attributes.AttributesExtension;
 import com.vladsch.flexmark.ext.autolink.AutolinkExtension;
 import com.vladsch.flexmark.ext.definition.DefinitionExtension;
-import com.vladsch.flexmark.ext.footnotes.FootnoteExtension;
 import com.vladsch.flexmark.ext.gfm.strikethrough.StrikethroughSubscriptExtension;
 import com.vladsch.flexmark.ext.ins.InsExtension;
 import com.vladsch.flexmark.ext.jekyll.tag.JekyllTagExtension;
@@ -115,11 +112,8 @@ public class MarkdownReader implements XMLReader {
         .set(
           Parser.EXTENSIONS,
           asList(
-            AbbreviationExtension.create(),
             AdmonitionExtension.create(),
             AnchorLinkExtension.create(),
-            AttributesExtension.create(),
-            FootnoteExtension.create(),
             InsExtension.create(),
             JekyllTagExtension.create(),
             SuperscriptExtension.create(),

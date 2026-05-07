@@ -1,1 +1,14 @@
-<?xml version="1.0" encoding="UTF-8"?><pandoc><head><map><entry key="$schema">urn:oasis:names:tc:dita:xsd:reference.xsd</entry><entry key="id">reference</entry></map></head><div><header class="reference" id="reference" level="1">Reference</header><div><div class="section"><para>This is reference.</para></div></div></div></pandoc>
+<pandoc>
+   <head>
+      <map>
+         <entry key="$schema">urn:oasis:names:tc:dita:xsd:reference.xsd</entry>
+         <entry key="id">reference</entry>
+      </map>
+   </head>
+   <div>
+      <header class="reference" id="reference" level="1">Reference</header>
+      <div>
+         <para>This is reference.</para>
+      </div>
+   </div>
+</pandoc>

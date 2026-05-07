@@ -1,4 +1,7 @@
-# Install the software {.task}
+---
+$schema: 'urn:oasis:names:tc:dita:xsd:task.xsd'
+---
+# Install the software
 
 Run the installer.
 

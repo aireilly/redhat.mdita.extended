@@ -3,19 +3,19 @@ $schema: urn:oasis:names:tc:dita:xsd:topic.xsd
 id: root
 ---
 
-# Root {#root}
+# Root
 
-## A {#a}
+## A
 
-### A.1 {#a-1}
+### A.1
 
-#### A.1.a {#a-1-a}
+#### A.1.a
 
-##### A.1.a.I {#a-1-a_i}
+##### A.1.a.I
 
-### A.2 {#a-2}
+### A.2
 
-## B {#b}
+## B
 
-### B.1 {#b-1}
+### B.1
 

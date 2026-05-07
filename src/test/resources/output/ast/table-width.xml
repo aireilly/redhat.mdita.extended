@@ -1,1 +1,32 @@
-<?xml version="1.0" encoding="UTF-8"?><pandoc><head><map><entry key="$schema">urn:oasis:names:tc:dita:xsd:topic.xsd</entry><entry key="id">tables</entry></map></head><div><header id="tables" level="1">Tables</header><div><table><col width="25%"/><col width="25%"/><col width="200px"/><thead><tr><tablecell>A</tablecell><tablecell>B</tablecell><tablecell>C</tablecell></tr></thead><tbody><tr><tablecell>A1</tablecell><tablecell>B1</tablecell><tablecell>C1</tablecell></tr></tbody></table></div></div></pandoc>
+<pandoc>
+   <head>
+      <map>
+         <entry key="$schema">urn:oasis:names:tc:dita:xsd:topic.xsd</entry>
+         <entry key="id">tables</entry>
+      </map>
+   </head>
+   <div>
+      <header id="tables" level="1">Tables</header>
+      <div>
+         <table>
+            <col width="25%"/>
+            <col width="25%"/>
+            <col width="200px"/>
+            <thead>
+               <tr>
+                  <tablecell>A</tablecell>
+                  <tablecell>B</tablecell>
+                  <tablecell>C</tablecell>
+               </tr>
+            </thead>
+            <tbody>
+               <tr>
+                  <tablecell>A1</tablecell>
+                  <tablecell>B1</tablecell>
+                  <tablecell>C1</tablecell>
+               </tr>
+            </tbody>
+         </table>
+      </div>
+   </div>
+</pandoc>

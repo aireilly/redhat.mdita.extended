@@ -19,10 +19,8 @@ public class AstToMarkdownTest {
   @ParameterizedTest
   @ValueSource(
     strings = {
-      "abbreviation",
       "admonition",
       "ast",
-      "body_attributes",
       "codeblock",
       "comment",
       "concept",
@@ -31,13 +29,10 @@ public class AstToMarkdownTest {
       "dl",
       "entity",
       "escape",
-      "footnote",
       "hdita",
       "header",
-      "header_attributes",
       "html",
       "html_unsupported",
-      "image-size",
       "image",
       "inline",
       "inline_extended",

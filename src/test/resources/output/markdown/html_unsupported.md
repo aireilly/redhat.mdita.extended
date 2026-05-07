@@ -3,19 +3,19 @@ $schema: urn:oasis:names:tc:dita:xsd:topic.xsd
 id: html-elements-reference
 ---
 
-# HTML elements reference {#html-elements-reference}
+# HTML elements reference
 
-## Main root {#main-root}
+## Main root
 
-## Document metadata {#document-metadata}
+## Document metadata
 
-## Sectioning root {#sectioning-root}
+## Sectioning root
 
-## Content sectioning {#content-sectioning}
+## Content sectioning
 
 \[/topic/topic/body/address \{"- topic/address "\}\)content\(address\] \[/topic/topic/body/aside \{"- topic/aside "\}\)content\(aside\] \[/topic/topic/body/footer \{"- topic/footer "\}\)content\(footer\] \[/topic/topic/body/header \{"- topic/header "\}\)content\(header\] \[/topic/topic/body/main \{"- topic/main "\}\)content\(main\]
 
-## Text content {#text-content}
+## Text content
 
 > content
 
@@ -28,7 +28,7 @@ content
 
 content
 
-\[/topic/topic/body/hr \{"- topic/hr "\}\)\(hr\]
+\[/topic/topic/body/hr \{"- topic/hr "\}\) \(hr\]
 
 
 1.  content
@@ -41,7 +41,7 @@ content
 
 -   content
 
-## Inline text semantics {#inline-text-semantics}
+## Inline text semantics
 
 content
 
@@ -55,7 +55,7 @@ content
 
 contentcontent
 
-**content**{.cite}
+**content**
 
 `content`
 
@@ -99,19 +99,19 @@ content
 
 \[/topic/topic/body/p/wbr \{"- topic/wbr "\}\)content\(wbr\]
 
-## Image and multimedia {#image-and-multimedia}
+## Image and multimedia
 
 \[/topic/topic/body/p/audio \{"- topic/audio "\}\)content\(audio\]
 
 ![]()
 
-\[/topic/topic/body/map \{"- topic/map "\}\) content \(map\] \[/topic/topic/body/track \{"- topic/track "\}\)\(track\]
+\[/topic/topic/body/map \{"- topic/map "\}\) content \(map\] \[/topic/topic/body/track \{"- topic/track "\}\) \(track\]
 
 \[/topic/topic/body/p/video \{"- topic/video "\}\)content\(video\]
 
-## Embedded content {#embedded-content}
+## Embedded content
 
-\[/topic/topic/body/embed \{"- topic/embed "\}\)\(embed\] \[/topic/topic/body/noembed \{"- topic/noembed "\}\)content\(noembed\] \[/topic/topic/body/iframe \{"- topic/iframe "\}\)content\(iframe\]
+\[/topic/topic/body/embed \{"- topic/embed "\}\) \(embed\] \[/topic/topic/body/noembed \{"- topic/noembed "\}\)content\(noembed\] \[/topic/topic/body/iframe \{"- topic/iframe "\}\)content\(iframe\]
 
 content
 
@@ -119,37 +119,37 @@ content
 
 \[/topic/topic/body/p/portal \{"- topic/portal "\}\)content\(portal\]
 
-\[/topic/topic/body/source \{"- topic/source "\}\)\(source\]
+\[/topic/topic/body/source \{"- topic/source "\}\) \(source\]
 
-## SVG and MathML {#svg-and-mathml}
+## SVG and MathML
 
 \[/topic/topic/body/p/svg \{"- topic/svg "\}\)content\(svg\]
 
 \[/topic/topic/body/math \{"- topic/math "\}\)content\(math\]
 
-## Scripting {#scripting}
+## Scripting
 
 \[/topic/topic/body/p/canvas \{"- topic/canvas "\}\)content\(canvas\]
 
 content
 
-## Demarcating edits {#demarcating-edits}
+## Demarcating edits
 
 content
 
 \[/topic/topic/body/p/ins \{"- topic/ins "\}\)content\(ins\]
 
-## Table content {#table-content}
+## Table content
 
 |content|
 |-------|
 |content|
 
-## Forms {#forms}
+## Forms
 
 \[/topic/topic/body/p/button \{"- topic/button "\}\)content\(button\]
 
-\[/topic/topic/body/datalist \{"- topic/datalist "\}\)  \(datalist\] \[/topic/topic/body/fieldset \{"- topic/fieldset "\}\)content\(fieldset\] \[/topic/topic/body/form \{"- topic/form "\}\)content\(form\] \[/topic/topic/body/input \{"- topic/input "\}\)\(input\]
+\[/topic/topic/body/datalist \{"- topic/datalist "\}\) `` \(datalist\] \[/topic/topic/body/fieldset \{"- topic/fieldset "\}\)content\(fieldset\] \[/topic/topic/body/form \{"- topic/form "\}\)content\(form\] \[/topic/topic/body/input \{"- topic/input "\}\) \(input\]
 
 \[/topic/topic/body/p/label \{"- topic/label "\}\)content\(label\]
 
@@ -161,21 +161,21 @@ content
 
 \[/topic/topic/body/p/progress \{"- topic/progress "\}\)content\(progress\]
 
-\[/topic/topic/body/p/select \{"- topic/select "\}\) \[/topic/topic/body/p/select/optgroup \{"- topic/optgroup "\}\) content \(optgroup\] \(select\]
+\[/topic/topic/body/p/select \{"- topic/select "\}\) \[/topic/topic/body/p/select/optgroup \{"- topic/optgroup "\}\) \[/topic/topic/body/p/select/optgroup/option \{"- topic/option "\}\)content\(option\] \(optgroup\] \(select\]
 
 \[/topic/topic/body/p/textarea \{"- topic/textarea "\}\)content\(textarea\]
 
-## Interactive elements {#interactive-elements}
+## Interactive elements
 
 \[/topic/topic/body/details \{"- topic/details "\}\)content\(details\] \[/topic/topic/body/dialog \{"- topic/dialog "\}\)content\(dialog\] content
 
-## Web Components {#web-components}
+## Web Components
 
 \[/topic/topic/body/p/slot \{"- topic/slot "\}\)content\(slot\]
 
 \[/topic/topic/body/p/template \{"- topic/template "\}\)content\(template\]
 
-## Obsolete and deprecated elements {#obsolete-and-deprecated-elements}
+## Obsolete and deprecated elements
 
 \[/topic/topic/body/p/acronym \{"- topic/acronym "\}\)content\(acronym\]
 

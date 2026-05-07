@@ -3,35 +3,35 @@ $schema: urn:oasis:names:tc:dita:xsd:topic.xsd
 id: concept
 ---
 
-# Concept {#concept .concept}
+# Concept
 
 Content A.
 
-## Heading A.1 {#heading-a1}
+## Heading A.1
 
 Content A.1.
 
-# Task {#task .task}
+# Task
 
 Content B.
 
-## Heading B.1 {#heading-b1}
+## Heading B.1
 
 Content B.1.
 
-# Reference {#reference .reference}
+# Reference
 
 Content C.
 
-## Heading C.1 {#heading-c1}
+## Heading C.1
 
 Content C.1.
 
-# Topic {#topic}
+# Topic
 
 Content D.
 
-## Heading D.1 {#heading-d1}
+## Heading D.1
 
 Content D.1.
 

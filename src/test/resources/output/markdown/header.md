@@ -3,17 +3,17 @@ $schema: urn:oasis:names:tc:dita:xsd:topic.xsd
 id: a
 ---
 
-# A {#a}
+# A
 
-## A.1 {#a1}
+## A.1
 
-### A.1.a {#a1a}
+### A.1.a
 
-#### A.1.a.I {#a1ai .section}
+#### A.1.a.I
 
-#### A.1.a.II {#example .section}
+#### A.1.a.II
 
-#### A.1.a.III {#a1aiii}
+#### A.1.a.III
 
-## A.2 {#a2}
+## A.2
 

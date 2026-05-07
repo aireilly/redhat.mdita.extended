@@ -11,7 +11,6 @@ import com.elovirta.dita.markdown.*;
 import com.elovirta.dita.utils.FragmentContentHandler;
 import com.vladsch.flexmark.ast.*;
 import com.vladsch.flexmark.ext.anchorlink.AnchorLink;
-import com.vladsch.flexmark.ext.attributes.AttributesNode;
 import com.vladsch.flexmark.ext.gfm.strikethrough.Strikethrough;
 import com.vladsch.flexmark.ext.gfm.strikethrough.Subscript;
 import com.vladsch.flexmark.ext.superscript.Superscript;
@@ -554,13 +553,6 @@ public class MapRenderer extends AbstractRenderer {
 
   private final boolean onlyImageChild = false;
 
-  private boolean isAttributesParagraph(final Node node) {
-    if (node == null) {
-      return false;
-    }
-    final Node firstChild = node.getFirstChild();
-    return firstChild instanceof AttributesNode && firstChild.getNext() == null;
-  }
 
   private void render(final Reference node, final NodeRendererContext context, final SaxWriter html) {
     final Attributes atts = getLinkAttributes(node.getUrl().toString(), KEYDEF_ATTS)
@@ -644,15 +636,7 @@ public class MapRenderer extends AbstractRenderer {
 
   private void renderSimpleTableBlock(final TableBlock node, final NodeRendererContext context, final SaxWriter html) {
     //        currentTableNode = node;
-    final Attributes tableAtts;
-    if (isAttributesParagraph(node.getNext())) {
-      final Title header = Title.getFromChildren(node.getNext());
-      final AttributesBuilder builder = new AttributesBuilder(RELTABLE_ATTS);
-      tableAtts = readAttributes(header, builder).build();
-    } else {
-      tableAtts = RELTABLE_ATTS;
-    }
-    html.startElement(node, MAP_RELTABLE, tableAtts);
+    html.startElement(node, MAP_RELTABLE, RELTABLE_ATTS);
 
     context.renderChildren(node);
     //        html.endElement(); // tgroup

@@ -1,0 +1,10 @@
+<topic xmlns:ditaarch="http://dita.oasis-open.org/architecture/2005/" class="- topic/topic "
+  specializations="@props/audience @props/deliveryTarget @props/otherprops @props/platform @props/product"
+  id="images" ditaarch:DITAArchVersion="2.0">
+  <title class="- topic/title ">Images</title>
+  <body class="- topic/body ">
+    <image class="- topic/image " href="test.jpg" placement="break" height="50px" width="100px">
+      <alt class="- topic/alt ">Alt</alt>
+    </image>
+  </body>
+</topic>

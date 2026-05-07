@@ -11,20 +11,13 @@ import static org.dita.dost.util.XMLUtils.AttributesBuilder;
 import com.elovirta.dita.markdown.*;
 import com.elovirta.dita.utils.FragmentContentHandler;
 import com.vladsch.flexmark.ast.*;
-import com.vladsch.flexmark.ext.abbreviation.Abbreviation;
-import com.vladsch.flexmark.ext.abbreviation.AbbreviationBlock;
 import com.vladsch.flexmark.ext.admonition.AdmonitionBlock;
-import com.vladsch.flexmark.ext.anchorlink.AnchorLink;
-import com.vladsch.flexmark.ext.attributes.AttributesNode;
 import com.vladsch.flexmark.ext.definition.DefinitionItem;
 import com.vladsch.flexmark.ext.definition.DefinitionList;
 import com.vladsch.flexmark.ext.definition.DefinitionTerm;
-import com.vladsch.flexmark.ext.footnotes.Footnote;
-import com.vladsch.flexmark.ext.footnotes.FootnoteBlock;
 import com.vladsch.flexmark.ext.jekyll.tag.JekyllTag;
 import com.vladsch.flexmark.ext.jekyll.tag.JekyllTagBlock;
 import com.vladsch.flexmark.ext.tables.*;
-import com.vladsch.flexmark.ext.typographic.TypographicQuotes;
 import com.vladsch.flexmark.ext.yaml.front.matter.AbstractYamlFrontMatterVisitor;
 import com.vladsch.flexmark.ext.yaml.front.matter.YamlFrontMatterBlock;
 import com.vladsch.flexmark.util.ast.ContentNode;
@@ -37,11 +30,8 @@ import com.vladsch.flexmark.util.visitor.AstHandler;
 import java.io.IOException;
 import java.io.StringReader;
 import java.util.*;
-import java.util.AbstractMap.SimpleImmutableEntry;
-import java.util.Map.Entry;
 import java.util.function.Function;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 import javax.xml.transform.Transformer;
 import javax.xml.transform.TransformerConfigurationException;
 import javax.xml.transform.sax.SAXResult;
@@ -60,8 +50,6 @@ public class TopicRenderer extends AbstractRenderer {
 
   private static final ResourceBundle MESSAGES = ResourceBundle.getBundle("com.elovirta.dita.messages");
 
-  private static final String COLUMN_NAME_COL = "col";
-  private static final String ATTRIBUTE_NAME_COLSPAN = "colspan";
   private static final Attributes TOPIC_ATTS = new AttributesBuilder()
     .add(ATTRIBUTE_NAME_CLASS, TOPIC_TOPIC.toString())
     .add(
@@ -75,17 +63,12 @@ public class TopicRenderer extends AbstractRenderer {
     .build();
   private static final Attributes BODY_ATTS = buildAtts(TOPIC_BODY);
   private static final Attributes NOTE_ATTS = buildAtts(TOPIC_NOTE);
-  private static final Attributes FN_ATTS = buildAtts(TOPIC_FN);
   private static final Attributes LI_ATTS = buildAtts(TOPIC_LI);
   private static final Attributes P_ATTS = buildAtts(TOPIC_P);
   private static final Attributes DD_ATTS = buildAtts(TOPIC_DD);
   private static final Attributes CODEBLOCK_ATTS = buildAtts(PR_D_CODEBLOCK);
   private static final Attributes PRE_ATTS = buildAtts(TOPIC_PRE);
   private static final Attributes DT_ATTS = buildAtts(TOPIC_DT);
-  private static final Attributes DEL_ATTS = new AttributesBuilder()
-    .add(ATTRIBUTE_NAME_CLASS, TOPIC_PH.toString())
-    .add("status", "deleted")
-    .build();
   private static final Attributes SHORTDESC_ATTS = buildAtts(TOPIC_SHORTDESC);
   private static final Attributes PROLOG_ATTS = buildAtts(TOPIC_PROLOG);
   private static final Attributes BLOCKQUOTE_ATTS = buildAtts(TOPIC_LQ);
@@ -93,31 +76,16 @@ public class TopicRenderer extends AbstractRenderer {
   private static final Attributes DL_ATTS = buildAtts(TOPIC_DL);
   private static final Attributes DLENTRY_ATTS = buildAtts(TOPIC_DLENTRY);
   private static final Attributes OL_ATTS = buildAtts(TOPIC_OL);
-  private static final Attributes TABLE_ATTS = buildAtts(TOPIC_TABLE);
-  private static final Attributes TGROUP_ATTS = buildAtts(TOPIC_TGROUP);
-  private static final Attributes COLSPEC_ATTS = buildAtts(TOPIC_COLSPEC);
-  private static final Attributes TBODY_ATTS = buildAtts(TOPIC_TBODY);
-  private static final Attributes THEAD_ATTS = buildAtts(TOPIC_THEAD);
-  private static final Attributes TR_ATTS = buildAtts(TOPIC_ROW);
   private static final Attributes SIMPLETABLE_ATTS = buildAtts(TOPIC_SIMPLETABLE);
   private static final Attributes STHEAD_ATTS = buildAtts(TOPIC_STHEAD);
   private static final Attributes STROW_ATTS = buildAtts(TOPIC_STROW);
   private static final Attributes STENTRY_ATTS = buildAtts(TOPIC_STENTRY);
   private static final Attributes XREF_ATTS = buildAtts(TOPIC_XREF);
-  private static final Attributes ENTRY_ATTS = buildAtts(TOPIC_ENTRY);
   private static final Attributes FIG_ATTS = buildAtts(TOPIC_FIG);
   private static final Attributes REQUIRED_CLEANUP_ATTS = buildAtts(TOPIC_REQUIRED_CLEANUP);
 
   public static final String TIGHT_LIST_P = "tight-list-p";
 
-  private static final Map<String, DitaClass> sections = new HashMap<>();
-
-  /**
-   * Section class names that should be stripped from outputclass.
-   * Task section names (prereq, context, etc.) are preserved in outputclass
-   * so the SpecializeFilter can detect and rename them.
-   */
-  private static final Set<String> SECTION_CLASSES_TO_STRIP = Set.of(TOPIC_SECTION.localName, TOPIC_EXAMPLE.localName);
 
   /**
    * Default heading titles that map to task section elements without
@@ -141,29 +109,14 @@ public class TopicRenderer extends AbstractRenderer {
     "related-links"
   );
 
-  static {
-    sections.put(TOPIC_SECTION.localName, TOPIC_SECTION);
-    sections.put(TOPIC_EXAMPLE.localName, TOPIC_EXAMPLE);
-    sections.put(TASK_PREREQ.localName, TOPIC_SECTION);
-    sections.put(TASK_CONTEXT.localName, TOPIC_SECTION);
-    sections.put(TASK_RESULT.localName, TOPIC_SECTION);
-    sections.put(TASK_POSTREQ.localName, TOPIC_SECTION);
-    sections.put(TASK_TASKTROUBLESHOOTING.localName, TOPIC_SECTION);
-    sections.put("related-links", TOPIC_SECTION);
-  }
-
-  private final Map<String, String> abbreviations = new HashMap<>();
 
   private final boolean shortdescParagraph;
   private final boolean idFromYaml;
   private final boolean tightList;
 
-  //  private TableBlock currentTableNode;
   private int currentTableColumn;
   private boolean inSection = false;
 
-  private final Set<String> footnotes = new HashSet<>();
-  private Map<String, Integer> footnoteCount;
   private String lastId;
 
   /**
@@ -187,41 +140,17 @@ public class TopicRenderer extends AbstractRenderer {
   @Override
   public Map<Class<? extends Node>, NodeRenderingHandler<? extends Node>> getNodeRenderingHandlers() {
     final List<NodeRenderingHandler<? extends Node>> res = new ArrayList<>(super.getNodeRenderingHandlers().values());
-    if (mditaCoreProfile || mditaExtendedProfile) {
-      res.add(new NodeRenderingHandler<>(TableBlock.class, this::renderSimpleTableBlock));
-      res.add(new NodeRenderingHandler<>(TableCaption.class, this::renderSimpleTableCaption));
-      res.add(new NodeRenderingHandler<>(TableBody.class, this::renderSimpleTableBody));
-      res.add(new NodeRenderingHandler<>(TableHead.class, this::renderSimpleTableHead));
-      res.add(new NodeRenderingHandler<>(TableRow.class, this::renderSimpleTableRow));
-      res.add(new NodeRenderingHandler<>(TableCell.class, this::renderSimpleTableCell));
-      res.add(new NodeRenderingHandler<>(TableSeparator.class, this::renderSimpleTableSeparator));
-    } else {
-      res.add(new NodeRenderingHandler<>(TableBlock.class, this::render));
-      res.add(new NodeRenderingHandler<>(TableCaption.class, this::render));
-      res.add(new NodeRenderingHandler<>(TableBody.class, this::render));
-      res.add(new NodeRenderingHandler<>(TableHead.class, this::render));
-      res.add(new NodeRenderingHandler<>(TableRow.class, this::render));
-      res.add(new NodeRenderingHandler<>(TableCell.class, this::render));
-      res.add(new NodeRenderingHandler<>(TableSeparator.class, this::render));
-    }
+    res.add(new NodeRenderingHandler<>(TableBlock.class, this::renderSimpleTableBlock));
+    res.add(new NodeRenderingHandler<>(TableCaption.class, this::renderSimpleTableCaption));
+    res.add(new NodeRenderingHandler<>(TableBody.class, this::renderSimpleTableBody));
+    res.add(new NodeRenderingHandler<>(TableHead.class, this::renderSimpleTableHead));
+    res.add(new NodeRenderingHandler<>(TableRow.class, this::renderSimpleTableRow));
+    res.add(new NodeRenderingHandler<>(TableCell.class, this::renderSimpleTableCell));
+    res.add(new NodeRenderingHandler<>(TableSeparator.class, this::renderSimpleTableSeparator));
     if (!mditaCoreProfile) {
-      res.add(
-        new NodeRenderingHandler<>(
-          AttributesNode.class,
-          (node, context, html) -> {
-            /* Ignore */
-          }
-        )
-      );
       res.add(new NodeRenderingHandler<>(DefinitionList.class, this::render));
       res.add(new NodeRenderingHandler<>(DefinitionTerm.class, this::render));
       res.add(new NodeRenderingHandler<>(DefinitionItem.class, this::render));
-      res.add(new NodeRenderingHandler<>(Footnote.class, this::render));
-      res.add(new NodeRenderingHandler<>(FootnoteBlock.class, this::render));
-    }
-    if (!mditaCoreProfile && !mditaExtendedProfile) {
-      res.add(new NodeRenderingHandler<>(Abbreviation.class, this::render));
-      res.add(new NodeRenderingHandler<>(AbbreviationBlock.class, this::render));
     }
     res.add(new NodeRenderingHandler<>(AdmonitionBlock.class, this::render));
     res.add(new NodeRenderingHandler<>(AutoLink.class, this::render));
@@ -274,7 +203,6 @@ public class TopicRenderer extends AbstractRenderer {
   // Visitor methods
 
   private void render(final Document node, final NodeRendererContext context, final SaxWriter html) {
-    collectFootnotes(node);
     final boolean isCompound = hasMultipleTopLevelHeaders(node);
     if (isCompound) {
       final AttributesBuilder atts = new AttributesBuilder()
@@ -306,27 +234,6 @@ public class TopicRenderer extends AbstractRenderer {
     }
   }
 
-  private void collectFootnotes(Document doc) {
-    final Map<String, Integer> res = new HashMap<>();
-    doc
-      .getDescendants()
-      .forEach(node -> {
-        if (node instanceof Footnote) {
-          final Footnote footnote = (Footnote) node;
-          final String callout = footnote.getText().toString().trim();
-          res.compute(callout, (k, v) -> (v == null) ? 1 : v + 1);
-        }
-      });
-    footnoteCount = Collections.unmodifiableMap(res);
-  }
-
-  private void render(final Abbreviation node, final NodeRendererContext context, final SaxWriter html) {
-    html.characters(node.getChars().toString());
-  }
-
-  private void render(final AbbreviationBlock node, final NodeRendererContext context, final SaxWriter html) {
-    // Ignore
-  }
 
   private void render(final AdmonitionBlock node, final NodeRendererContext context, final SaxWriter html) {
     final String type = node.getInfo().toString();
@@ -385,61 +292,20 @@ public class TopicRenderer extends AbstractRenderer {
     }
   }
 
-  private void render(final Footnote node, final NodeRendererContext context, final SaxWriter html) {
-    final String callout = node.getText().toString().trim();
-    final String id = getId("fn_" + callout);
-    final int count = footnoteCount.getOrDefault(callout, 0);
-    if (count == 1) {
-      final Attributes atts = new AttributesBuilder(FN_ATTS).add("callout", callout).build();
-      html.startElement(node, TOPIC_FN, atts);
-      Node child = node.getFootnoteBlock().getFirstChild();
-      while (child != null) {
-        context.renderChildren(child);
-        child = child.getNext();
-      }
-      html.endElement();
-    } else {
-      if (!footnotes.contains(id)) {
-        final Attributes atts = new AttributesBuilder(FN_ATTS)
-          .add("callout", callout)
-          .add(ATTRIBUTE_NAME_ID, id)
-          .build();
-        html.startElement(node, TOPIC_FN, atts);
-        Node child = node.getFootnoteBlock().getFirstChild();
-        while (child != null) {
-          context.renderChildren(child);
-          child = child.getNext();
-        }
-        html.endElement();
-        footnotes.add(id);
-      }
-      final Attributes atts = new AttributesBuilder(XREF_ATTS)
-        .add(ATTRIBUTE_NAME_TYPE, "fn")
-        .add(ATTRIBUTE_NAME_HREF, String.format("#%s/%s", lastId, id))
-        .build();
-      html.startElement(node, TOPIC_XREF, atts);
-      html.endElement();
-    }
-  }
-
-  private void render(final FootnoteBlock node, final NodeRendererContext context, final SaxWriter html) {
-    // Ignore
-  }
-
   private void render(final BlockQuote node, final NodeRendererContext context, final SaxWriter html) {
     if (mditaCoreProfile || mditaExtendedProfile) {
       context.renderChildren(node);
     } else {
-      printTag(node, context, html, TOPIC_LQ, getAttributesFromAttributesNode(node, BLOCKQUOTE_ATTS));
+      printTag(node, context, html, TOPIC_LQ, BLOCKQUOTE_ATTS);
     }
   }
 
   private void render(final BulletList node, final NodeRendererContext context, final SaxWriter html) {
-    printTag(node, context, html, TOPIC_UL, getAttributesFromAttributesNode(node, UL_ATTS));
+    printTag(node, context, html, TOPIC_UL, UL_ATTS);
   }
 
   private void render(final DefinitionList node, final NodeRendererContext context, final SaxWriter html) {
-    html.startElement(node, TOPIC_DL, getAttributesFromAttributesNode(node, DL_ATTS));
+    html.startElement(node, TOPIC_DL, DL_ATTS);
     DitaClass previous = null;
     //        for (final Node child : node.getChildren()) {
     //            if (previous == null) {
@@ -572,46 +438,19 @@ public class TopicRenderer extends AbstractRenderer {
     }
   }
 
-  private static <E> E containsSome(final Collection<E> col, final Collection<E> find) {
-    for (final E c : col) {
-      if (find.contains(c)) {
-        return c;
-      }
-    }
-    return null;
-  }
-
   private void render(final Heading node, final NodeRendererContext context, final SaxWriter html) {
-    final StringBuilder buf = new StringBuilder();
-    node.getAstExtra(buf);
-    Title header = null;
-    if (!mditaCoreProfile) {
-      if (node.getFirstChild() instanceof AnchorLink) {
-        header = Title.getFromChildren(node.getFirstChild());
-      } else {
-        header = Title.getFromChildren(node);
-      }
-      header.id.ifPresent(node::setAnchorRefId);
-    }
-
     if (inSection) {
       html.endElement(); // section or example
       inSection = false;
     }
     final DitaClass cls;
     final boolean isSection;
+    final String headingText = node.getText().toString().trim().toLowerCase();
     if ((mditaCoreProfile || mditaExtendedProfile) && node.getLevel() == 2) {
       isSection = true;
       cls = TOPIC_SECTION;
     } else if (!mditaCoreProfile) {
-      final String sectionClassName = containsSome(header.classes, sections.keySet());
-      if (sectionClassName != null) {
-        isSection = true;
-        cls = sections.get(sectionClassName);
-      } else if (DEFAULT_TASK_SECTION_TITLES.containsKey(node.getText().toString().trim().toLowerCase())) {
-        isSection = true;
-        cls = TOPIC_SECTION;
-      } else if (DEFAULT_SECTION_TITLES.containsKey(node.getText().toString().trim().toLowerCase())) {
+      if (DEFAULT_TASK_SECTION_TITLES.containsKey(headingText) || DEFAULT_SECTION_TITLES.containsKey(headingText)) {
         isSection = true;
         cls = TOPIC_SECTION;
       } else {
@@ -633,31 +472,23 @@ public class TopicRenderer extends AbstractRenderer {
         );
       }
       final AttributesBuilder atts = new AttributesBuilder().add(ATTRIBUTE_NAME_CLASS, cls.toString());
-      final String id = getSectionId(node, header);
+      final String id = getSectionId(node);
       if (id != null) {
         atts.add(ATTRIBUTE_NAME_ID, id);
       }
       if (!mditaCoreProfile) {
-        final Collection<String> classes = new ArrayList<>(header.classes);
-        classes.removeAll(SECTION_CLASSES_TO_STRIP);
-        final String headingText = node.getText().toString().trim().toLowerCase();
-        if (Collections.disjoint(classes, DEFAULT_TASK_SECTION_TITLES.values())) {
-          final String defaultClass = DEFAULT_TASK_SECTION_TITLES.get(headingText);
-          if (defaultClass != null) {
-            classes.add(defaultClass);
-          }
-        }
-        if (Collections.disjoint(classes, DEFAULT_SECTION_TITLES.values())) {
-          final String defaultClass = DEFAULT_SECTION_TITLES.get(headingText);
-          if (defaultClass != null) {
-            classes.add(defaultClass);
+        final List<String> classes = new ArrayList<>();
+        final String defaultTaskClass = DEFAULT_TASK_SECTION_TITLES.get(headingText);
+        if (defaultTaskClass != null) {
+          classes.add(defaultTaskClass);
+        } else {
+          final String defaultSectionClass = DEFAULT_SECTION_TITLES.get(headingText);
+          if (defaultSectionClass != null) {
+            classes.add(defaultSectionClass);
           }
         }
         if (!classes.isEmpty()) {
           atts.add("outputclass", String.join(" ", classes));
-        }
-        for (Entry<String, String> attr : header.attributes.entrySet()) {
-          atts.add(attr.getKey(), attr.getValue());
         }
       }
       html.startElement(node, cls, atts.build());
@@ -693,27 +524,17 @@ public class TopicRenderer extends AbstractRenderer {
             );
       }
 
-      final String id = getTopicId(node, header);
+      final String id = getTopicId(node);
       if (id != null) {
         lastId = id;
         atts.add(ATTRIBUTE_NAME_ID, id);
       }
-      if (!mditaCoreProfile) {
-        final Collection<String> topicClasses = new ArrayList<>(header.classes);
-        // Merge $schema-derived type into outputclass for SpecializeFilter
-        if (node.getLevel() == 1) {
-          final String yamlType = getSchemaType(node);
-          if (yamlType != null && !topicClasses.contains(yamlType)) {
-            topicClasses.add(yamlType);
-          }
-          schemaType = yamlType;
+      if (!mditaCoreProfile && node.getLevel() == 1) {
+        final String yamlType = getSchemaType(node);
+        if (yamlType != null) {
+          atts.add(ATTRIBUTE_NAME_OUTPUTCLASS, yamlType);
         }
-        if (!topicClasses.isEmpty()) {
-          atts.add(ATTRIBUTE_NAME_OUTPUTCLASS, String.join(" ", topicClasses));
-        }
-        for (Entry<String, String> attr : header.attributes.entrySet()) {
-          atts.add(attr.getKey(), attr.getValue());
-        }
+        schemaType = yamlType;
       }
       html.startElement(node, TOPIC_TOPIC, atts.build());
       html.startElement(node, TOPIC_TITLE, TITLE_ATTS);
@@ -736,24 +557,14 @@ public class TopicRenderer extends AbstractRenderer {
     }
   }
 
-  private String getSectionId(Heading node, Title header) {
-    if (header != null) {
-      if (node.getAnchorRefId() != null) {
-        return node.getAnchorRefId();
-      } else {
-        return null;
-        //                return getId(header.title);
-      }
-    } else {
-      if (node.getAnchorRefId() != null) {
-        return node.getAnchorRefId();
-      } else {
-        return getId(node.getText().toString());
-      }
+  private String getSectionId(Heading node) {
+    if (node.getAnchorRefId() != null) {
+      return node.getAnchorRefId();
     }
+    return null;
   }
 
-  private String getTopicId(final Heading node, final Title header) {
+  private String getTopicId(final Heading node) {
     if (idFromYaml && node.getLevel() == 1 && node.getDocument().getChildOfType(YamlFrontMatterBlock.class) != null) {
       final AbstractYamlFrontMatterVisitor v = new AbstractYamlFrontMatterVisitor();
       v.visit(node.getDocument());
@@ -763,7 +574,10 @@ public class TopicRenderer extends AbstractRenderer {
         return ids.get(0);
       }
     }
-    return getSectionId(node, header);
+    if (node.getAnchorRefId() != null) {
+      return node.getAnchorRefId();
+    }
+    return getId(node.getText().toString());
   }
 
   /**
@@ -837,167 +651,8 @@ public class TopicRenderer extends AbstractRenderer {
     html.setDocumentLocator();
   }
 
-  private static Stream<Entry<String, Entry<DitaClass, Attributes>>> createHtmlToDita(Entry<String, DitaClass> e) {
-    final Entry<DitaClass, Attributes> value = new SimpleImmutableEntry<>(e.getValue(), buildAtts(e.getValue()));
-    return Stream.of(
-      new SimpleImmutableEntry<>("<" + e.getKey() + ">", value),
-      new SimpleImmutableEntry<>("</" + e.getKey() + ">", value)
-    );
-  }
-
-  private static final Map<String, Entry<DitaClass, Attributes>> htmlToDita;
-  private static final Map<String, Entry<DitaClass, Attributes>> hditaToXdita;
-  private static final Map<String, Entry<DitaClass, Attributes>> ditaToDita;
-
-  static {
-    htmlToDita =
-      Stream
-        .of(
-          new SimpleImmutableEntry<>("span", TOPIC_PH),
-          new SimpleImmutableEntry<>("code", PR_D_CODEPH),
-          new SimpleImmutableEntry<>("s", HI_D_LINE_THROUGH),
-          new SimpleImmutableEntry<>("tt", HI_D_TT),
-          new SimpleImmutableEntry<>("b", HI_D_B),
-          new SimpleImmutableEntry<>("strong", HI_D_B),
-          new SimpleImmutableEntry<>("i", HI_D_I),
-          new SimpleImmutableEntry<>("em", HI_D_I),
-          new SimpleImmutableEntry<>("sub", HI_D_SUB),
-          new SimpleImmutableEntry<>("sup", HI_D_SUP),
-          new SimpleImmutableEntry<>("u", HI_D_U)
-        )
-        .flatMap(TopicRenderer::createHtmlToDita)
-        .collect(Collectors.toUnmodifiableMap(Entry::getKey, Entry::getValue));
-    hditaToXdita =
-      Stream
-        .<Entry<String, DitaClass>>of(
-          new SimpleImmutableEntry<>("span", TOPIC_PH),
-          new SimpleImmutableEntry<>("code", TOPIC_PH),
-          new SimpleImmutableEntry<>("s", TOPIC_PH),
-          new SimpleImmutableEntry<>("tt", HI_D_TT),
-          new SimpleImmutableEntry<>("b", HI_D_B),
-          new SimpleImmutableEntry<>("strong", HI_D_B),
-          new SimpleImmutableEntry<>("i", HI_D_I),
-          new SimpleImmutableEntry<>("em", HI_D_I),
-          new SimpleImmutableEntry<>("sub", HI_D_SUB),
-          new SimpleImmutableEntry<>("sup", HI_D_SUP),
-          new SimpleImmutableEntry<>("u", HI_D_U)
-        )
-        .flatMap(TopicRenderer::createHtmlToDita)
-        .collect(Collectors.toUnmodifiableMap(Entry::getKey, Entry::getValue));
-    ditaToDita =
-      Stream
-        .of(
-          DitaClass.getInstance("+ topic/keyword learningInteractionBase-d/keyword learning-d/lcAreaShape "),
-          DitaClass.getInstance("+ topic/keyword learningInteractionBase2-d/keyword learning2-d/lcAreaShape2 "),
-          DitaClass.getInstance("+ topic/keyword markup-d/markupname "),
-          DitaClass.getInstance("+ topic/keyword markup-d/markupname xml-d/numcharref "),
-          DitaClass.getInstance("+ topic/keyword markup-d/markupname xml-d/parameterentity "),
-          DitaClass.getInstance("+ topic/keyword markup-d/markupname xml-d/textentity "),
-          DitaClass.getInstance("+ topic/keyword markup-d/markupname xml-d/xmlatt "),
-          DitaClass.getInstance("+ topic/keyword markup-d/markupname xml-d/xmlelement "),
-          DitaClass.getInstance("+ topic/keyword markup-d/markupname xml-d/xmlnsname "),
-          DitaClass.getInstance("+ topic/keyword markup-d/markupname xml-d/xmlpi "),
-          DitaClass.getInstance("+ topic/keyword pr-d/apiname "),
-          DitaClass.getInstance("+ topic/keyword pr-d/kwd "),
-          DitaClass.getInstance("+ topic/keyword pr-d/option "),
-          DitaClass.getInstance("+ topic/keyword pr-d/parmname "),
-          DitaClass.getInstance("+ topic/keyword sw-d/cmdname "),
-          DitaClass.getInstance("+ topic/keyword sw-d/msgnum "),
-          DitaClass.getInstance("+ topic/keyword sw-d/varname "),
-          DitaClass.getInstance("+ topic/keyword ui-d/shortcut "),
-          DitaClass.getInstance("+ topic/keyword ui-d/wintitle "),
-          DitaClass.getInstance("+ topic/keyword ut-d/shape "),
-          DitaClass.getInstance("+ topic/ph emphasis-d/em "),
-          DitaClass.getInstance("+ topic/ph emphasis-d/strong "),
-          DitaClass.getInstance("+ topic/ph equation-d/equation-inline "),
-          DitaClass.getInstance("+ topic/ph equation-d/equation-number "),
-          DitaClass.getInstance("+ topic/ph hi-d/b "),
-          DitaClass.getInstance("+ topic/ph hi-d/i "),
-          DitaClass.getInstance("+ topic/ph hi-d/line-through "),
-          DitaClass.getInstance("+ topic/ph hi-d/overline "),
-          DitaClass.getInstance("+ topic/ph hi-d/sub "),
-          DitaClass.getInstance("+ topic/ph hi-d/sup "),
-          DitaClass.getInstance("+ topic/ph hi-d/tt "),
-          DitaClass.getInstance("+ topic/ph hi-d/u "),
-          DitaClass.getInstance("+ topic/ph learningInteractionBase-d/ph learning-d/lcAreaCoords "),
-          DitaClass.getInstance("+ topic/ph learningInteractionBase2-d/ph learning2-d/lcAreaCoords2 "),
-          DitaClass.getInstance("+ topic/ph pr-d/codeph "),
-          DitaClass.getInstance("+ topic/ph pr-d/delim "),
-          DitaClass.getInstance("+ topic/ph pr-d/oper "),
-          DitaClass.getInstance("+ topic/ph pr-d/repsep "),
-          DitaClass.getInstance("+ topic/ph pr-d/sep "),
-          DitaClass.getInstance("+ topic/ph pr-d/synph "),
-          DitaClass.getInstance("+ topic/ph pr-d/var "),
-          DitaClass.getInstance("+ topic/ph sw-d/filepath "),
-          DitaClass.getInstance("+ topic/ph sw-d/msgph "),
-          DitaClass.getInstance("+ topic/ph sw-d/systemoutput "),
-          DitaClass.getInstance("+ topic/ph sw-d/userinput "),
-          DitaClass.getInstance("+ topic/ph ui-d/menucascade "),
-          DitaClass.getInstance("+ topic/ph ui-d/uicontrol "),
-          DitaClass.getInstance("+ topic/ph ut-d/coords "),
-          DitaClass.getInstance("+ topic/term abbrev-d/abbreviated-form "),
-          DitaClass.getInstance("+ topic/xref mathml-d/mathmlref "),
-          DitaClass.getInstance("+ topic/xref pr-d/coderef "),
-          DitaClass.getInstance("+ topic/xref pr-d/fragref "),
-          DitaClass.getInstance("+ topic/xref pr-d/synnoteref "),
-          DitaClass.getInstance("+ topic/xref svg-d/svgref "),
-          DitaClass.getInstance("- topic/boolean "),
-          DitaClass.getInstance("- topic/cite "),
-          DitaClass.getInstance("- topic/data learningBase/lcTime "),
-          DitaClass.getInstance("- topic/include "),
-          DitaClass.getInstance("- topic/indextermref "),
-          DitaClass.getInstance("- topic/itemgroup "),
-          DitaClass.getInstance("- topic/itemgroup task/info "),
-          DitaClass.getInstance("- topic/itemgroup task/stepresult "),
-          DitaClass.getInstance("- topic/itemgroup task/stepxmp "),
-          DitaClass.getInstance("- topic/itemgroup task/tutorialinfo "),
-          DitaClass.getInstance("- topic/keyword "),
-          DitaClass.getInstance("- topic/ph "),
-          DitaClass.getInstance("- topic/ph bookmap/booklibrary "),
-          DitaClass.getInstance("- topic/ph bookmap/booktitlealt "),
-          DitaClass.getInstance("- topic/ph bookmap/completed "),
-          DitaClass.getInstance("- topic/ph bookmap/day "),
-          DitaClass.getInstance("- topic/ph bookmap/mainbooktitle "),
-          DitaClass.getInstance("- topic/ph bookmap/month "),
-          DitaClass.getInstance("- topic/ph bookmap/revisionid "),
-          DitaClass.getInstance("- topic/ph bookmap/started "),
-          DitaClass.getInstance("- topic/ph bookmap/summary "),
-          DitaClass.getInstance("- topic/ph bookmap/year "),
-          DitaClass.getInstance("- topic/ph learningBase/lcObjectivesStem "),
-          DitaClass.getInstance("- topic/ph task/cmd "),
-          DitaClass.getInstance("- topic/q "),
-          DitaClass.getInstance("- topic/state "),
-          DitaClass.getInstance("- topic/term "),
-          DitaClass.getInstance("- topic/text "),
-          DitaClass.getInstance("- topic/tm "),
-          DitaClass.getInstance("- topic/xref "),
-          DitaClass.getInstance("- topic/xref concept/xref glossentry/glossAlternateFor ")
-        )
-        .map(cls -> Map.entry(cls.localName, cls))
-        .flatMap(TopicRenderer::createHtmlToDita)
-        .collect(Collectors.toUnmodifiableMap(Entry::getKey, Entry::getValue));
-  }
-
-  /**
-   * Render inline HTML start or end tag. Start tags may contain attributes.
-   */
   private void render(final HtmlInline node, final NodeRendererContext context, final SaxWriter html) {
     final String text = node.getChars().toString();
-    Entry<DitaClass, Attributes> entry = (mditaExtendedProfile ? hditaToXdita : htmlToDita).get(text);
-    if (rawDita && entry == null) {
-      entry = ditaToDita.get(text);
-    }
-    if (entry != null) {
-      final DitaClass cls = entry.getKey();
-      html.setLocation(node);
-      if (text.startsWith("</")) {
-        html.endElement(cls);
-      } else {
-        html.startElement(node, cls, entry.getValue());
-      }
-      return;
-    }
-
     final TransformerHandler h;
     try {
       h = transformerFactorySupplier.get().newTransformerHandler(templatesSupplier.get());
@@ -1044,24 +699,13 @@ public class TopicRenderer extends AbstractRenderer {
   }
 
   private void render(final OrderedList node, final NodeRendererContext context, final SaxWriter html) {
-    printTag(node, context, html, TOPIC_OL, getAttributesFromAttributesNode(node, OL_ATTS));
+    printTag(node, context, html, TOPIC_OL, OL_ATTS);
   }
 
   private boolean onlyImageChild = false;
 
-  /** Check if paragraph only contains a single attributes node. */
-  private boolean isAttributesParagraph(final Node node) {
-    if (node == null) {
-      return false;
-    }
-    final Node firstChild = node.getFirstChild();
-    return firstChild instanceof AttributesNode && firstChild.getNext() == null;
-  }
-
   private void render(final Paragraph node, final NodeRendererContext context, final SaxWriter html) {
-    if (isAttributesParagraph(node)) {
-      // Attributes for previous block
-    } else if (shortdescParagraph && !inSection && node.getPrevious() instanceof Heading) {
+    if (shortdescParagraph && !inSection && node.getPrevious() instanceof Heading) {
       // Pulled by Heading
     } else if (containsImage(node)) {
       onlyImageChild = true;
@@ -1081,15 +725,7 @@ public class TopicRenderer extends AbstractRenderer {
         html.endElement();
         return;
       }
-      final Attributes atts;
-      if (!mditaCoreProfile) {
-        final Title header = Title.getFromChildren(node);
-        final AttributesBuilder builder = new AttributesBuilder(P_ATTS);
-        atts = readAttributes(header, builder).build();
-      } else {
-        atts = P_ATTS;
-      }
-      printTag(node, context, html, TOPIC_P, atts);
+      printTag(node, context, html, TOPIC_P, P_ATTS);
     }
   }
 
@@ -1099,30 +735,11 @@ public class TopicRenderer extends AbstractRenderer {
   private boolean containsImage(final ContentNode node) {
     final Node first = node.getFirstChild();
     if (first instanceof Image || first instanceof ImageRef) {
-      return first.getNextAnyNot(AttributesNode.class) == null;
+      return first.getNext() == null;
     }
     return false;
   }
 
-  private void render(final TypographicQuotes node, final NodeRendererContext context, final SaxWriter html) {
-    //        switch (node.getType()) {
-    //            case DoubleAngle:
-    //                html.characters('\u00AB');//&laquo;
-    //                context.renderChildren(node);
-    //                html.characters('\u00AB');//&laquo;
-    //                break;
-    //            case Double:
-    //                html.characters('\u201C');//"&ldquo;"
-    //                context.renderChildren(node);
-    //                html.characters('\u201C');//"&ldquo;"
-    //                break;
-    //            case Single:
-    html.characters('\u2018'); //"&lsquo;"
-    context.renderChildren(node);
-    html.characters('\u2018'); //"&lsquo;"
-    //                break;
-    //        }
-  }
 
   private void render(final ReferenceNode node, final NodeRendererContext context, final SaxWriter html) {
     throw new RuntimeException();
@@ -1183,117 +800,10 @@ public class TopicRenderer extends AbstractRenderer {
     html.endElement();
   }
 
-  // OASIS Table
-
-  private void render(final TableBody node, final NodeRendererContext context, final SaxWriter html) {
-    printTag(node, context, html, TOPIC_TBODY, TBODY_ATTS);
-  }
-
-  private void render(final TableCaption node, final NodeRendererContext context, final SaxWriter html) {
-    // Pull processed by TableBlock
-  }
-
-  private void render(final TableCell node, final NodeRendererContext context, final SaxWriter html) {
-    final AttributesBuilder atts = new AttributesBuilder(ENTRY_ATTS);
-    //        column.accept(this);
-    if (node.getAlignment() != null) {
-      atts.add(ATTRIBUTE_NAME_ALIGN, node.getAlignment().cellAlignment().name().toLowerCase());
-    }
-    if (node.getSpan() > 1) {
-      atts.add(ATTRIBUTE_NAME_NAMEST, COLUMN_NAME_COL + Integer.toString(currentTableColumn + 1));
-      atts.add(ATTRIBUTE_NAME_NAMEEND, COLUMN_NAME_COL + Integer.toString(currentTableColumn + node.getSpan()));
-    }
-    html.startElement(node, TOPIC_ENTRY, atts.build());
-    context.renderChildren(node);
-    html.endElement();
-
-    currentTableColumn += node.getSpan();
-  }
-
-  private void render(final TableHead node, final NodeRendererContext context, final SaxWriter html) {
-    printTag(node, context, html, TOPIC_THEAD, THEAD_ATTS);
-  }
-
-  private void render(final TableBlock node, final NodeRendererContext context, final SaxWriter html) {
-    //    currentTableNode = node;
-    final Attributes tableAtts;
-    if (!mditaExtendedProfile && isAttributesParagraph(node.getNext())) {
-      final Title header = Title.getFromChildren(node.getNext());
-      final AttributesBuilder builder = new AttributesBuilder(TABLE_ATTS);
-      tableAtts = readAttributes(header, builder).build();
-    } else {
-      tableAtts = TABLE_ATTS;
-    }
-    html.startElement(node, TOPIC_TABLE, tableAtts);
-    final Node caption = node.getChildOfType(TableCaption.class);
-    if (caption != null) {
-      html.startElement(caption, TOPIC_TITLE, TITLE_ATTS);
-      context.renderChildren(caption);
-      html.endElement();
-    }
-
-    final int maxCols = findMaxCols(node);
-    final Attributes atts = new AttributesBuilder(TGROUP_ATTS)
-      .add(ATTRIBUTE_NAME_COLS, Integer.toString(maxCols))
-      .build();
-    html.startElement(node, TOPIC_TGROUP, atts);
-
-    for (int i = 0; i < maxCols; i++) {
-      final AttributesBuilder catts = new AttributesBuilder(COLSPEC_ATTS)
-        .add(ATTRIBUTE_NAME_COLNAME, COLUMN_NAME_COL + (i + 1));
-      html.startElement(node, TOPIC_COLSPEC, catts.build());
-      html.endElement(); // colspec
-    }
-
-    context.renderChildren(node);
-    html.endElement(); // tgroup
-    html.endElement(); // table
-    //    currentTableNode = null;
-  }
-
-  private int findMaxCols(TableBlock table) {
-    int max = 0;
-    for (Node body = table.getFirstChild(); body != null; body = body.getNext()) {
-      if (body instanceof TableHead || body instanceof TableBody) {
-        for (Node row = body.getFirstChild(); row != null; row = row.getNext()) {
-          if (row instanceof TableRow) {
-            int colCount = 0;
-            for (Node col = row.getFirstChild(); col != null; col = col.getNext()) {
-              if (col instanceof TableCell) {
-                TableCell c = ((TableCell) col);
-                colCount = colCount + c.getSpan();
-              }
-            }
-            max = Math.max(max, colCount);
-          }
-        }
-      }
-    }
-    return max;
-  }
-
-  private void render(TableSeparator node, NodeRendererContext context, SaxWriter html) {
-    // Ignore
-  }
-
-  private void render(final TableRow node, final NodeRendererContext context, final SaxWriter html) {
-    currentTableColumn = 0;
-    printTag(node, context, html, TOPIC_ROW, TR_ATTS);
-  }
-
   // Simple table
 
   private void renderSimpleTableBlock(final TableBlock node, final NodeRendererContext context, final SaxWriter html) {
-    //    currentTableNode = node;
-    final Attributes tableAtts;
-    if (isAttributesParagraph(node.getNext())) {
-      final Title header = Title.getFromChildren(node.getNext());
-      final AttributesBuilder builder = new AttributesBuilder(SIMPLETABLE_ATTS);
-      tableAtts = readAttributes(header, builder).build();
-    } else {
-      tableAtts = SIMPLETABLE_ATTS;
-    }
-    html.startElement(node, TOPIC_SIMPLETABLE, tableAtts);
+    html.startElement(node, TOPIC_SIMPLETABLE, SIMPLETABLE_ATTS);
     final Node caption = node.getChildOfType(TableCaption.class);
     if (caption != null) {
       html.startElement(caption, TOPIC_TITLE, TITLE_ATTS);
@@ -1338,7 +848,7 @@ public class TopicRenderer extends AbstractRenderer {
   private void renderSimpleTableCell(final TableCell node, final NodeRendererContext context, final SaxWriter html) {
     final AttributesBuilder atts = new AttributesBuilder(STENTRY_ATTS);
     if (node.getSpan() > 1) {
-      atts.add(ATTRIBUTE_NAME_COLSPAN, Integer.toString(node.getSpan()));
+      atts.add("colspan", Integer.toString(node.getSpan()));
     }
     html.startElement(node, TOPIC_STENTRY, atts.build());
     if (isInline(node.getFirstChild())) {
@@ -1403,7 +913,7 @@ public class TopicRenderer extends AbstractRenderer {
       if (metadata.id != null) {
         atts.add(ATTRIBUTE_NAME_ID, metadata.id);
       }
-      for (Entry<String, String> entry : metadata.attrs.entrySet()) {
+      for (Map.Entry<String, String> entry : metadata.attrs.entrySet()) {
         atts.add(entry.getKey(), entry.getValue());
       }
     } else if (info.isNotNull() && !info.isBlank()) {
@@ -1439,14 +949,10 @@ public class TopicRenderer extends AbstractRenderer {
   }
 
   private void render(final Text node, final NodeRendererContext context, final SaxWriter html) {
-    if (abbreviations.isEmpty()) {
-      if (node.getParent() instanceof Code) {
-        html.characters(node.getChars().toString());
-      } else {
-        html.characters(node.getChars().unescapeNoEntities());
-      }
+    if (node.getParent() instanceof Code) {
+      html.characters(node.getChars().toString());
     } else {
-      printWithAbbreviations(node.getChars().toString(), html);
+      html.characters(node.getChars().unescapeNoEntities());
     }
   }
 
@@ -1470,69 +976,10 @@ public class TopicRenderer extends AbstractRenderer {
 
   // helpers
 
-  private Attributes getAttributesFromAttributesNode(Node node, Attributes base) {
-    if (isAttributesParagraph(node.getNext())) {
-      final Title header = Title.getFromChildren(node.getNext());
-      final AttributesBuilder builder = new AttributesBuilder(base);
-      return readAttributes(header, builder).build();
-    } else {
-      return base;
-    }
-  }
 
   @Override
   protected AttributesBuilder getLinkAttributes(final String href) {
     return getLinkAttributes(href, XREF_ATTS);
   }
 
-  protected void printWithAbbreviations(String string, final SaxWriter html) {
-    Map<Integer, Entry<String, String>> expansions = null;
-
-    for (Entry<String, String> entry : abbreviations.entrySet()) {
-      // first check, whether we have a legal match
-      String abbr = entry.getKey();
-
-      int ix = 0;
-      while (true) {
-        final int sx = string.indexOf(abbr, ix);
-        if (sx == -1) break;
-
-        // only allow whole word matches
-        ix = sx + abbr.length();
-
-        if (sx > 0 && Character.isLetterOrDigit(string.charAt(sx - 1))) continue;
-        if (ix < string.length() && Character.isLetterOrDigit(string.charAt(ix))) {
-          continue;
-        }
-
-        // ok, legal match so save an expansions "task" for all matches
-        if (expansions == null) {
-          expansions = new TreeMap<>();
-        }
-        expansions.put(sx, entry);
-      }
-    }
-
-    if (expansions != null) {
-      int ix = 0;
-      for (Entry<Integer, Entry<String, String>> entry : expansions.entrySet()) {
-        int sx = entry.getKey();
-        final String abbr = entry.getValue().getKey();
-        final String expansion = entry.getValue().getValue();
-
-        html.characters(string.substring(ix, sx));
-        final AttributesBuilder atts = new AttributesBuilder(PH_ATTS);
-        if (expansion != null && !expansion.isEmpty()) {
-          atts.add(ATTRIBUTE_NAME_OTHERPROPS, expansion);
-        }
-        html.startElement(null, TOPIC_PH, atts.build());
-        html.characters(abbr);
-        html.endElement();
-        ix = sx + abbr.length();
-      }
-      html.characters(string.substring(ix));
-    } else {
-      html.characters(string);
-    }
-  }
 }

@@ -1,1 +1,35 @@
-<?xml version="1.0" encoding="UTF-8"?><pandoc><head><map><entry key="$schema">urn:oasis:names:tc:dita:xsd:topic.xsd</entry><entry key="id">extended-profile</entry><entry key="author"><array><entry>Author One</entry><entry>Author Two</entry></array></entry><entry key="source">Source</entry><entry key="publisher">Publisher</entry><entry key="permissions">Permissions</entry><entry key="audience"/><entry key="category">Category</entry><entry key="keyword"><array><entry>Keyword1</entry><entry>Keyword2</entry></array></entry><entry key="resourceid"><array><entry>Resourceid1</entry><entry>Resourceid2</entry></array></entry></map></head><div><header id="extended-profile" level="1">YAML Header</header><div/></div></pandoc>
+<pandoc>
+   <head>
+      <map>
+         <entry key="$schema">urn:oasis:names:tc:dita:xsd:topic.xsd</entry>
+         <entry key="id">extended-profile</entry>
+         <entry key="author">
+            <array>
+               <entry>Author One</entry>
+               <entry>Author Two</entry>
+            </array>
+         </entry>
+         <entry key="source">Source</entry>
+         <entry key="publisher">Publisher</entry>
+         <entry key="permissions">Permissions</entry>
+         <entry key="audience"/>
+         <entry key="category">Category</entry>
+         <entry key="keyword">
+            <array>
+               <entry>Keyword1</entry>
+               <entry>Keyword2</entry>
+            </array>
+         </entry>
+         <entry key="resourceid">
+            <array>
+               <entry>Resourceid1</entry>
+               <entry>Resourceid2</entry>
+            </array>
+         </entry>
+      </map>
+   </head>
+   <div>
+      <header id="extended-profile" level="1">YAML Header</header>
+      <div/>
+   </div>
+</pandoc>

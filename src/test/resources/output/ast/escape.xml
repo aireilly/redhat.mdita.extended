@@ -1,1 +1,15 @@
-<?xml version="1.0" encoding="UTF-8"?><pandoc><head><map><entry key="$schema">urn:oasis:names:tc:dita:xsd:topic.xsd</entry><entry key="id">escape</entry></map></head><div><header id="escape" level="1">Escape</header><div><para>Asterisk * bracket [foo].</para><para>\`*_{}[]()&gt;#+-.!&lt;&gt;</para></div></div></pandoc>
+<pandoc>
+   <head>
+      <map>
+         <entry key="$schema">urn:oasis:names:tc:dita:xsd:topic.xsd</entry>
+         <entry key="id">escape</entry>
+      </map>
+   </head>
+   <div>
+      <header id="escape" level="1">Escape</header>
+      <div>
+         <para>Asterisk * bracket [foo].</para>
+         <para>\`*_{}[]()&gt;#+-.!&lt;&gt;</para>
+      </div>
+   </div>
+</pandoc>

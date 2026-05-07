@@ -1,37 +1,50 @@
-<topic xmlns:ditaarch="http://dita.oasis-open.org/architecture/2005/" class="- topic/topic "
-  specializations="@props/audience @props/deliveryTarget @props/otherprops @props/platform @props/product"
-  id="a" ditaarch:DITAArchVersion="2.0">
-  <title class="- topic/title ">A</title>
-  <body class="- topic/body "/>
-  <topic class="- topic/topic "
-    specializations="@props/audience @props/deliveryTarget @props/otherprops @props/platform @props/product"
-    id="a1" ditaarch:DITAArchVersion="2.0">
-    <title class="- topic/title ">A.1</title>
-    <body class="- topic/body "/>
-    <topic class="- topic/topic "
-      specializations="@props/audience @props/deliveryTarget @props/otherprops @props/platform @props/product"
-      id="a1a" ditaarch:DITAArchVersion="2.0">
-      <title class="- topic/title ">A.1.a</title>
-      <body class="- topic/body ">
-        <section class="- topic/section " id="a1ai">
-          <title class="- topic/title ">A.1.a.I </title>
-        </section>
-        <section class="- topic/section " id="example">
-          <title class="- topic/title ">A.1.a.II </title>
-        </section>
-      </body>
+<topic xmlns:ditaarch="http://dita.oasis-open.org/architecture/2005/"
+       class="- topic/topic "
+       ditaarch:DITAArchVersion="2.0"
+       id="a"
+       specializations="@props/audience @props/deliveryTarget @props/otherprops @props/platform @props/product">
+   <title class="- topic/title ">A</title>
+   <body class="- topic/body "/>
+   <topic class="- topic/topic "
+          ditaarch:DITAArchVersion="2.0"
+          id="a1"
+          specializations="@props/audience @props/deliveryTarget @props/otherprops @props/platform @props/product">
+      <title class="- topic/title ">A.1</title>
+      <body class="- topic/body "/>
       <topic class="- topic/topic "
-        specializations="@props/audience @props/deliveryTarget @props/otherprops @props/platform @props/product"
-        id="a1aiii" ditaarch:DITAArchVersion="2.0">
-        <title class="- topic/title ">A.1.a.III</title>
-        <body class="- topic/body "/>
+             ditaarch:DITAArchVersion="2.0"
+             id="a1a"
+             specializations="@props/audience @props/deliveryTarget @props/otherprops @props/platform @props/product">
+         <title class="- topic/title ">A.1.a</title>
+         <body class="- topic/body "/>
+         <topic class="- topic/topic "
+                ditaarch:DITAArchVersion="2.0"
+                id="a1ai"
+                specializations="@props/audience @props/deliveryTarget @props/otherprops @props/platform @props/product">
+            <title class="- topic/title ">A.1.a.I</title>
+            <body class="- topic/body "/>
+         </topic>
+         <topic class="- topic/topic "
+                ditaarch:DITAArchVersion="2.0"
+                id="a1aii"
+                specializations="@props/audience @props/deliveryTarget @props/otherprops @props/platform @props/product">
+            <title class="- topic/title ">A.1.a.II</title>
+            <body class="- topic/body "/>
+         </topic>
+         <topic class="- topic/topic "
+                ditaarch:DITAArchVersion="2.0"
+                id="a1aiii"
+                specializations="@props/audience @props/deliveryTarget @props/otherprops @props/platform @props/product">
+            <title class="- topic/title ">A.1.a.III</title>
+            <body class="- topic/body "/>
+         </topic>
       </topic>
-    </topic>
-  </topic>
-  <topic class="- topic/topic "
-    specializations="@props/audience @props/deliveryTarget @props/otherprops @props/platform @props/product"
-    id="a2" ditaarch:DITAArchVersion="2.0">
-    <title class="- topic/title ">A.2</title>
-    <body class="- topic/body "/>
-  </topic>
+   </topic>
+   <topic class="- topic/topic "
+          ditaarch:DITAArchVersion="2.0"
+          id="a2"
+          specializations="@props/audience @props/deliveryTarget @props/otherprops @props/platform @props/product">
+      <title class="- topic/title ">A.2</title>
+      <body class="- topic/body "/>
+   </topic>
 </topic>

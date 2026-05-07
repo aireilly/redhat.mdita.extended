@@ -1,0 +1,11 @@
+<topic xmlns:ditaarch="http://dita.oasis-open.org/architecture/2005/" class="- topic/topic "
+  specializations="@props/audience @props/deliveryTarget @props/otherprops @props/platform @props/product"
+  id="html-block" ditaarch:DITAArchVersion="2.0">
+  <title class="- topic/title ">HTML Block</title>
+  <body class="- topic/body ">
+    <p class="- topic/p ">Plain <b class="+ topic/ph hi-d/b "><i class="+ topic/ph hi-d/i ">paragraph</i></b>.</p>
+    <p class="- topic/p ">HTML paragraph.</p>
+    <p class="- topic/p " props="audience(novice)">Novice content.</p>
+    <p class="- topic/p "><video class="- topic/video " controls="" poster="remote.png" src="remote.mp4"/></p>
+  </body>
+</topic>

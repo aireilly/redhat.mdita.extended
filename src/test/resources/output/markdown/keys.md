@@ -3,7 +3,7 @@ $schema: urn:oasis:names:tc:dita:xsd:topic.xsd
 id: keys
 ---
 
-# Keys {#keys}
+# Keys
 
 This is [an example](test.md) reference-style link.
 

@@ -3,7 +3,7 @@ $schema: urn:oasis:names:tc:dita:xsd:topic.xsd
 id: admonition
 ---
 
-# Admonition {#admonition}
+# Admonition
 
 Block-Styled Side Content
 

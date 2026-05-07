@@ -3,7 +3,7 @@ $schema: urn:oasis:names:tc:dita:xsd:topic.xsd
 id: add-remove-or-edit-menu-items-in-your-online-store
 ---
 
-# Add, remove, or edit menu items in your online store {#add-remove-or-edit-menu-items-in-your-online-store}
+# Add, remove, or edit menu items in your online store
 
 ============================ You can add menu items to your online store menus to build your store's navigation. Menu items are links to products, collections, webpages, blog posts, policies, or other websites. You can also remove or edit menu items.
 
@@ -11,7 +11,7 @@ In most cases, you need to create an item before you can link to it. For example
 
 You can view and change your online store navigation from the [**Navigation**](/www.shopify.com/admin/menus) page in your Shopify admin.
 
-## Add a menu item {#add-a-menu-item}
+## Add a menu item
 
 You can add menu items to link to:
 
@@ -25,7 +25,7 @@ You can add menu items to link to:
 
 \{\{ 'xYGuJhKiOZw' \| youtube \}\}
 
-## Steps: {#steps}
+## Steps:
 
 1.  On the **Navigation** page, click the title of the menu that you want to edit.
 
@@ -49,9 +49,9 @@ You can add menu items to link to:
 6.  Click **Save menu**.
 
 
-## Edit a menu item {#edit-a-menu-item}
+## Edit a menu item
 
-## Steps: {#steps-1}
+## Steps:
 
 1.  Click the title of the menu that includes the item.
 
@@ -66,11 +66,11 @@ You can add menu items to link to:
 5.  Click **Save menu**.
 
 
-## Change the display order of menu items {#change-the-display-order-of-menu-items}
+## Change the display order of menu items
 
 You can view the display order of menu items on the [**Navigation**](/www.shopify.com/admin/menus) page. The menu items display on your online store in the order that they are listed.
 
-## Steps: {#steps-2}
+## Steps:
 
 1.  Click the title of the menu that you want to reorder.
 
@@ -79,11 +79,11 @@ You can view the display order of menu items on the [**Navigation**](/www.shopif
 3.  Click **Save menu**.
 
 
-## Remove a menu item {#remove-a-menu-item}
+## Remove a menu item
 
 You can remove a menu item to delete it from your online store navigation. When you remove a menu item that has items nested below it in a drop-down menu, the nested menu items are also removed and the drop-down menu is removed from your online store navigation.
 
-## Steps: {#steps-3}
+## Steps:
 
 1.  Click the title of the menu that you want to reorder.
 

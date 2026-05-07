@@ -1,1 +1,14 @@
-<?xml version="1.0" encoding="UTF-8"?><pandoc><head><map><entry key="$schema">urn:oasis:names:tc:dita:xsd:topic.xsd</entry><entry key="id">yaml-id</entry></map></head><div><header id="yaml-id" level="1">YAML Title</header><div><para>Root topic content.</para></div></div></pandoc>
+<pandoc>
+   <head>
+      <map>
+         <entry key="$schema">urn:oasis:names:tc:dita:xsd:topic.xsd</entry>
+         <entry key="id">yaml-id</entry>
+      </map>
+   </head>
+   <div>
+      <header id="yaml-id" level="1">YAML Title</header>
+      <div>
+         <para>Root topic content.</para>
+      </div>
+   </div>
+</pandoc>

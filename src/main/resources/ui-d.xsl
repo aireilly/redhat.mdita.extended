@@ -4,7 +4,7 @@
   <xsl:template match="*[contains(@class,' ui-d/screen ')]" name="topic.ui-d.screen">
     <xsl:apply-templates select="*[contains(@class,' ditaot-d/ditaval-startprop ')]" mode="out-of-line"/>
     <xsl:call-template name="spec-title-nospace"/>
-    <codeblock class="screen">
+    <codeblock>
       <xsl:call-template name="commonattributes"/>
       <xsl:call-template name="setscale"/>
       <xsl:call-template name="setidaname"/>
@@ -22,7 +22,7 @@
         <xsl:text> > </xsl:text>
       </xsl:if>
     </xsl:if>
-    <strong class="uicontrol">
+    <strong>
       <xsl:call-template name="commonattributes"/>
       <xsl:call-template name="setidaname"/>
       <xsl:apply-templates/>
@@ -30,15 +30,15 @@
   </xsl:template>
 
   <xsl:template match="*[contains(@class,' ui-d/wintitle ')]" name="topic.ui-d.wintitle">
-    <span class="wintitle">
+    <strong>
       <xsl:call-template name="commonattributes"/>
       <xsl:call-template name="setidaname"/>
       <xsl:apply-templates/>
-    </span>
+    </strong>
   </xsl:template>
 
   <xsl:template match="*[contains(@class,' ui-d/menucascade ')]" name="topic.ui-d.menucascade">
-    <span class="menucascade">
+    <span>
       <xsl:call-template name="commonattributes"/>
       <xsl:call-template name="setidaname"/>
       <xsl:apply-templates/>
@@ -48,7 +48,7 @@
   <xsl:template match="*[contains(@class,' ui-d/menucascade ')]/text()"/>
 
   <xsl:template match="*[contains(@class,' ui-d/shortcut ')]" name="topic.ui-d.shortcut">
-    <span class="shortcut">
+    <span>
       <xsl:call-template name="commonattributes"/>
       <xsl:call-template name="setidaname"/>
       <xsl:apply-templates/>

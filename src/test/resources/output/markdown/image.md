@@ -3,7 +3,7 @@ $schema: urn:oasis:names:tc:dita:xsd:topic.xsd
 id: images
 ---
 
-# Images {#images}
+# Images
 
 An inline ![Alt](test.jpg).
 

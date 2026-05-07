@@ -1,1 +1,26 @@
-<?xml version="1.0" encoding="UTF-8"?><pandoc><head><map><entry key="$schema">urn:oasis:names:tc:dita:xsd:topic.xsd</entry><entry key="id">images</entry></map></head><div><header id="images" level="1">Images</header><div><para>An inline <image alt="Alt" href="test.jpg"/>.</para><para><image alt="Alt" href="test.jpg"/></para><para><image alt="Alt" href="test.jpg" title="Title"/></para><para><image keyref="image-key"/></para><para><image alt="Alt" href="test.jpg" keyref="img_id" title="Title"/></para></div></div></pandoc>
+<pandoc>
+   <head>
+      <map>
+         <entry key="$schema">urn:oasis:names:tc:dita:xsd:topic.xsd</entry>
+         <entry key="id">images</entry>
+      </map>
+   </head>
+   <div>
+      <header id="images" level="1">Images</header>
+      <div>
+         <para>An inline <image alt="Alt" href="test.jpg"/>.</para>
+         <para>
+            <image alt="Alt" href="test.jpg"/>
+         </para>
+         <para>
+            <image alt="Alt" href="test.jpg" title="Title"/>
+         </para>
+         <para>
+            <image keyref="image-key"/>
+         </para>
+         <para>
+            <image alt="Alt" href="test.jpg" keyref="img_id" title="Title"/>
+         </para>
+      </div>
+   </div>
+</pandoc>

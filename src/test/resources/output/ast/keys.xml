@@ -1,1 +1,19 @@
-<?xml version="1.0" encoding="UTF-8"?><pandoc><head><map><entry key="$schema">urn:oasis:names:tc:dita:xsd:topic.xsd</entry><entry key="id">keys</entry></map></head><div><header id="keys" level="1">Keys</header><div><para>This is <link href="test.md">an example</link> reference-style link.</para><para>This is <link href="test.md">key-a</link> reference-style link.</para><para>This is <link href="test.md">Markdown</link> reference-style link.</para><para>This is <link href="test.md">Markdown</link> reference-style link.</para><para>This is <span>an example</span> reference-style link.</para><para>This is <span/> reference-style link.</para></div></div></pandoc>
+<pandoc>
+   <head>
+      <map>
+         <entry key="$schema">urn:oasis:names:tc:dita:xsd:topic.xsd</entry>
+         <entry key="id">keys</entry>
+      </map>
+   </head>
+   <div>
+      <header id="keys" level="1">Keys</header>
+      <div>
+         <para>This is <link href="test.md">an example</link> reference-style link.</para>
+         <para>This is <link href="test.md">key-a</link> reference-style link.</para>
+         <para>This is <link href="test.md">Markdown</link> reference-style link.</para>
+         <para>This is <link href="test.md">Markdown</link> reference-style link.</para>
+         <para>This is <span>an example</span> reference-style link.</para>
+         <para>This is <span/> reference-style link.</para>
+      </div>
+   </div>
+</pandoc>

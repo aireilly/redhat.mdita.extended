@@ -1,0 +1,25 @@
+<topic xmlns:ditaarch="http://dita.oasis-open.org/architecture/2005/" class="- topic/topic "
+  specializations="@props/audience @props/deliveryTarget @props/otherprops @props/platform @props/product"
+  id="images" ditaarch:DITAArchVersion="2.0">
+  <title class="- topic/title ">Images</title>
+  <body class="- topic/body ">
+    <p class="- topic/p ">An inline <image class="- topic/image " href="test.jpg"
+          ><alt class="- topic/alt ">Alt</alt></image>.</p>
+    <image class="- topic/image " href="test.jpg" placement="break">
+      <alt class="- topic/alt ">Alt</alt>
+    </image>
+    <fig class="- topic/fig ">
+      <title class="- topic/title ">Title</title>
+      <image class="- topic/image " href="test.jpg">
+        <alt class="- topic/alt ">Alt</alt>
+      </image>
+    </fig>
+    <image class="- topic/image " keyref="image-key" placement="break"/>
+    <fig class="- topic/fig ">
+      <title class="- topic/title ">Title</title>
+      <image class="- topic/image " href="test.jpg" keyref="img_id">
+        <alt class="- topic/alt ">Alt</alt>
+      </image>
+    </fig>
+  </body>
+</topic>

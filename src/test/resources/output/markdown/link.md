@@ -3,7 +3,7 @@ $schema: urn:oasis:names:tc:dita:xsd:topic.xsd
 id: links
 ---
 
-# Links {#links}
+# Links
 
 [Markdown](concept.md)
 

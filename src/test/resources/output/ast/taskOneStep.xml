@@ -1,1 +1,22 @@
-<?xml version="1.0" encoding="UTF-8"?><pandoc><head><map><entry key="$schema">urn:oasis:names:tc:dita:xsd:task.xsd</entry><entry key="id">task</entry></map></head><div><header class="task" id="task" level="1">Task</header><div><div class="section"><para>Context</para></div><orderedlist><li><para>Command</para><div><para>Info.</para></div></li></orderedlist></div></div></pandoc>
+<pandoc>
+   <head>
+      <map>
+         <entry key="$schema">urn:oasis:names:tc:dita:xsd:task.xsd</entry>
+         <entry key="id">task</entry>
+      </map>
+   </head>
+   <div>
+      <header class="task" id="task" level="1">Task</header>
+      <div>
+         <para>Context</para>
+         <orderedlist>
+            <li>
+               <para>Command</para>
+               <div>
+                  <para>Info.</para>
+               </div>
+            </li>
+         </orderedlist>
+      </div>
+   </div>
+</pandoc>

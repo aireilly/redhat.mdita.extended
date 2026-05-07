@@ -1,0 +1,9 @@
+<topic xmlns:ditaarch="http://dita.oasis-open.org/architecture/2005/" class="- topic/topic "
+  specializations="@props/audience @props/deliveryTarget @props/otherprops @props/platform @props/product"
+  id="escape" ditaarch:DITAArchVersion="2.0">
+  <title class="- topic/title ">Escape</title>
+  <body class="- topic/body ">
+    <p class="- topic/p ">Asterisk * bracket [foo].</p>
+    <p class="- topic/p ">\`*_{}[]()&gt;#+-.!&lt;></p>
+  </body>
+</topic>

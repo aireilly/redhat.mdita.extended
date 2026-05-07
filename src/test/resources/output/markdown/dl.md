@@ -3,7 +3,7 @@ $schema: urn:oasis:names:tc:dita:xsd:topic.xsd
 id: definition-list
 ---
 
-# Definition list {#definition-list}
+# Definition list
 
 Apple
 :   Pomaceous fruit of plants of the genus Malus in the family Rosaceae.

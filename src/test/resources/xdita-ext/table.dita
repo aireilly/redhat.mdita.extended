@@ -1,224 +1,218 @@
-﻿<?xml version="1.0" encoding="UTF-8"?>
-<topic xmlns:ditaarch="http://dita.oasis-open.org/architecture/2005/" class="- topic/topic "
-  ditaarch:DITAArchVersion="2.0"
-  specializations="(topic hi-d)(topic em-d)(topic ui-d)(topic sw-d)(topic pr-d) @props/audience @props/deliveryTarget @props/otherprops @props/platform @props/product"
-  id="tables">
-  <title class="- topic/title ">Tables</title>
-  <body class="- topic/body ">
-    <simpletable class="- topic/simpletable ">
-      <sthead class="- topic/sthead ">
-        <stentry class="- topic/stentry ">
-          <p class="- topic/p ">Right</p>
-        </stentry>
-        <stentry class="- topic/stentry ">
-          <p class="- topic/p ">Left</p>
-        </stentry>
-        <stentry class="- topic/stentry ">
-          <p class="- topic/p ">Default</p>
-        </stentry>
-        <stentry class="- topic/stentry ">
-          <p class="- topic/p ">Center</p>
-        </stentry>
-      </sthead>
-      <strow class="- topic/strow ">
-        <stentry class="- topic/stentry ">
-          <p class="- topic/p ">12</p>
-        </stentry>
-        <stentry class="- topic/stentry ">
-          <p class="- topic/p ">12</p>
-        </stentry>
-        <stentry class="- topic/stentry ">
-          <p class="- topic/p ">12</p>
-        </stentry>
-        <stentry class="- topic/stentry ">
-          <p class="- topic/p ">12</p>
-        </stentry>
-      </strow>
-      <strow class="- topic/strow ">
-        <stentry class="- topic/stentry ">
-          <p class="- topic/p ">123</p>
-        </stentry>
-        <stentry class="- topic/stentry ">
-          <p class="- topic/p ">123</p>
-        </stentry>
-        <stentry class="- topic/stentry ">
-          <p class="- topic/p ">123</p>
-        </stentry>
-        <stentry class="- topic/stentry ">
-          <p class="- topic/p ">123</p>
-        </stentry>
-      </strow>
-      <strow class="- topic/strow ">
-        <stentry class="- topic/stentry ">
-          <p class="- topic/p ">1</p>
-        </stentry>
-        <stentry class="- topic/stentry ">
-          <p class="- topic/p ">1</p>
-        </stentry>
-        <stentry class="- topic/stentry ">
-          <p class="- topic/p ">1</p>
-        </stentry>
-        <stentry class="- topic/stentry ">
-          <p class="- topic/p ">1</p>
-        </stentry>
-      </strow>
-    </simpletable>
-    <simpletable class="- topic/simpletable ">
-      <title class="- topic/title ">simple_table</title>
-      <sthead class="- topic/sthead ">
-        <stentry class="- topic/stentry ">
-          <p class="- topic/p ">First Header</p>
-        </stentry>
-        <stentry class="- topic/stentry ">
-          <p class="- topic/p ">Second Header</p>
-        </stentry>
-        <stentry class="- topic/stentry ">
-          <p class="- topic/p ">Third Header</p>
-        </stentry>
-      </sthead>
-      <strow class="- topic/strow ">
-        <stentry class="- topic/stentry ">
-          <p class="- topic/p ">First row</p>
-        </stentry>
-        <stentry class="- topic/stentry ">
-          <p class="- topic/p ">Data</p>
-        </stentry>
-        <stentry class="- topic/stentry ">
-          <p class="- topic/p ">Very long data entry</p>
-        </stentry>
-      </strow>
-      <strow class="- topic/strow ">
-        <stentry class="- topic/stentry ">
-          <p class="- topic/p ">Second row</p>
-        </stentry>
-        <stentry class="- topic/stentry ">
-          <p class="- topic/p ">
-            <b class="+ topic/ph hi-d/b ">Cell</b>
-          </p>
-        </stentry>
-        <stentry class="- topic/stentry ">
-          <p class="- topic/p ">
-            <i class="+ topic/ph hi-d/i ">Cell</i>
-          </p>
-        </stentry>
-      </strow>
-    </simpletable>
-    <p class="- topic/p ">PHP Table:</p>
-    <simpletable class="- topic/simpletable ">
-      <sthead class="- topic/sthead ">
-        <stentry class="- topic/stentry ">
-          <p class="- topic/p ">First Header</p>
-        </stentry>
-        <stentry class="- topic/stentry ">
-          <p class="- topic/p ">Second Header Very long data entry Very long data entry Very long data entry Very long
-            data entry Very long data entry Very long data entry Very long data entry Very long data entry Very long
-            data entry
-          </p>
-        </stentry>
-        <stentry class="- topic/stentry ">
-          <p class="- topic/p ">Third Header</p>
-        </stentry>
-      </sthead>
-      <strow class="- topic/strow ">
-        <stentry class="- topic/stentry ">
-          <p class="- topic/p ">First row</p>
-        </stentry>
-        <stentry class="- topic/stentry ">
-          <p class="- topic/p ">Data</p>
-        </stentry>
-        <stentry class="- topic/stentry ">
-          <p class="- topic/p ">Very long data entry Very long data entry Very long data entry Very long data entry Very
-            long data entry Very long data entry Very long data entry Very long data entry Very long data entry Very
-            long data entry
-          </p>
-        </stentry>
-      </strow>
-      <strow class="- topic/strow ">
-        <stentry class="- topic/stentry ">
-          <p class="- topic/p ">Second row</p>
-        </stentry>
-        <stentry class="- topic/stentry ">
-          <p class="- topic/p ">
-            <b class="+ topic/ph hi-d/b ">Cell</b>
-          </p>
-        </stentry>
-        <stentry class="- topic/stentry ">
-          <p class="- topic/p ">
-            <i class="+ topic/ph hi-d/i ">Cell</i>
-          </p>
-        </stentry>
-      </strow>
-    </simpletable>
-    <simpletable class="- topic/simpletable ">
-      <sthead class="- topic/sthead ">
-        <stentry class="- topic/stentry ">
-          <p class="- topic/p ">A</p>
-        </stentry>
-        <stentry class="- topic/stentry ">
-          <p class="- topic/p ">B</p>
-        </stentry>
-        <stentry class="- topic/stentry ">
-          <p class="- topic/p ">C</p>
-        </stentry>
-      </sthead>
-      <strow class="- topic/strow ">
-        <stentry class="- topic/stentry ">
-          <p class="- topic/p ">A1</p>
-        </stentry>
-        <stentry class="- topic/stentry ">
-          <p class="- topic/p ">B1</p>
-        </stentry>
-        <stentry class="- topic/stentry ">
-          <p class="- topic/p ">C1</p>
-        </stentry>
-      </strow>
-      <strow class="- topic/strow ">
-        <stentry class="- topic/stentry ">
-          <p class="- topic/p ">A2</p>
-        </stentry>
-        <stentry class="- topic/stentry " colspan="2">
-          <p class="- topic/p ">B2</p>
-        </stentry>
-      </strow>
-      <strow class="- topic/strow ">
-        <stentry class="- topic/stentry " colspan="3">
-          <p class="- topic/p ">A3</p>
-        </stentry>
-      </strow>
-      <strow class="- topic/strow ">
-        <stentry class="- topic/stentry " colspan="2">
-          <p class="- topic/p ">A4</p>
-        </stentry>
-        <stentry class="- topic/stentry ">
-          <p class="- topic/p ">C4</p>
-        </stentry>
-      </strow>
-    </simpletable>
-    <simpletable class="- topic/simpletable ">
-      <sthead class="- topic/sthead ">
-        <stentry class="- topic/stentry ">
-          <p class="- topic/p ">A</p>
-        </stentry>
-        <stentry class="- topic/stentry ">
-          <p class="- topic/p ">B</p>
-        </stentry>
-        <stentry class="- topic/stentry ">
-          <p class="- topic/p ">C</p>
-        </stentry>
-      </sthead>
-      <strow class="- topic/strow ">
-        <stentry class="- topic/stentry ">
-          <p class="- topic/p ">A5</p>
-        </stentry>
-      </strow>
-      <strow class="- topic/strow ">
-        <stentry class="- topic/stentry ">
-          <p class="- topic/p ">A6</p>
-        </stentry>
-        <stentry class="- topic/stentry ">
-          <p class="- topic/p ">A7</p>
-        </stentry>
-      </strow>
-    </simpletable>
-  </body>
+<topic xmlns:ditaarch="http://dita.oasis-open.org/architecture/2005/"
+       class="- topic/topic "
+       ditaarch:DITAArchVersion="2.0"
+       id="tables"
+       specializations="(topic hi-d)(topic em-d)(topic ui-d)(topic sw-d)(topic pr-d) @props/audience @props/deliveryTarget @props/otherprops @props/platform @props/product">
+   <title class="- topic/title ">Tables</title>
+   <body class="- topic/body ">
+      <simpletable class="- topic/simpletable ">
+         <sthead class="- topic/sthead ">
+            <stentry class="- topic/stentry ">
+               <p class="- topic/p ">Right</p>
+            </stentry>
+            <stentry class="- topic/stentry ">
+               <p class="- topic/p ">Left</p>
+            </stentry>
+            <stentry class="- topic/stentry ">
+               <p class="- topic/p ">Default</p>
+            </stentry>
+            <stentry class="- topic/stentry ">
+               <p class="- topic/p ">Center</p>
+            </stentry>
+         </sthead>
+         <strow class="- topic/strow ">
+            <stentry class="- topic/stentry ">
+               <p class="- topic/p ">12</p>
+            </stentry>
+            <stentry class="- topic/stentry ">
+               <p class="- topic/p ">12</p>
+            </stentry>
+            <stentry class="- topic/stentry ">
+               <p class="- topic/p ">12</p>
+            </stentry>
+            <stentry class="- topic/stentry ">
+               <p class="- topic/p ">12</p>
+            </stentry>
+         </strow>
+         <strow class="- topic/strow ">
+            <stentry class="- topic/stentry ">
+               <p class="- topic/p ">123</p>
+            </stentry>
+            <stentry class="- topic/stentry ">
+               <p class="- topic/p ">123</p>
+            </stentry>
+            <stentry class="- topic/stentry ">
+               <p class="- topic/p ">123</p>
+            </stentry>
+            <stentry class="- topic/stentry ">
+               <p class="- topic/p ">123</p>
+            </stentry>
+         </strow>
+         <strow class="- topic/strow ">
+            <stentry class="- topic/stentry ">
+               <p class="- topic/p ">1</p>
+            </stentry>
+            <stentry class="- topic/stentry ">
+               <p class="- topic/p ">1</p>
+            </stentry>
+            <stentry class="- topic/stentry ">
+               <p class="- topic/p ">1</p>
+            </stentry>
+            <stentry class="- topic/stentry ">
+               <p class="- topic/p ">1</p>
+            </stentry>
+         </strow>
+      </simpletable>
+      <simpletable class="- topic/simpletable ">
+         <title class="- topic/title ">simple_table</title>
+         <sthead class="- topic/sthead ">
+            <stentry class="- topic/stentry ">
+               <p class="- topic/p ">First Header</p>
+            </stentry>
+            <stentry class="- topic/stentry ">
+               <p class="- topic/p ">Second Header</p>
+            </stentry>
+            <stentry class="- topic/stentry ">
+               <p class="- topic/p ">Third Header</p>
+            </stentry>
+         </sthead>
+         <strow class="- topic/strow ">
+            <stentry class="- topic/stentry ">
+               <p class="- topic/p ">First row</p>
+            </stentry>
+            <stentry class="- topic/stentry ">
+               <p class="- topic/p ">Data</p>
+            </stentry>
+            <stentry class="- topic/stentry ">
+               <p class="- topic/p ">Very long data entry</p>
+            </stentry>
+         </strow>
+         <strow class="- topic/strow ">
+            <stentry class="- topic/stentry ">
+               <p class="- topic/p ">Second row</p>
+            </stentry>
+            <stentry class="- topic/stentry ">
+               <p class="- topic/p ">
+                  <b class="+ topic/ph hi-d/b ">Cell</b>
+               </p>
+            </stentry>
+            <stentry class="- topic/stentry ">
+               <p class="- topic/p ">
+                  <i class="+ topic/ph hi-d/i ">Cell</i>
+               </p>
+            </stentry>
+         </strow>
+      </simpletable>
+      <p class="- topic/p ">PHP Table:</p>
+      <simpletable class="- topic/simpletable ">
+         <sthead class="- topic/sthead ">
+            <stentry class="- topic/stentry ">
+               <p class="- topic/p ">First Header</p>
+            </stentry>
+            <stentry class="- topic/stentry ">
+               <p class="- topic/p ">Second Header Very long data entry Very long data entry Very long data entry Very long data entry Very long data entry Very long data entry Very long data entry Very long data entry Very long data entry</p>
+            </stentry>
+            <stentry class="- topic/stentry ">
+               <p class="- topic/p ">Third Header</p>
+            </stentry>
+         </sthead>
+         <strow class="- topic/strow ">
+            <stentry class="- topic/stentry ">
+               <p class="- topic/p ">First row</p>
+            </stentry>
+            <stentry class="- topic/stentry ">
+               <p class="- topic/p ">Data</p>
+            </stentry>
+            <stentry class="- topic/stentry ">
+               <p class="- topic/p ">Very long data entry Very long data entry Very long data entry Very long data entry Very long data entry Very long data entry Very long data entry Very long data entry Very long data entry Very long data entry</p>
+            </stentry>
+         </strow>
+         <strow class="- topic/strow ">
+            <stentry class="- topic/stentry ">
+               <p class="- topic/p ">Second row</p>
+            </stentry>
+            <stentry class="- topic/stentry ">
+               <p class="- topic/p ">
+                  <b class="+ topic/ph hi-d/b ">Cell</b>
+               </p>
+            </stentry>
+            <stentry class="- topic/stentry ">
+               <p class="- topic/p ">
+                  <i class="+ topic/ph hi-d/i ">Cell</i>
+               </p>
+            </stentry>
+         </strow>
+      </simpletable>
+      <simpletable class="- topic/simpletable ">
+         <sthead class="- topic/sthead ">
+            <stentry class="- topic/stentry ">
+               <p class="- topic/p ">A</p>
+            </stentry>
+            <stentry class="- topic/stentry ">
+               <p class="- topic/p ">B</p>
+            </stentry>
+            <stentry class="- topic/stentry ">
+               <p class="- topic/p ">C</p>
+            </stentry>
+         </sthead>
+         <strow class="- topic/strow ">
+            <stentry class="- topic/stentry ">
+               <p class="- topic/p ">A1</p>
+            </stentry>
+            <stentry class="- topic/stentry ">
+               <p class="- topic/p ">B1</p>
+            </stentry>
+            <stentry class="- topic/stentry ">
+               <p class="- topic/p ">C1</p>
+            </stentry>
+         </strow>
+         <strow class="- topic/strow ">
+            <stentry class="- topic/stentry ">
+               <p class="- topic/p ">A2</p>
+            </stentry>
+            <stentry class="- topic/stentry " colspan="2">
+               <p class="- topic/p ">B2</p>
+            </stentry>
+         </strow>
+         <strow class="- topic/strow ">
+            <stentry class="- topic/stentry " colspan="3">
+               <p class="- topic/p ">A3</p>
+            </stentry>
+         </strow>
+         <strow class="- topic/strow ">
+            <stentry class="- topic/stentry " colspan="2">
+               <p class="- topic/p ">A4</p>
+            </stentry>
+            <stentry class="- topic/stentry ">
+               <p class="- topic/p ">C4</p>
+            </stentry>
+         </strow>
+      </simpletable>
+      <simpletable class="- topic/simpletable ">
+         <sthead class="- topic/sthead ">
+            <stentry class="- topic/stentry ">
+               <p class="- topic/p ">A</p>
+            </stentry>
+            <stentry class="- topic/stentry ">
+               <p class="- topic/p ">B</p>
+            </stentry>
+            <stentry class="- topic/stentry ">
+               <p class="- topic/p ">C</p>
+            </stentry>
+         </sthead>
+         <strow class="- topic/strow ">
+            <stentry class="- topic/stentry ">
+               <p class="- topic/p ">A5</p>
+            </stentry>
+         </strow>
+         <strow class="- topic/strow ">
+            <stentry class="- topic/stentry ">
+               <p class="- topic/p ">A6</p>
+            </stentry>
+            <stentry class="- topic/stentry ">
+               <p class="- topic/p ">A7</p>
+            </stentry>
+         </strow>
+      </simpletable>
+   </body>
 </topic>

@@ -72,40 +72,11 @@
   
   <xsl:variable name="profiling-attr-names" select="('audience', 'platform', 'product', 'otherprops', 'deliveryTarget', 'props', 'rev')" as="xs:string*"/>
 
-  <xsl:template name="ast-attibutes">
-    <xsl:variable name="profiling-attrs" select="@*[local-name() = $profiling-attr-names]"/>
-    <xsl:variable name="has-id" select="exists(@id)" as="xs:boolean"/>
-    <xsl:if test="@id or @class or $profiling-attrs">
-      <xsl:text> {</xsl:text>
-      <xsl:if test="@id">
-        <xsl:text>#</xsl:text>
-        <xsl:value-of select="@id"/>
-      </xsl:if>
-      <xsl:for-each select="tokenize(@class, '\s+')">
-        <xsl:if test="position() > 1 or $has-id"><xsl:text> </xsl:text></xsl:if>
-        <xsl:text>.</xsl:text>
-        <xsl:value-of select="."/>
-      </xsl:for-each>
-      <xsl:for-each select="$profiling-attrs">
-        <xsl:text> </xsl:text>
-        <xsl:value-of select="local-name()"/>
-        <xsl:text>="</xsl:text>
-        <xsl:value-of select="."/>
-        <xsl:text>"</xsl:text>
-      </xsl:for-each>
-      <xsl:text>}</xsl:text>
-    </xsl:if>
-  </xsl:template>
+  <xsl:template name="ast-attibutes"/>
 
   <xsl:variable name="domain-class-names" select="('uicontrol', 'wintitle', 'menucascade', 'filepath', 'userinput', 'systemoutput', 'sysout', 'cmdname', 'varname', 'msgph', 'codeph', 'option', 'parmname', 'apiname', 'cite')" as="xs:string*"/>
 
-  <xsl:template name="inline-class-attribute">
-    <xsl:if test="@class and tokenize(@class, '\s+')[. = $domain-class-names]">
-      <xsl:text>{.</xsl:text>
-      <xsl:value-of select="tokenize(@class, '\s+')[. = $domain-class-names][1]"/>
-      <xsl:text>}</xsl:text>
-    </xsl:if>
-  </xsl:template>
+  <xsl:template name="inline-class-attribute"/>
 
   <xsl:template match="span[@class = 'menucascade']" mode="ast">
     <xsl:text>**</xsl:text>
@@ -115,25 +86,10 @@
       </xsl:if>
       <xsl:apply-templates mode="ast"/>
     </xsl:for-each>
-    <xsl:text>**{.menucascade}</xsl:text>
+    <xsl:text>**</xsl:text>
   </xsl:template>
 
-  <xsl:template name="block-attributes">
-    <xsl:variable name="profiling-attrs" select="@*[local-name() = $profiling-attr-names]"/>
-    <xsl:if test="$profiling-attrs">
-      <xsl:value-of select="$linefeed"/>
-      <xsl:text>{</xsl:text>
-      <xsl:for-each select="$profiling-attrs">
-        <xsl:if test="position() > 1"><xsl:text> </xsl:text></xsl:if>
-        <xsl:value-of select="local-name()"/>
-        <xsl:text>="</xsl:text>
-        <xsl:value-of select="."/>
-        <xsl:text>"</xsl:text>
-      </xsl:for-each>
-      <xsl:text>}</xsl:text>
-      <xsl:value-of select="$linefeed"/>
-    </xsl:if>
-  </xsl:template>
+  <xsl:template name="block-attributes"/>
 
   <xsl:template match="bulletlist | orderedlist" mode="ast">
     <xsl:param name="indent" tunnel="yes" as="xs:string" select="''"/>
@@ -338,67 +294,6 @@
     <xsl:value-of select="."/>
   </xsl:template>
 
-  <xsl:template match="table[*/tr/tablecell/(codeblock | rawblock | blockquote | orderedlist | bulletlist | definitionlist | header | table | div)] |
-                       table[*/tr/tablecell[count(para | plain) &gt; 1]] |
-                       table[*/tr/tablecell[@colspan or @rowspan]] |
-                       table[empty(thead)]"
-                mode="ast" priority="10">
-    <xsl:variable name="html" as="element()*">
-      <table>
-        <xsl:copy-of select="@*"/>
-        <xsl:for-each select="thead">
-          <thead>
-            <xsl:copy-of select="@*"/>
-            <xsl:for-each select="tr">
-              <tr>
-                <xsl:copy-of select="@*"/>
-                <xsl:for-each select="tablecell">
-                  <th>
-                    <xsl:copy-of select="@*"/>
-                    <xsl:variable name="contents" as="xs:string">
-                      <xsl:value-of separator="">
-                        <xsl:apply-templates mode="#current">
-                          <xsl:with-param name="indent" tunnel="yes" select="''"/>
-                        </xsl:apply-templates>
-                      </xsl:value-of>
-                    </xsl:variable>
-                    <xsl:value-of select="normalize-space($contents)"/>
-                  </th>
-                </xsl:for-each>
-              </tr>
-            </xsl:for-each>
-          </thead>
-        </xsl:for-each>
-        <xsl:for-each select="tbody">
-          <tbody>
-            <xsl:copy-of select="@*"/>
-            <xsl:for-each select="tr">
-              <tr>
-                <xsl:copy-of select="@*"/>
-                <xsl:for-each select="tablecell">
-                  <td>
-                    <xsl:copy-of select="@*"/>
-                    <xsl:variable name="contents" as="xs:string">
-                      <xsl:value-of separator="">
-                        <xsl:apply-templates mode="#current">
-                          <xsl:with-param name="indent" tunnel="yes" select="''"/>
-                        </xsl:apply-templates>
-                      </xsl:value-of>
-                    </xsl:variable>
-                    <xsl:value-of select="normalize-space($contents)"/>
-                  </td>
-                </xsl:for-each>
-              </tr>
-            </xsl:for-each>
-          </tbody>
-        </xsl:for-each>
-      </table>
-    </xsl:variable>
-    <xsl:value-of select="$linefeed"/>
-    <xsl:apply-templates select="$html" mode="render-html"/>
-    <xsl:value-of select="$linefeed"/>
-  </xsl:template>
-
   <xsl:template name="process-tablecell-contents">
     <xsl:choose>
       <xsl:when test="para and count(*) eq 1 and not(text()[normalize-space()])">
@@ -447,7 +342,6 @@
       <xsl:with-param name="escape" select="concat('*', $escape)" as="xs:string?" tunnel="yes"/>
     </xsl:apply-templates>
     <xsl:value-of select="$char"/>
-    <xsl:text>{.cite}</xsl:text>
   </xsl:template>
 
   <xsl:template match="code" mode="ast">
@@ -468,25 +362,6 @@
     <xsl:text>(</xsl:text>
     <xsl:value-of select="@href"/>
     <xsl:text>)</xsl:text>
-    <xsl:if test="@format or @scope or @chunk or @toc">
-      <xsl:text>{</xsl:text>
-      <xsl:variable name="attrs" as="xs:string*">
-        <xsl:if test="@format">
-          <xsl:sequence select="concat('format=&quot;', @format, '&quot;')"/>
-        </xsl:if>
-        <xsl:if test="@scope">
-          <xsl:sequence select="concat('scope=&quot;', @scope, '&quot;')"/>
-        </xsl:if>
-        <xsl:if test="@chunk">
-          <xsl:sequence select="concat('chunk=&quot;', @chunk, '&quot;')"/>
-        </xsl:if>
-        <xsl:if test="@toc">
-          <xsl:sequence select="concat('toc=&quot;', @toc, '&quot;')"/>
-        </xsl:if>
-      </xsl:variable>
-      <xsl:value-of select="string-join($attrs, ' ')"/>
-      <xsl:text>}</xsl:text>
-    </xsl:if>
   </xsl:template>
   
   <xsl:template match="link[empty(@href) and @keyref]" mode="ast">

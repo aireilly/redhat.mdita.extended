@@ -22,7 +22,7 @@ public class HtmlReaderTest extends AbstractReaderTest {
 
   @Override
   public String getExp() {
-    return "dita/";
+    return "dita-html/";
   }
 
   @ParameterizedTest

@@ -1,1 +1,34 @@
-<?xml version="1.0" encoding="UTF-8"?><pandoc><head><map><entry key="$schema">urn:oasis:names:tc:dita:xsd:topic.xsd</entry><entry key="id">note</entry></map></head><div><header id="note" level="1">Note</header><div><note type="note"><para>Note</para></note><note type="caution"><para>Caution</para></note><note type="danger"><para>Danger</para></note><note type="note"><para>Note</para></note><note type="note"><para>Notice</para></note><note type="trouble"><para>Trouble</para></note><note type="warning"><para>Warning</para></note></div></div></pandoc>
+<pandoc>
+   <head>
+      <map>
+         <entry key="$schema">urn:oasis:names:tc:dita:xsd:topic.xsd</entry>
+         <entry key="id">note</entry>
+      </map>
+   </head>
+   <div>
+      <header id="note" level="1">Note</header>
+      <div>
+         <note type="note">
+            <para>Note</para>
+         </note>
+         <note type="caution">
+            <para>Caution</para>
+         </note>
+         <note type="danger">
+            <para>Danger</para>
+         </note>
+         <note type="note">
+            <para>Note</para>
+         </note>
+         <note type="note">
+            <para>Notice</para>
+         </note>
+         <note type="trouble">
+            <para>Trouble</para>
+         </note>
+         <note type="warning">
+            <para>Warning</para>
+         </note>
+      </div>
+   </div>
+</pandoc>

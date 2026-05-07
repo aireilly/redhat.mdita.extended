@@ -1,62 +1,72 @@
-<?xml version="1.0" encoding="UTF-8"?>
 <dita xmlns:ditaarch="http://dita.oasis-open.org/architecture/2005/"
       ditaarch:DITAArchVersion="2.0"
       specializations="@props/audience @props/deliveryTarget @props/otherprops @props/platform @props/product">
-  <concept id="concept" ditaarch:DITAArchVersion="2.0"
-           specializations="@props/audience @props/deliveryTarget @props/otherprops @props/platform @props/product" class="- topic/topic concept/concept ">
-    <title class="- topic/title ">Concept </title>
-    <conbody class="- topic/body  concept/conbody ">
-      <p class="- topic/p ">Content A.</p>
-    </conbody>
-    <concept id="heading-a1" ditaarch:DITAArchVersion="2.0"
-             specializations="@props/audience @props/deliveryTarget @props/otherprops @props/platform @props/product" class="- topic/topic concept/concept ">
-      <title class="- topic/title ">Heading A.1</title>
-      <conbody class="- topic/body  concept/conbody ">
-        <p class="- topic/p ">Content A.1.</p>
-      </conbody>
-    </concept>
-  </concept>
-  <task id="task" ditaarch:DITAArchVersion="2.0"
-        specializations="@props/audience @props/deliveryTarget @props/otherprops @props/platform @props/product" class="- topic/topic task/task ">
-    <title class="- topic/title ">Task </title>
-    <taskbody class="- topic/body task/taskbody ">
-      <context class="- topic/section task/context "><p class="- topic/p ">Content B.</p></context>
-    </taskbody>
-    <task id="heading-b1" ditaarch:DITAArchVersion="2.0"
-          specializations="@props/audience @props/deliveryTarget @props/otherprops @props/platform @props/product" class="- topic/topic task/task ">
-      <title class="- topic/title ">Heading B.1</title>
-      <taskbody class="- topic/body task/taskbody ">
-        <context class="- topic/section task/context "><p class="- topic/p ">Content B.1.</p></context>
-      </taskbody>
-    </task>
-  </task>
-  <reference id="reference" ditaarch:DITAArchVersion="2.0"
-             specializations="@props/audience @props/deliveryTarget @props/otherprops @props/platform @props/product" class="- topic/topic       reference/reference ">
-    <title class="- topic/title ">Reference </title>
-    <refbody class="- topic/body        reference/refbody ">
-      <section class="- topic/section "><p class="- topic/p ">Content C.</p></section>
-    </refbody>
-    <reference id="heading-c1" ditaarch:DITAArchVersion="2.0"
-               specializations="@props/audience @props/deliveryTarget @props/otherprops @props/platform @props/product" class="- topic/topic       reference/reference ">
-      <title class="- topic/title ">Heading C.1</title>
-      <refbody class="- topic/body        reference/refbody ">
-        <section class="- topic/section "><p class="- topic/p ">Content C.1.</p></section>
-      </refbody>
-    </reference>
-  </reference>
-  <topic id="topic" ditaarch:DITAArchVersion="2.0"
-         specializations="@props/audience @props/deliveryTarget @props/otherprops @props/platform @props/product" class="- topic/topic ">
-    <title class="- topic/title ">Topic</title>
-    <body class="- topic/body ">
-      <p class="- topic/p ">Content D.</p>
-    </body>
-    <topic id="heading-d1" ditaarch:DITAArchVersion="2.0"
-           specializations="@props/audience @props/deliveryTarget @props/otherprops @props/platform @props/product" class="- topic/topic ">
-      <title class="- topic/title ">Heading D.1</title>
-      <body class="- topic/body ">
-        <p class="- topic/p ">Content D.1.</p>
-      </body>
-    </topic>
-  </topic>
+   <concept class="- topic/topic concept/concept "
+            ditaarch:DITAArchVersion="2.0"
+            id="concept"
+            specializations="@props/audience @props/deliveryTarget @props/otherprops @props/platform @props/product">
+      <title class="- topic/title ">Concept</title>
+      <shortdesc class="- topic/shortdesc ">Content A.</shortdesc>
+      <prolog class="- topic/prolog "/>
+      <conbody class="- topic/body concept/conbody "/>
+      <concept class="- topic/topic concept/concept "
+               ditaarch:DITAArchVersion="2.0"
+               id="heading-a1"
+               specializations="@props/audience @props/deliveryTarget @props/otherprops @props/platform @props/product">
+         <title class="- topic/title ">Heading A.1</title>
+         <shortdesc class="- topic/shortdesc ">Content A.1.</shortdesc>
+         <conbody class="- topic/body concept/conbody "/>
+      </concept>
+   </concept>
+   <concept class="- topic/topic concept/concept "
+            ditaarch:DITAArchVersion="2.0"
+            id="task"
+            specializations="@props/audience @props/deliveryTarget @props/otherprops @props/platform @props/product">
+      <title class="- topic/title ">Task</title>
+      <shortdesc class="- topic/shortdesc ">Content B.</shortdesc>
+      <prolog class="- topic/prolog "/>
+      <conbody class="- topic/body concept/conbody "/>
+      <concept class="- topic/topic concept/concept "
+               ditaarch:DITAArchVersion="2.0"
+               id="heading-b1"
+               specializations="@props/audience @props/deliveryTarget @props/otherprops @props/platform @props/product">
+         <title class="- topic/title ">Heading B.1</title>
+         <shortdesc class="- topic/shortdesc ">Content B.1.</shortdesc>
+         <conbody class="- topic/body concept/conbody "/>
+      </concept>
+   </concept>
+   <concept class="- topic/topic concept/concept "
+            ditaarch:DITAArchVersion="2.0"
+            id="reference"
+            specializations="@props/audience @props/deliveryTarget @props/otherprops @props/platform @props/product">
+      <title class="- topic/title ">Reference</title>
+      <shortdesc class="- topic/shortdesc ">Content C.</shortdesc>
+      <prolog class="- topic/prolog "/>
+      <conbody class="- topic/body concept/conbody "/>
+      <concept class="- topic/topic concept/concept "
+               ditaarch:DITAArchVersion="2.0"
+               id="heading-c1"
+               specializations="@props/audience @props/deliveryTarget @props/otherprops @props/platform @props/product">
+         <title class="- topic/title ">Heading C.1</title>
+         <shortdesc class="- topic/shortdesc ">Content C.1.</shortdesc>
+         <conbody class="- topic/body concept/conbody "/>
+      </concept>
+   </concept>
+   <concept class="- topic/topic concept/concept "
+            ditaarch:DITAArchVersion="2.0"
+            id="topic"
+            specializations="@props/audience @props/deliveryTarget @props/otherprops @props/platform @props/product">
+      <title class="- topic/title ">Topic</title>
+      <shortdesc class="- topic/shortdesc ">Content D.</shortdesc>
+      <prolog class="- topic/prolog "/>
+      <conbody class="- topic/body concept/conbody "/>
+      <concept class="- topic/topic concept/concept "
+               ditaarch:DITAArchVersion="2.0"
+               id="heading-d1"
+               specializations="@props/audience @props/deliveryTarget @props/otherprops @props/platform @props/product">
+         <title class="- topic/title ">Heading D.1</title>
+         <shortdesc class="- topic/shortdesc ">Content D.1.</shortdesc>
+         <conbody class="- topic/body concept/conbody "/>
+      </concept>
+   </concept>
 </dita>
-

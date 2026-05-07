@@ -41,10 +41,8 @@ public class DitaToAstTest {
   @ParameterizedTest
   @ValueSource(
     strings = {
-      "abbreviation",
       "admonition",
       "ast",
-      "body_attributes",
       "codeblock",
       "comment",
       "concept",
@@ -53,13 +51,10 @@ public class DitaToAstTest {
       "dl",
       "entity",
       "escape",
-      "footnote",
       "hdita",
       "header",
-      "header_attributes",
       "html",
       "html_unsupported",
-      "image-size",
       "image",
       "inline",
       "inline_extended",
@@ -132,12 +127,13 @@ public class DitaToAstTest {
         doc.removeChild(node);
       }
     }
-    //    final NodeList elems = doc.getElementsByTagName("*");
-    //    for (int i = 0; i < elems.getLength(); i++) {
-    //      final Element elem = (Element) elems.item(i);
-    //            elem.removeAttribute("domains");
-    //            elem.removeAttributeNS("http://dita.oasis-open.org/architecture/2005/", "DITAArchVersion");
-    //    }
+    final NodeList elems = doc.getElementsByTagName("tablecell");
+    for (int i = 0; i < elems.getLength(); i++) {
+      final Element elem = (Element) elems.item(i);
+      if (elem.hasAttribute("id") && elem.getAttribute("id").matches("d\\d+e\\d+")) {
+        elem.removeAttribute("id");
+      }
+    }
     doc.normalizeDocument();
     return doc;
   }

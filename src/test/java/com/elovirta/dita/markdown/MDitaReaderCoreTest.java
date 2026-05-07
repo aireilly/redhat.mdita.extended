@@ -67,13 +67,9 @@ public class MDitaReaderCoreTest extends AbstractReaderTest {
   @ParameterizedTest
   @ValueSource(
     strings = {
-      "html_unsupported.md",
       "inline_extended.md",
       "jekyll.md",
-      "footnote.md",
       "dl.md",
-      "abbreviation.md",
-      "body_attributes.md",
     }
   )
   public void test_unsupported(String file) {

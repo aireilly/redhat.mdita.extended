@@ -5,7 +5,7 @@ sourceCompatibility = 11
 targetCompatibility = 11
 
 group = 'com.redhat.dita'
-version = "0.0.5"
+version = "0.0.6"
 
 repositories {
     mavenCentral()
@@ -77,6 +77,11 @@ dependencies {
 
 test {
     useJUnitPlatform()
+}
+
+tasks.register('generateExpected', JavaExec) {
+    classpath = sourceSets.test.runtimeClasspath
+    mainClass = 'com.elovirta.dita.utils.GenerateExpected'
 }
 
 tasks.register('dist', Zip) {

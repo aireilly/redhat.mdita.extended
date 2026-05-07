@@ -1,1 +1,84 @@
-<?xml version="1.0" encoding="UTF-8"?><pandoc><head><map><entry key="$schema">urn:oasis:names:tc:dita:xsd:topic.xsd</entry><entry key="id">admonition</entry></map></head><div><header id="admonition" level="1">Admonition</header><div><para>Block-Styled Side Content</para><note type="note"><para>Optional Title</para><para>block content</para><para>block content</para></note><para>No-Heading Content</para><note type="note"><para>block content</para></note><note type="note"><para>block content</para></note><para>Collapsible Block-Styled Side Content:</para><para>Collapsed by default</para><note type="note"><para>Optional Title</para><para>block content</para></note><para>Open by default</para><note type="note"><para>Optional Title</para><para>block content</para></note><note type="note"><para>block content</para></note><note type="tip"><para>block content</para></note><note type="fastpath"><para>block content</para></note><note type="restriction"><para>block content</para></note><note type="important"><para>block content</para></note><note type="remember"><para>block content</para></note><note type="attention"><para>block content</para></note><note type="caution"><para>block content</para></note><note type="note"><para>block content</para></note><note type="danger"><para>block content</para></note><note type="warning"><para>block content</para></note><note type="trouble"><para>block content</para></note><note type="caution"><para>Uppercase type</para></note><orderedlist><li><plain>List item</plain><note type="note"><para>block content</para></note></li></orderedlist></div></div></pandoc>
+<pandoc>
+   <head>
+      <map>
+         <entry key="$schema">urn:oasis:names:tc:dita:xsd:topic.xsd</entry>
+         <entry key="id">admonition</entry>
+      </map>
+   </head>
+   <div>
+      <header id="admonition" level="1">Admonition</header>
+      <div>
+         <para>Block-Styled Side Content</para>
+         <note type="note">
+            <para>Optional Title</para>
+            <para>block content</para>
+            <para>block content</para>
+         </note>
+         <para>No-Heading Content</para>
+         <note type="note">
+            <para>block content</para>
+         </note>
+         <note type="note">
+            <para>block content</para>
+         </note>
+         <para>Collapsible Block-Styled Side Content:</para>
+         <para>Collapsed by default</para>
+         <note type="note">
+            <para>Optional Title</para>
+            <para>block content</para>
+         </note>
+         <para>Open by default</para>
+         <note type="note">
+            <para>Optional Title</para>
+            <para>block content</para>
+         </note>
+         <note type="note">
+            <para>block content</para>
+         </note>
+         <note type="tip">
+            <para>block content</para>
+         </note>
+         <note type="fastpath">
+            <para>block content</para>
+         </note>
+         <note type="restriction">
+            <para>block content</para>
+         </note>
+         <note type="important">
+            <para>block content</para>
+         </note>
+         <note type="remember">
+            <para>block content</para>
+         </note>
+         <note type="attention">
+            <para>block content</para>
+         </note>
+         <note type="caution">
+            <para>block content</para>
+         </note>
+         <note type="note">
+            <para>block content</para>
+         </note>
+         <note type="danger">
+            <para>block content</para>
+         </note>
+         <note type="warning">
+            <para>block content</para>
+         </note>
+         <note type="trouble">
+            <para>block content</para>
+         </note>
+         <note type="caution">
+            <para>Uppercase type</para>
+         </note>
+         <orderedlist>
+            <li>
+               <plain>List item</plain>
+               <note type="note">
+                  <para>block content</para>
+               </note>
+            </li>
+         </orderedlist>
+      </div>
+   </div>
+</pandoc>

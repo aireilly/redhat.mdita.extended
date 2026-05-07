@@ -36,23 +36,13 @@ public class SpecializeFilter extends XMLFilterImpl {
     STEPS,
     STEP,
     INFO,
-    STEPRESULT,
-    STEPXMP,
     SUBSTEPS,
     SUBSTEP,
     SUBINFO,
     CHOICES,
-    CHOICETABLE,
     RESULT,
     POST_STEPS,
   }
-
-  private static final DitaClass TASK_STEPRESULT = DitaClass.getInstance("- topic/itemgroup task/stepresult ");
-  private static final DitaClass TASK_STEPXMP = DitaClass.getInstance("- topic/itemgroup task/stepxmp ");
-  private static final DitaClass TOPIC_DRAFT_COMMENT = DitaClass.getInstance("- topic/draft-comment ");
-  private static final DitaClass TOPIC_RELATED_LINKS = DitaClass.getInstance("- topic/related-links ");
-  private static final DitaClass TOPIC_LINK = DitaClass.getInstance("- topic/link ");
-  private static final DitaClass TOPIC_LINKTEXT = DitaClass.getInstance("- topic/linktext ");
 
   private final Type forceType;
 
@@ -66,12 +56,6 @@ public class SpecializeFilter extends XMLFilterImpl {
   private TaskState taskState = null;
   private ReferenceState referenceState = null;
   private boolean stepsCompleted = false;
-  private int choicetableColumn = 0;
-  private boolean inChoicetableHead = false;
-  private boolean inRelatedLinks = false;
-  private int relatedLinksSuppressDepth = 0;
-  private boolean inRelatedLinksXref = false;
-  private boolean bodyClosedForRelatedLinks = false;
 
   private static final Map<String, DitaClass> TASK_SECTIONS = Map.of(
     TASK_PREREQ.localName,
@@ -119,21 +103,6 @@ public class SpecializeFilter extends XMLFilterImpl {
       }
     }
 
-    if ("p".equals(localName) && getOutputclass(atts).contains("draft-comment")) {
-      renameStartElement(TOPIC_DRAFT_COMMENT, atts);
-      return;
-    }
-
-    if ("section".equals(localName) && depth == DEPTH_IN_BODY && getOutputclass(atts).contains("related-links")) {
-      startRelatedLinks(uri);
-      return;
-    }
-
-    if (inRelatedLinks) {
-      startElementRelatedLinks(uri, localName, qName, atts);
-      return;
-    }
-
     switch (typeStack.peek()) {
       case CONCEPT:
         startElementConcept(uri, localName, qName, atts);
@@ -151,18 +120,6 @@ public class SpecializeFilter extends XMLFilterImpl {
 
   @Override
   public void endElement(String uri, String localName, String qName) throws SAXException {
-    if (inRelatedLinks) {
-      endElementRelatedLinks(uri, localName, qName);
-      depth--;
-      return;
-    }
-
-    if (bodyClosedForRelatedLinks && "body".equals(localName)) {
-      bodyClosedForRelatedLinks = false;
-      depth--;
-      return;
-    }
-
     switch (typeStack.peek()) {
       case TASK:
         endElementTask(uri, localName, qName);
@@ -212,8 +169,6 @@ public class SpecializeFilter extends XMLFilterImpl {
         taskState = TaskState.BODY;
         stepsCompleted = false;
         paragraphCountInSubstep = 0;
-        choicetableColumn = 0;
-        inChoicetableHead = false;
         renameStartElement(TASK_TASKBODY, atts);
         break;
       case "section":
@@ -276,127 +231,51 @@ public class SpecializeFilter extends XMLFilterImpl {
           doStartElement(uri, localName, qName, atts);
         }
         break;
-      case "simpletable":
-        if (depth == 5 && (taskState == TaskState.STEP || taskState == TaskState.INFO)) {
-          if (taskState == TaskState.INFO) {
-            doEndElement(NULL_NS_URI, TASK_INFO.localName, TASK_INFO.localName);
-          }
-          taskState = TaskState.CHOICETABLE;
-          choicetableColumn = 0;
-          inChoicetableHead = false;
-          renameStartElement(TASK_CHOICETABLE, atts);
-        } else {
-          doStartElement(uri, localName, qName, atts);
-        }
-        break;
-      case "sthead":
-        if (taskState == TaskState.CHOICETABLE) {
-          inChoicetableHead = true;
-          choicetableColumn = 0;
-          renameStartElement(TASK_CHHEAD, atts);
-        } else {
-          doStartElement(uri, localName, qName, atts);
-        }
-        break;
-      case "strow":
-        if (taskState == TaskState.CHOICETABLE) {
-          inChoicetableHead = false;
-          choicetableColumn = 0;
-          renameStartElement(TASK_CHROW, atts);
-        } else {
-          doStartElement(uri, localName, qName, atts);
-        }
-        break;
-      case "stentry":
-        if (taskState == TaskState.CHOICETABLE) {
-          choicetableColumn++;
-          DitaClass entryClass;
-          if (inChoicetableHead) {
-            entryClass = choicetableColumn == 1 ? TASK_CHOPTIONHD : TASK_CHDESCHD;
-          } else {
-            entryClass = choicetableColumn == 1 ? TASK_CHOPTION : TASK_CHDESC;
-          }
-          renameStartElement(entryClass, atts);
-        } else {
-          doStartElement(uri, localName, qName, atts);
-        }
-        break;
       default:
         if (depth == DEPTH_IN_BODY) {
           openImplicitSection(uri);
           doStartElement(uri, localName, qName, atts);
         } else if (
-          (
-            taskState == TaskState.STEP ||
-            taskState == TaskState.INFO ||
-            taskState == TaskState.STEPRESULT ||
-            taskState == TaskState.STEPXMP
-          ) &&
+          (taskState == TaskState.STEP || taskState == TaskState.INFO) &&
           depth == 5
         ) {
-          final String outputclass = atts.getValue(ATTRIBUTE_NAME_OUTPUTCLASS);
-          if ("stepresult".equals(outputclass) || "stepxmp".equals(outputclass)) {
-            if (taskState == TaskState.INFO) {
-              doEndElement(NULL_NS_URI, TASK_INFO.localName, TASK_INFO.localName);
-            } else if (taskState == TaskState.STEPRESULT) {
-              doEndElement(NULL_NS_URI, TASK_STEPRESULT.localName, TASK_STEPRESULT.localName);
-            } else if (taskState == TaskState.STEPXMP) {
-              doEndElement(NULL_NS_URI, TASK_STEPXMP.localName, TASK_STEPXMP.localName);
-            }
-            final DitaClass wrapperClass = "stepresult".equals(outputclass) ? TASK_STEPRESULT : TASK_STEPXMP;
-            final TaskState newState = "stepresult".equals(outputclass) ? TaskState.STEPRESULT : TaskState.STEPXMP;
-            AttributesImpl wrapperAtts = new AttributesImpl();
-            wrapperAtts.addAttribute(
-              NULL_NS_URI,
-              ATTRIBUTE_NAME_CLASS,
-              ATTRIBUTE_NAME_CLASS,
-              "CDATA",
-              wrapperClass.toString()
-            );
-            doStartElement(NULL_NS_URI, wrapperClass.localName, wrapperClass.localName, wrapperAtts);
-            taskState = newState;
-            doStartElement(uri, localName, qName, stripOutputclass(atts));
-          } else if (taskState == TaskState.STEPRESULT || taskState == TaskState.STEPXMP) {
-            doStartElement(uri, localName, qName, atts);
-          } else {
-            switch (localName) {
-              case "p":
-              case TIGHT_LIST_P:
-                paragraphCountInStep++;
-                if (paragraphCountInStep == 1) {
-                  renameStartElement(TASK_CMD, atts);
-                } else if (paragraphCountInStep == 2 && taskState != TaskState.INFO) {
-                  AttributesImpl infoAtts = new AttributesImpl();
-                  infoAtts.addAttribute(
-                    NULL_NS_URI,
-                    ATTRIBUTE_NAME_CLASS,
-                    ATTRIBUTE_NAME_CLASS,
-                    "CDATA",
-                    TASK_INFO.toString()
-                  );
-                  doStartElement(NULL_NS_URI, TASK_INFO.localName, TASK_INFO.localName, infoAtts);
-                  taskState = TaskState.INFO;
-                  doStartElement(uri, localName, qName, atts);
-                } else {
-                  doStartElement(uri, localName, qName, atts);
-                }
-                break;
-              default:
-                if (taskState != TaskState.INFO) {
-                  AttributesImpl infoAtts = new AttributesImpl();
-                  infoAtts.addAttribute(
-                    NULL_NS_URI,
-                    ATTRIBUTE_NAME_CLASS,
-                    ATTRIBUTE_NAME_CLASS,
-                    "CDATA",
-                    TASK_INFO.toString()
-                  );
-                  doStartElement(NULL_NS_URI, TASK_INFO.localName, TASK_INFO.localName, infoAtts);
-                  taskState = TaskState.INFO;
-                }
+          switch (localName) {
+            case "p":
+            case TIGHT_LIST_P:
+              paragraphCountInStep++;
+              if (paragraphCountInStep == 1) {
+                renameStartElement(TASK_CMD, atts);
+              } else if (paragraphCountInStep == 2 && taskState != TaskState.INFO) {
+                AttributesImpl infoAtts = new AttributesImpl();
+                infoAtts.addAttribute(
+                  NULL_NS_URI,
+                  ATTRIBUTE_NAME_CLASS,
+                  ATTRIBUTE_NAME_CLASS,
+                  "CDATA",
+                  TASK_INFO.toString()
+                );
+                doStartElement(NULL_NS_URI, TASK_INFO.localName, TASK_INFO.localName, infoAtts);
+                taskState = TaskState.INFO;
                 doStartElement(uri, localName, qName, atts);
-                break;
-            }
+              } else {
+                doStartElement(uri, localName, qName, atts);
+              }
+              break;
+            default:
+              if (taskState != TaskState.INFO) {
+                AttributesImpl infoAtts = new AttributesImpl();
+                infoAtts.addAttribute(
+                  NULL_NS_URI,
+                  ATTRIBUTE_NAME_CLASS,
+                  ATTRIBUTE_NAME_CLASS,
+                  "CDATA",
+                  TASK_INFO.toString()
+                );
+                doStartElement(NULL_NS_URI, TASK_INFO.localName, TASK_INFO.localName, infoAtts);
+                taskState = TaskState.INFO;
+              }
+              doStartElement(uri, localName, qName, atts);
+              break;
           }
         } else if ((taskState == TaskState.SUBSTEP || taskState == TaskState.SUBINFO) && depth == 7) {
           switch (localName) {
@@ -518,14 +397,6 @@ public class SpecializeFilter extends XMLFilterImpl {
           paragraphCountInSubstep = 0;
           taskState = TaskState.SUBSTEPS;
         }
-        if (taskState == TaskState.STEPRESULT && depth == 4) {
-          doEndElement(NULL_NS_URI, TASK_STEPRESULT.localName, TASK_STEPRESULT.localName);
-          taskState = TaskState.STEP;
-        }
-        if (taskState == TaskState.STEPXMP && depth == 4) {
-          doEndElement(NULL_NS_URI, TASK_STEPXMP.localName, TASK_STEPXMP.localName);
-          taskState = TaskState.STEP;
-        }
         if (taskState == TaskState.INFO && depth == 4) {
           doEndElement(NULL_NS_URI, TASK_INFO.localName, TASK_INFO.localName);
           taskState = TaskState.STEP;
@@ -533,20 +404,6 @@ public class SpecializeFilter extends XMLFilterImpl {
         if (taskState == TaskState.STEP && depth == 4) {
           paragraphCountInStep = 0;
           taskState = TaskState.STEPS;
-        }
-        doEndElement(uri, localName, qName);
-        break;
-      case "simpletable":
-        if (depth == 5 && taskState == TaskState.CHOICETABLE) {
-          taskState = TaskState.STEP;
-          inChoicetableHead = false;
-          choicetableColumn = 0;
-        }
-        doEndElement(uri, localName, qName);
-        break;
-      case "sthead":
-        if (taskState == TaskState.CHOICETABLE) {
-          inChoicetableHead = false;
         }
         doEndElement(uri, localName, qName);
         break;
@@ -611,94 +468,6 @@ public class SpecializeFilter extends XMLFilterImpl {
     }
   }
 
-  private void startRelatedLinks(String uri) throws SAXException {
-    switch (typeStack.peek()) {
-      case TASK:
-        closeImplicitSection(uri);
-        break;
-      case REFERENCE:
-        if (referenceState == ReferenceState.SECTION) {
-          referenceState = null;
-          doEndElement(uri, TOPIC_SECTION.localName, TOPIC_SECTION.localName);
-        }
-        break;
-      default:
-        break;
-    }
-    doEndElement(uri, "body", "body");
-    bodyClosedForRelatedLinks = true;
-    AttributesImpl rlAtts = new AttributesImpl();
-    rlAtts.addAttribute(
-      NULL_NS_URI,
-      ATTRIBUTE_NAME_CLASS,
-      ATTRIBUTE_NAME_CLASS,
-      "CDATA",
-      TOPIC_RELATED_LINKS.toString()
-    );
-    doStartElement(NULL_NS_URI, TOPIC_RELATED_LINKS.localName, TOPIC_RELATED_LINKS.localName, rlAtts);
-    inRelatedLinks = true;
-    relatedLinksSuppressDepth = 0;
-  }
-
-  private void startElementRelatedLinks(String uri, String localName, String qName, Attributes atts)
-    throws SAXException {
-    switch (localName) {
-      case "xref":
-        AttributesImpl linkAtts = new AttributesImpl();
-        linkAtts.addAttribute(NULL_NS_URI, ATTRIBUTE_NAME_CLASS, ATTRIBUTE_NAME_CLASS, "CDATA", TOPIC_LINK.toString());
-        final String href = atts.getValue(ATTRIBUTE_NAME_HREF);
-        if (href != null) {
-          linkAtts.addAttribute(NULL_NS_URI, ATTRIBUTE_NAME_HREF, ATTRIBUTE_NAME_HREF, "CDATA", href);
-        }
-        final String format = atts.getValue(ATTRIBUTE_NAME_FORMAT);
-        if (format != null) {
-          linkAtts.addAttribute(NULL_NS_URI, ATTRIBUTE_NAME_FORMAT, ATTRIBUTE_NAME_FORMAT, "CDATA", format);
-        }
-        final String scope = atts.getValue(ATTRIBUTE_NAME_SCOPE);
-        if (scope != null) {
-          linkAtts.addAttribute(NULL_NS_URI, ATTRIBUTE_NAME_SCOPE, ATTRIBUTE_NAME_SCOPE, "CDATA", scope);
-        }
-        doStartElement(NULL_NS_URI, TOPIC_LINK.localName, TOPIC_LINK.localName, linkAtts);
-        AttributesImpl ltAtts = new AttributesImpl();
-        ltAtts.addAttribute(
-          NULL_NS_URI,
-          ATTRIBUTE_NAME_CLASS,
-          ATTRIBUTE_NAME_CLASS,
-          "CDATA",
-          TOPIC_LINKTEXT.toString()
-        );
-        doStartElement(NULL_NS_URI, TOPIC_LINKTEXT.localName, TOPIC_LINKTEXT.localName, ltAtts);
-        inRelatedLinksXref = true;
-        break;
-      default:
-        relatedLinksSuppressDepth++;
-        break;
-    }
-  }
-
-  private void endElementRelatedLinks(String uri, String localName, String qName) throws SAXException {
-    if ("section".equals(localName) && relatedLinksSuppressDepth == 0) {
-      doEndElement(uri, TOPIC_RELATED_LINKS.localName, TOPIC_RELATED_LINKS.localName);
-      inRelatedLinks = false;
-      return;
-    }
-    if (inRelatedLinksXref && "xref".equals(localName)) {
-      doEndElement(uri, TOPIC_LINKTEXT.localName, TOPIC_LINKTEXT.localName);
-      doEndElement(uri, TOPIC_LINK.localName, TOPIC_LINK.localName);
-      inRelatedLinksXref = false;
-    } else if (relatedLinksSuppressDepth > 0) {
-      relatedLinksSuppressDepth--;
-    }
-  }
-
-  @Override
-  public void characters(char[] ch, int start, int length) throws SAXException {
-    if (inRelatedLinks && !inRelatedLinksXref) {
-      return;
-    }
-    super.characters(ch, start, length);
-  }
-
   public void doStartElement(String uri, String localName, String qName, Attributes atts) throws SAXException {
     //        System.out.printf("<%s>%n", localName);
     super.startElement(uri, localName, qName, atts);
@@ -747,12 +516,4 @@ public class SpecializeFilter extends XMLFilterImpl {
     return Arrays.asList(outputclass.trim().split("\\s+"));
   }
 
-  private Attributes stripOutputclass(Attributes atts) {
-    final AttributesImpl result = new AttributesImpl(atts);
-    final int idx = result.getIndex(ATTRIBUTE_NAME_OUTPUTCLASS);
-    if (idx >= 0) {
-      result.removeAttribute(idx);
-    }
-    return result;
-  }
 }

@@ -3,7 +3,7 @@ $schema: urn:oasis:names:tc:dita:xsd:topic.xsd
 id: test
 ---
 
-# Test {#test}
+# Test
 
 Paragraph *emph* and **strong** or `code`.
 

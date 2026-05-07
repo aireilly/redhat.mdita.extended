@@ -1,1 +1,14 @@
-<?xml version="1.0" encoding="UTF-8"?><pandoc><head><map><entry key="$schema">urn:oasis:names:tc:dita:xsd:topic.xsd</entry><entry key="id">line-break</entry></map></head><div><header id="line-break" level="1">Line break</header><div><para>Linebreak.</para></div></div></pandoc>
+<pandoc>
+   <head>
+      <map>
+         <entry key="$schema">urn:oasis:names:tc:dita:xsd:topic.xsd</entry>
+         <entry key="id">line-break</entry>
+      </map>
+   </head>
+   <div>
+      <header id="line-break" level="1">Line break</header>
+      <div>
+         <para>Linebreak.</para>
+      </div>
+   </div>
+</pandoc>

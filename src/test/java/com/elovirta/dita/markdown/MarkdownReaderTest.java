@@ -46,9 +46,7 @@ public class MarkdownReaderTest extends AbstractReaderTest {
   @ParameterizedTest
   @ValueSource(
     strings = {
-      "abbreviation.md",
       "admonition.md",
-      "body_attributes.md",
       "codeblock.md",
       "comment.md",
       "concept.md",
@@ -57,12 +55,9 @@ public class MarkdownReaderTest extends AbstractReaderTest {
       "dl.md",
       "entity.md",
       "escape.md",
-      "footnote.md",
       "header.md",
-      "header_attributes.md",
       "html.md",
       "html_unsupported.md",
-      "image-size.md",
       "image.md",
       "inline.md",
       "inline_extended.md",
@@ -90,7 +85,6 @@ public class MarkdownReaderTest extends AbstractReaderTest {
       "testNoBOM.md",
       "ul.md",
       "yaml.md",
-      //            "pandoc_header.md",
       "schema/concept.md",
       "schema/core.md",
       "schema/example.md",
@@ -105,7 +99,7 @@ public class MarkdownReaderTest extends AbstractReaderTest {
   }
 
   @ParameterizedTest
-  @ValueSource(strings = { "dita_block.md", "dita_block_unsupported.md", "dita_inline.md" })
+  @ValueSource(strings = { "dita_block.md", "dita_block_unsupported.md" })
   public void test_rawDITA(String file) throws Exception {
     reader.setFeature("http://lwdita.org/sax/features/raw-dita", true);
 
@@ -299,31 +293,31 @@ public class MarkdownReaderTest extends AbstractReaderTest {
     testLocatorParsing(
       Arrays.asList(
         new Event("startDocument", 1, 1),
-        new Event("startElement", "task", 1, 1),
-        new Event("startElement", "title", 1, 1),
-        new Event("characters", "Task", 1, 1),
-        new Event("endElement", "title", 1, 1),
-        new Event("startElement", "taskbody", 1, 1),
-        new Event("startElement", "context", 3, 1),
-        new Event("startElement", "p", 3, 1),
-        new Event("characters", "Context", 3, 1),
-        new Event("endElement", "p", 3, 1),
-        new Event("endElement", "context", 5, 1),
-        new Event("startElement", "steps", 5, 1),
-        new Event("startElement", "step", 5, 1),
-        new Event("startElement", "cmd", 5, 5),
-        new Event("characters", "Command", 5, 5),
-        new Event("endElement", "cmd", 5, 5),
-        new Event("startElement", "info", 7, 5),
-        new Event("startElement", "p", 7, 5),
-        new Event("characters", "Info.", 7, 5),
-        new Event("endElement", "p", 7, 5),
-        new Event("endElement", "info", 7, 5),
-        new Event("endElement", "step", 7, 5),
-        new Event("endElement", "steps", 7, 5),
-        new Event("endElement", "taskbody", 7, 5),
-        new Event("endElement", "task", 7, 5),
-        new Event("endDocument", 7, 5)
+        new Event("startElement", "task", 4, 1),
+        new Event("startElement", "title", 4, 1),
+        new Event("characters", "Task", 4, 1),
+        new Event("endElement", "title", 4, 1),
+        new Event("startElement", "shortdesc", 6, 1),
+        new Event("characters", "Context", 6, 1),
+        new Event("endElement", "shortdesc", 6, 1),
+        new Event("startElement", "prolog", 1, 1),
+        new Event("endElement", "prolog", 1, 1),
+        new Event("startElement", "taskbody", 4, 1),
+        new Event("startElement", "steps", 8, 1),
+        new Event("startElement", "step", 8, 1),
+        new Event("startElement", "cmd", 8, 5),
+        new Event("characters", "Command", 8, 5),
+        new Event("endElement", "cmd", 8, 5),
+        new Event("startElement", "info", 10, 5),
+        new Event("startElement", "p", 10, 5),
+        new Event("characters", "Info.", 10, 5),
+        new Event("endElement", "p", 10, 5),
+        new Event("endElement", "info", 10, 5),
+        new Event("endElement", "step", 10, 5),
+        new Event("endElement", "steps", 10, 5),
+        new Event("endElement", "taskbody", 10, 5),
+        new Event("endElement", "task", 10, 5),
+        new Event("endDocument", 10, 5)
       ),
       "taskOneStep.md"
     );

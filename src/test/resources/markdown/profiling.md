@@ -2,12 +2,12 @@
 
 This guide covers installation on supported platforms.
 
-## Installing on Linux {platform="linux"}
+## Installing on Linux
 
 Use the package manager to install.
 
-## Installing on macOS {platform="macos"}
+## Installing on macOS
 
 Use Homebrew to install.
 
-For **expert users**{audience="expert"}, compile from source.
+For **expert users**, compile from source.

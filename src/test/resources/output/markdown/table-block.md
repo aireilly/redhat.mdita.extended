@@ -3,7 +3,34 @@ $schema: urn:oasis:names:tc:dita:xsd:topic.xsd
 id: tables
 ---
 
-# Table with block content {#tables}
+# Table with block content
 
+|A|B|C|
+|---|---|---|
+|A1 **bold**
 
-<table><thead><tr><th>A</th><th>B</th><th>C</th></tr></thead><tbody><tr><td>A1 **bold** A1</td><td>B1 **bold** B1</td><td>**C1** C1</td></tr><tr><td align="left">A2 **bold**</td><td align="center">B2</td><td align="right">**C2**</td></tr><tr><td colspan="2">A3 B3</td><td rowspan="2">C3</td></tr><tr><td>``` A4 ```</td><td>1. B4</td></tr></tbody></table>
+ A1
+
+|B1
+
+ **bold** B1
+
+|**C1**
+
+ C1
+
+|
+|A2 **bold**|B2|**C2**|
+|A3
+
+ B3
+
+|C3|
+|```
+A4
+```
+
+|1.  B4
+
+|
+

@@ -3,7 +3,7 @@
                 xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
 
   <xsl:template match="*[contains(@class,' sw-d/filepath ')]" name="topic.sw-d.filepath">
-    <code class="filepath">
+    <code>
       <xsl:call-template name="commonattributes"/>
       <xsl:call-template name="setidaname"/>
       <xsl:apply-templates/>
@@ -11,7 +11,7 @@
   </xsl:template>
 
   <xsl:template match="*[contains(@class,' sw-d/msgph ')]" name="topic.sw-d.msgph">
-    <code class="msgph">
+    <code>
       <xsl:call-template name="commonattributes"/>
       <xsl:call-template name="setidaname"/>
       <xsl:apply-templates/>
@@ -19,7 +19,7 @@
   </xsl:template>
 
   <xsl:template match="*[contains(@class,' sw-d/userinput ')]" name="topic.sw-d.userinput">
-    <code class="userinput">
+    <code>
       <xsl:call-template name="commonattributes"/>
       <xsl:call-template name="setidaname"/>
       <xsl:apply-templates/>
@@ -27,7 +27,7 @@
   </xsl:template>
 
   <xsl:template match="*[contains(@class,' sw-d/systemoutput ')]" name="topic.sw-d.systemoutput">
-    <code class="sysout">
+    <code>
       <xsl:call-template name="commonattributes"/>
       <xsl:call-template name="setidaname"/>
       <xsl:apply-templates/>
@@ -35,7 +35,7 @@
   </xsl:template>
 
   <xsl:template match="*[contains(@class,' sw-d/cmdname ')]" name="topic.sw-d.cmdname">
-    <code class="cmdname">
+    <code>
       <xsl:call-template name="commonattributes"/>
       <xsl:call-template name="setidaname"/>
       <xsl:apply-templates/>
@@ -43,15 +43,15 @@
   </xsl:template>
 
   <xsl:template match="*[contains(@class,' sw-d/msgnum ')]" name="topic.sw-d.msgnum">
-    <span class="msgnum">
+    <code>
       <xsl:call-template name="commonattributes"/>
       <xsl:call-template name="setidaname"/>
       <xsl:apply-templates/>
-    </span>
+    </code>
   </xsl:template>
 
   <xsl:template match="*[contains(@class,' sw-d/varname ')]" name="topic.sw-d.varname">
-    <code class="varname">
+    <code>
       <xsl:call-template name="commonattributes"/>
       <xsl:call-template name="setidaname"/>
       <xsl:apply-templates/>

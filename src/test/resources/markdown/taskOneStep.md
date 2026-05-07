@@ -1,4 +1,7 @@
-# Task {.task}
+---
+$schema: 'urn:oasis:names:tc:dita:xsd:task.xsd'
+---
+# Task
 
 Context
 

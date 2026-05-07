@@ -1,4 +1,7 @@
-# Concept {.concept}
+---
+$schema: 'urn:oasis:names:tc:dita:xsd:concept.xsd'
+---
+# Concept
 
 Content A.
 
@@ -6,7 +9,7 @@ Content A.
 
 Content A.1.
 
-# Task {.task}
+# Task
 
 Content B.
 
@@ -14,7 +17,7 @@ Content B.
 
 Content B.1.
 
-# Reference {.reference}
+# Reference
 
 Content C.
 

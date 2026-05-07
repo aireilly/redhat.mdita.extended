@@ -11,5 +11,5 @@ keyword: [Keyword1, Keyword2]
 resourceid: [Resourceid1, Resourceid2]
 ---
 
-# YAML Header {#extended-profile}
+# YAML Header
 

@@ -3,7 +3,7 @@ $schema: urn:oasis:names:tc:dita:xsd:topic.xsd
 id: note
 ---
 
-# Note {#note}
+# Note
 
 !!! note
     Note

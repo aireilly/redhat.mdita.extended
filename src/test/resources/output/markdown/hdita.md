@@ -3,7 +3,7 @@ $schema: urn:oasis:names:tc:dita:xsd:topic.xsd
 id: how-to-do-something
 ---
 
-# How to do something {#how-to-do-something}
+# How to do something
 
 Introduction to this specific task
 

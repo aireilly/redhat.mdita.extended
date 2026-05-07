@@ -1,1 +1,11 @@
-<?xml version="1.0" encoding="UTF-8"?><pandoc><head><map><entry key="$schema">urn:oasis:names:tc:dita:xsd:topic.xsd</entry><entry key="id">topic</entry></map></head><div><header id="topic" level="1">Topic</header></div></pandoc>
+<pandoc>
+   <head>
+      <map>
+         <entry key="$schema">urn:oasis:names:tc:dita:xsd:topic.xsd</entry>
+         <entry key="id">topic</entry>
+      </map>
+   </head>
+   <div>
+      <header id="topic" level="1">Topic</header>
+   </div>
+</pandoc>

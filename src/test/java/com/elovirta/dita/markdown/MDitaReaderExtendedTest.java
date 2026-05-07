@@ -34,7 +34,6 @@ public class MDitaReaderExtendedTest extends AbstractReaderTest {
   @ParameterizedTest
   @ValueSource(
     strings = {
-      "body_attributes.md",
       "codeblock.md",
       "comment.md",
       "concept.md",
@@ -43,9 +42,6 @@ public class MDitaReaderExtendedTest extends AbstractReaderTest {
       "dl.md",
       "entity.md",
       "escape.md",
-      "footnote.md",
-      "header_attributes.md",
-      "invalid_section_header.md",
       "dita_block.md",
       "html.md",
       "html_unsupported.md",
@@ -74,7 +70,6 @@ public class MDitaReaderExtendedTest extends AbstractReaderTest {
       "testNoBOM.md",
       "ul.md",
       "yaml.md",
-      "domain_elements.md",
       "related_links.md",
     }
   )
@@ -126,27 +121,31 @@ public class MDitaReaderExtendedTest extends AbstractReaderTest {
     testLocatorParsing(
       Arrays.asList(
         new Event("startDocument", 1, 1),
-        new Event("startElement", "topic", 1, 1),
-        new Event("startElement", "title", 1, 1),
-        new Event("characters", "Task", 1, 1),
-        new Event("endElement", "title", 1, 1),
-        new Event("startElement", "shortdesc", 3, 1),
-        new Event("characters", "Context", 3, 1),
-        new Event("endElement", "shortdesc", 3, 1),
-        new Event("startElement", "body", 1, 1),
-        new Event("startElement", "ol", 5, 1),
-        new Event("startElement", "li", 5, 1),
-        new Event("startElement", "p", 5, 5),
-        new Event("characters", "Command", 5, 5),
-        new Event("endElement", "p", 5, 5),
-        new Event("startElement", "p", 7, 5),
-        new Event("characters", "Info.", 7, 5),
-        new Event("endElement", "p", 7, 5),
-        new Event("endElement", "li", 7, 5),
-        new Event("endElement", "ol", 7, 5),
-        new Event("endElement", "body", 7, 5),
-        new Event("endElement", "topic", 7, 5),
-        new Event("endDocument", 7, 5)
+        new Event("startElement", "task", 4, 1),
+        new Event("startElement", "title", 4, 1),
+        new Event("characters", "Task", 4, 1),
+        new Event("endElement", "title", 4, 1),
+        new Event("startElement", "shortdesc", 6, 1),
+        new Event("characters", "Context", 6, 1),
+        new Event("endElement", "shortdesc", 6, 1),
+        new Event("startElement", "prolog", 1, 1),
+        new Event("endElement", "prolog", 1, 1),
+        new Event("startElement", "taskbody", 4, 1),
+        new Event("startElement", "steps", 8, 1),
+        new Event("startElement", "step", 8, 1),
+        new Event("startElement", "cmd", 8, 5),
+        new Event("characters", "Command", 8, 5),
+        new Event("endElement", "cmd", 8, 5),
+        new Event("startElement", "info", 10, 5),
+        new Event("startElement", "p", 10, 5),
+        new Event("characters", "Info.", 10, 5),
+        new Event("endElement", "p", 10, 5),
+        new Event("endElement", "info", 10, 5),
+        new Event("endElement", "step", 10, 5),
+        new Event("endElement", "steps", 10, 5),
+        new Event("endElement", "taskbody", 10, 5),
+        new Event("endElement", "task", 10, 5),
+        new Event("endDocument", 10, 5)
       ),
       "taskOneStep.md"
     );

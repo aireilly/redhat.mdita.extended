@@ -3,7 +3,7 @@ $schema: urn:oasis:names:tc:dita:xsd:topic.xsd
 id: tables
 ---
 
-# Tables {#tables}
+# Tables
 
 |Right|Left|Default|Center|
 |-----|----|-------|------|

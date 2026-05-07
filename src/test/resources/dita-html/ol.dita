@@ -1,0 +1,44 @@
+<topic xmlns:ditaarch="http://dita.oasis-open.org/architecture/2005/" class="- topic/topic "
+  specializations="@props/audience @props/deliveryTarget @props/otherprops @props/platform @props/product"
+  id="numbered-list" ditaarch:DITAArchVersion="2.0">
+  <title class="- topic/title ">Numbered list</title>
+  <body class="- topic/body ">
+    <p class="- topic/p ">Ordered:</p>
+    <ol class="- topic/ol ">
+      <li class="- topic/li ">ordered</li>
+      <li class="- topic/li ">list</li>
+      <li class="- topic/li ">item
+        <ol class="- topic/ol ">
+          <li class="- topic/li ">nested</li>
+          <li class="- topic/li ">list</li>
+        </ol>
+      </li>
+      <li class="- topic/li ">foo</li>
+      <li class="- topic/li ">foo</li>
+      <li class="- topic/li ">foo</li>
+      <li class="- topic/li ">foo</li>
+      <li class="- topic/li ">foo</li>
+      <li class="- topic/li ">foo</li>
+      <li class="- topic/li ">foo</li>
+      <li class="- topic/li ">foo</li>
+      <li class="- topic/li ">foo</li>
+      <li class="- topic/li ">foo</li>
+      <li class="- topic/li ">foo</li>
+      <li class="- topic/li ">foo</li>
+    </ol>
+    <p class="- topic/p ">Loose:</p>
+    <ol class="- topic/ol ">
+      <li class="- topic/li ">
+        <p class="- topic/p ">Item</p>
+      </li>
+      <li class="- topic/li ">
+        <p class="- topic/p ">Item</p>
+      </li>
+    </ol>
+    <p class="- topic/p ">Tight:</p>
+    <ol class="- topic/ol ">
+      <li class="- topic/li ">Item</li>
+      <li class="- topic/li ">Item</li>
+    </ol>
+  </body>
+</topic>

@@ -1,7 +1,7 @@
 # redhat.mdita.extended
 
-A fork of [org.lwdita](https://github.com/jelovirt/org.lwdita) with extended
-MDITA task support for Red Hat documentation workflows.
+!!! important
+    A fork of [org.lwdita](https://github.com/jelovirt/org.lwdita) with extended MDITA task support for Red Hat documentation workflows.
 
 This plug-in simplifies the Markdown-to-DITA conversion by focusing on text
 fidelity over format fidelity. Complex DITA elements are downsampled to
@@ -298,6 +298,26 @@ $schema: urn:oasis:names:tc:dita:xsd:map.xsd
 - [Overview](overview.md)
 - [Installation guide](install.mditamap)
 - [API reference](api.ditamap)
+```
+
+The referenced `install.mditamap` sub-map is a standalone map with its own
+topic references and nesting:
+
+```markdown
+---
+$schema: urn:oasis:names:tc:dita:xsd:map.xsd
+---
+
+# Installation guide
+
+- System requirements
+  - [Hardware](install/hardware.md)
+  - [Software](install/software.md)
+- Installing
+  1. [Download the package](install/download.md)
+  2. [Run the installer](install/run.md)
+  3. [Verify the installation](install/verify.md)
+- [Uninstalling](install/uninstall.md)
 ```
 
 ### Ordered lists (sequence)

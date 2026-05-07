@@ -128,6 +128,117 @@ The software is now installed.
 Configure the license key.
 ```
 
+## Admonitions
+
+Fenced admonitions (Flexmark syntax) are converted to DITA `<note>` elements.
+The admonition qualifier maps to the `@type` attribute:
+
+```markdown
+!!! warning
+    Back up your data before proceeding.
+
+!!! tip "Optional title"
+    This tip has a title rendered as a paragraph inside the note.
+```
+
+Supported types: `note`, `tip`, `fastpath`, `restriction`, `important`,
+`remember`, `attention`, `caution`, `notice`, `danger`, `warning`, `trouble`.
+Any other qualifier produces `type="other" othertype="<qualifier>"`.
+
+## Definition lists
+
+Definition lists (Flexmark syntax) are converted to DITA `<dl>`:
+
+```markdown
+Term 1
+:   Definition of term 1.
+
+Term 2
+:   Definition of term 2.
+```
+
+## Fenced code blocks
+
+Fenced code blocks become `<codeblock>` elements. The language identifier
+is mapped to `@outputclass`:
+
+````markdown
+```yaml
+apiVersion: v1
+kind: Pod
+```
+````
+
+Extended metadata syntax is also supported:
+
+````markdown
+```{.yaml #my-id key=value}
+content
+```
+````
+
+This sets `outputclass="yaml"`, `id="my-id"`, and `key="value"` on the
+`<codeblock>` element.
+
+## Images
+
+Images are converted to `<image>` elements. When an image has a title,
+it is wrapped in `<fig>` with `<title>`:
+
+```markdown
+![Alt text](image.png "Figure title")
+```
+
+When an image is the sole child of a paragraph, it gets
+`placement="break"` for block-level display.
+
+## Blockquotes
+
+Blockquotes are converted to DITA `<lq>` (long quote):
+
+```markdown
+> This becomes a long quote element.
+```
+
+## Hard line breaks
+
+A trailing backslash or two spaces at end of line produces a
+`<?linebreak?>` processing instruction in DITA output.
+
+## Key and content references
+
+The plug-in processes DITA key references and content references
+when they appear in the DITA source (for the DITA-to-Markdown
+conversion path):
+
+- `@keyref` on `<ph>`, `<xref>`, and `<image>` elements
+- `@conref` on block elements
+- `@conkeyref` on block elements
+
+## Link handling
+
+Links are auto-classified based on their URL:
+
+- Absolute URLs or paths starting with `/` get `scope="external"`
+- Fragment-only links (`#id`) get `format="markdown"`
+- File extension is detected and set as `@format` (e.g., `html`, `pdf`)
+- `mailto:` links get `format="email"`
+- `.dita` and `.xml` extensions are treated as native DITA (no format attribute)
+
+## Inline HTML
+
+Inline HTML tags in Markdown are transformed to DITA equivalents via
+an XSLT stylesheet. Common mappings include `<b>`/`<strong>` to `<b>`,
+`<i>`/`<em>` to `<i>`, `<code>` to `<codeph>`, `<sub>`, `<sup>`, and
+`<u>` to their DITA highlight-domain counterparts. Unsupported tags
+are passed through as `<required-cleanup>`.
+
+## Jekyll include tags
+
+Jekyll-style `{% include file.md %}` tags are converted to
+`<required-cleanup conref="file.md"/>`, preserving the reference for
+downstream resolution.
+
 ## Markdown source formats
 
 Two Markdown source formats are supported:
@@ -135,10 +246,15 @@ Two Markdown source formats are supported:
 - [Markdown DITA](https://github.com/jelovirt/org.lwdita/wiki/Markdown-DITA-syntax)
 - [MDITA (LwDITA)](https://github.com/jelovirt/org.lwdita/wiki/MDITA-syntax)
 
-## Relationship tables in MDITA maps
+## MDITA maps
 
-MDITA map files (`.mditamap`) support relationship tables. A Markdown table
-placed after the topic list is converted to a DITA `<reltable>`:
+MDITA map files (`.mditamap`) support the following features.
+
+### Topic references and sub-maps
+
+Bullet list items with links become `<topicref>` elements. Links to
+`.ditamap` or `.mditamap` files are automatically emitted as
+`<mapref format="ditamap">`, allowing sub-maps to be nested:
 
 ```markdown
 ---
@@ -148,12 +264,65 @@ $schema: urn:oasis:names:tc:dita:xsd:map.xsd
 # Product documentation
 
 - [Overview](overview.md)
-- [Configuration](config.md)
-- [Installation](install.md)
+- [Installation guide](install.mditamap)
+- [API reference](api.ditamap)
+```
 
+### Ordered lists (sequence)
+
+Ordered list items in maps produce `<topicref collection-type="sequence">`:
+
+```markdown
+1. [Step 1](step1.md)
+2. [Step 2](step2.md)
+3. [Step 3](step3.md)
+```
+
+### Topic heads
+
+List items without links become `<topichead>` elements with a `<navtitle>`:
+
+```markdown
+- Getting started
+  - [Quick start](quickstart.md)
+  - [Installation](install.md)
+```
+
+### Key definitions
+
+Markdown reference-style links at the bottom of a map file become
+`<keydef>` elements:
+
+```markdown
+[product-name]: product.md
+```
+
+### Relationship tables
+
+A Markdown table placed after the topic list is converted to a DITA
+`<reltable>`:
+
+```markdown
 | [Overview](overview.md)    | [Configuration](config.md)         |
 |----------------------------|------------------------------------|
 | [Installation](install.md) | [Troubleshooting](troubleshoot.md) |
+```
+
+## Output transtypes
+
+The plug-in registers four DITA-to-Markdown output transtypes:
+
+| Transtype | Description |
+|-----------|-------------|
+| `markdown` | Standard Markdown output |
+| `markdown_github` | GitHub-flavored Markdown |
+| `markdown_gitbook` | GitBook format |
+| `mdita` | MDITA (Lightweight DITA Markdown) |
+
+Usage:
+
+```shell
+dita -i input.ditamap -f markdown_github -o out
 ```
 
 ## Install

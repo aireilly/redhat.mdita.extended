@@ -41,6 +41,7 @@ See the accompanying LICENSE file for applicable license.
           <xsl:with-param name="id" select="'task_procedure'"/>
         </xsl:call-template>
       </xsl:with-param>
+      <xsl:with-param name="section-class" select="'steps'"/>
     </xsl:apply-templates>
     <xsl:next-match/>
   </xsl:template>
@@ -52,6 +53,7 @@ See the accompanying LICENSE file for applicable license.
           <xsl:with-param name="id" select="'task_procedure_unordered'"/>
         </xsl:call-template>
       </xsl:with-param>
+      <xsl:with-param name="section-class" select="'steps-unordered'"/>
     </xsl:apply-templates>
     <xsl:next-match/>
   </xsl:template>
@@ -63,6 +65,7 @@ See the accompanying LICENSE file for applicable license.
           <xsl:with-param name="id" select="'task_prereq'"/>
         </xsl:call-template>
       </xsl:with-param>
+      <xsl:with-param name="section-class" select="'prereq'"/>
     </xsl:apply-templates>
   </xsl:template>
   
@@ -73,6 +76,7 @@ See the accompanying LICENSE file for applicable license.
           <xsl:with-param name="id" select="'task_context'"/>
         </xsl:call-template>
       </xsl:with-param>
+      <xsl:with-param name="section-class" select="'context'"/>
     </xsl:apply-templates>
   </xsl:template>
       
@@ -83,6 +87,7 @@ See the accompanying LICENSE file for applicable license.
           <xsl:with-param name="id" select="'task_results'"/>
         </xsl:call-template>
       </xsl:with-param>
+      <xsl:with-param name="section-class" select="'result'"/>
     </xsl:apply-templates>
   </xsl:template>
   
@@ -93,6 +98,7 @@ See the accompanying LICENSE file for applicable license.
           <xsl:with-param name="id" select="'task_postreq'"/>
         </xsl:call-template>
       </xsl:with-param>
+      <xsl:with-param name="section-class" select="'postreq'"/>
     </xsl:apply-templates>
   </xsl:template>
   
@@ -120,6 +126,7 @@ See the accompanying LICENSE file for applicable license.
   
   <xsl:template match="*" mode="generate-task-label">
     <xsl:param name="use-label"/>
+    <xsl:param name="section-class" select="''"/>
     <xsl:param name="headLevel" as="xs:integer">
       <xsl:variable name="headCount" select="count(ancestor::*[contains(@class, ' topic/topic ')]) + 1"/>
       <xsl:choose>
@@ -130,7 +137,7 @@ See the accompanying LICENSE file for applicable license.
     <xsl:if test="$GENERATE-TASK-LABELS = 'YES'">
       <header level="{$headLevel}">
         <xsl:call-template name="commonattributes">
-          <xsl:with-param name="default-output-class" select="name(..)"/>
+          <xsl:with-param name="default-output-class" select="if ($section-class != '') then $section-class else name(..)"/>
         </xsl:call-template>
         <xsl:value-of select="$use-label"/>
       </header>

@@ -5,6 +5,7 @@ import static com.elovirta.dita.markdown.MDitaReader.EXTENDED_PROFILE;
 import static java.util.Arrays.asList;
 
 import com.vladsch.flexmark.ext.abbreviation.AbbreviationExtension;
+import com.vladsch.flexmark.ext.admonition.AdmonitionExtension;
 import com.vladsch.flexmark.ext.anchorlink.AnchorLinkExtension;
 import com.vladsch.flexmark.ext.attributes.AttributesExtension;
 import com.vladsch.flexmark.ext.autolink.AutolinkExtension;
@@ -52,6 +53,7 @@ public class DefaultSchemaProvider implements SchemaProvider {
         Parser.EXTENSIONS,
         asList(
           AbbreviationExtension.create(),
+          AdmonitionExtension.create(),
           AnchorLinkExtension.create(),
           AttributesExtension.create(),
           FootnoteExtension.create(),

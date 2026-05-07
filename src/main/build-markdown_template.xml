@@ -2,9 +2,15 @@
 <project xmlns:dita="http://dita-ot.sourceforge.net"
          xmlns:if="ant:if">
 
+  <target name="markdown.xsl.init">
+    <property name="args.xsl" value="${dita.plugin.redhat.mdita.extended.dir}/xsl/dita2markdown.xsl"/>
+    <property name="args.markdown.toc.xsl" value="${dita.plugin.redhat.mdita.extended.dir}/xsl/map2markdown-cover.xsl"/>
+  </target>
+
   <target name="dita2markdown"
           depends="build-init,
-                   preprocess, 
+                   preprocess,
+                   markdown.xsl.init,
                    markdown.init,
                    markdown.topic,
                    markdown.map"/>
@@ -15,7 +21,7 @@
     <condition property="markdown.type.prefix" value="_${markdown.type}" else="">
       <isset property="markdown.type"/>
     </condition>
-    <property name="args.xsl" value="${dita.plugin.org.lwdita.dir}/xsl/dita2markdown${markdown.type.prefix}.xsl"/>
+    <property name="args.xsl" value="${dita.plugin.redhat.mdita.extended.dir}/xsl/dita2markdown${markdown.type.prefix}.xsl"/>
     <makeurl file="${dita.input.valfile}" property="dita.input.valfile.url" validate="no"/>
     <property name="dita.markdown.reloadstylesheet" value="false"/>
   </target>
@@ -28,7 +34,7 @@
           unless="noMap"/>
 
   <target name="markdown.map.init" unless="noMap">
-    <property name="args.markdown.toc.xsl" value="${dita.plugin.org.lwdita.dir}/xsl/map2markdown-cover.xsl"/>
+    <property name="args.markdown.toc.xsl" value="${dita.plugin.redhat.mdita.extended.dir}/xsl/map2markdown-cover.xsl"/>
     <property name="args.markdown.toc" value="index"/>
     <property name="markdown.toc.generate" value="true"/>
     <condition property="_markdown.toc.skip" value="true">
@@ -128,9 +134,15 @@
   
   <!-- MDITA -->
 
+  <target name="mdita.xsl.init">
+    <property name="args.xsl" value="${dita.plugin.redhat.mdita.extended.dir}/xsl/dita2markdown.xsl"/>
+    <property name="args.markdown.toc.xsl" value="${dita.plugin.redhat.mdita.extended.dir}/xsl/map2markdown-cover.xsl"/>
+  </target>
+
   <target name="dita2mdita"
           depends="build-init,
                    preprocess,
+                   mdita.xsl.init,
                    markdown.init,
                    markdown.topic,
                    mdita.map"/>
@@ -141,7 +153,7 @@
           unless="noMap"/>
 
   <target name="mdita.map.init" unless="noMap">
-    <property name="args.markdown.toc.xsl" value="${dita.plugin.org.lwdita.dir}/xsl/map2markdown-cover.xsl"/>
+    <property name="args.markdown.toc.xsl" value="${dita.plugin.redhat.mdita.extended.dir}/xsl/map2markdown-cover.xsl"/>
     <property name="markdown.toc.generate" value="true"/>
     <condition property="_markdown.toc.skip" value="true">
       <or>
@@ -187,7 +199,7 @@
   <target name="dita2markdown_gitbook" depends="markdown_gitbook.init, dita2markdown"/>
 
   <target name="markdown_gitbook.init" depends="markdown_github.init">
-    <condition property="args.markdown.toc.xsl" value="${dita.plugin.org.lwdita.dir}/xsl/map2markdown-cover_gitbook.xsl">
+    <condition property="args.markdown.toc.xsl" value="${dita.plugin.redhat.mdita.extended.dir}/xsl/map2markdown-cover_gitbook.xsl">
       <not>
         <isset property="args.markdown.toc.xsl" />
       </not>

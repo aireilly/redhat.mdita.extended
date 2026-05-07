@@ -2,6 +2,7 @@ package com.elovirta.dita.markdown;
 
 import static java.util.Arrays.asList;
 
+import com.vladsch.flexmark.ext.admonition.AdmonitionExtension;
 import com.vladsch.flexmark.ext.anchorlink.AnchorLinkExtension;
 import com.vladsch.flexmark.ext.attributes.AttributesExtension;
 import com.vladsch.flexmark.ext.definition.DefinitionExtension;
@@ -54,6 +55,7 @@ public class MDitaReader extends MarkdownReader {
       Parser.EXTENSIONS,
       asList(
         //                    AbbreviationExtension.create(),
+        AdmonitionExtension.create(),
         AnchorLinkExtension.create(),
         AttributesExtension.create(),
         FootnoteExtension.create(),

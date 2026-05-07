@@ -353,8 +353,6 @@
                 <xsl:for-each select="tablecell">
                   <th>
                     <xsl:copy-of select="@*"/>
-                    <xsl:value-of select="$linefeed"/>
-                    <xsl:value-of select="$linefeed"/>
                     <xsl:variable name="contents" as="xs:string">
                       <xsl:value-of separator="">
                         <xsl:apply-templates mode="#current">
@@ -362,16 +360,7 @@
                         </xsl:apply-templates>
                       </xsl:value-of>
                     </xsl:variable>
-                    <xsl:value-of select="$contents" separator="|"/>
-                    <xsl:choose>
-                      <xsl:when test="not(ends-with($contents, '&#xA;&#xA;'))">
-                        <xsl:value-of select="$linefeed"/>
-                        <xsl:value-of select="$linefeed"/>
-                      </xsl:when>
-                      <xsl:when test="not(ends-with($contents, '&#xA;'))">
-                        <xsl:value-of select="$linefeed"/>
-                      </xsl:when>
-                    </xsl:choose>
+                    <xsl:value-of select="normalize-space($contents)"/>
                   </th>
                 </xsl:for-each>
               </tr>
@@ -387,8 +376,6 @@
                 <xsl:for-each select="tablecell">
                   <td>
                     <xsl:copy-of select="@*"/>
-                    <xsl:value-of select="$linefeed"/>
-                    <xsl:value-of select="$linefeed"/>
                     <xsl:variable name="contents" as="xs:string">
                       <xsl:value-of separator="">
                         <xsl:apply-templates mode="#current">
@@ -396,26 +383,18 @@
                         </xsl:apply-templates>
                       </xsl:value-of>
                     </xsl:variable>
-                    <xsl:value-of select="$contents" separator="|"/>
-                    <xsl:choose>
-                      <xsl:when test="not(ends-with($contents, '&#xA;&#xA;'))">
-                        <xsl:value-of select="$linefeed"/>
-                        <xsl:value-of select="$linefeed"/>
-                      </xsl:when>
-                      <xsl:when test="not(ends-with($contents, '&#xA;'))">
-                        <xsl:value-of select="$linefeed"/>
-                      </xsl:when>
-                    </xsl:choose>
+                    <xsl:value-of select="normalize-space($contents)"/>
                   </td>
                 </xsl:for-each>
               </tr>
             </xsl:for-each>
           </tbody>
         </xsl:for-each>
-        <xsl:value-of select="$linefeed"/>
       </table>
     </xsl:variable>
+    <xsl:value-of select="$linefeed"/>
     <xsl:apply-templates select="$html" mode="render-html"/>
+    <xsl:value-of select="$linefeed"/>
   </xsl:template>
 
   <xsl:template name="process-tablecell-contents">

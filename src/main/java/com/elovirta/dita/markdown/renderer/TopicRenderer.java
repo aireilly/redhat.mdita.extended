@@ -222,8 +222,8 @@ public class TopicRenderer extends AbstractRenderer {
     if (!mditaCoreProfile && !mditaExtendedProfile) {
       res.add(new NodeRenderingHandler<>(Abbreviation.class, this::render));
       res.add(new NodeRenderingHandler<>(AbbreviationBlock.class, this::render));
-      res.add(new NodeRenderingHandler<>(AdmonitionBlock.class, this::render));
     }
+    res.add(new NodeRenderingHandler<>(AdmonitionBlock.class, this::render));
     res.add(new NodeRenderingHandler<>(AutoLink.class, this::render));
     res.add(new NodeRenderingHandler<>(YamlFrontMatterBlock.class, this::render));
     res.add(new NodeRenderingHandler<>(BlockQuote.class, this::render));

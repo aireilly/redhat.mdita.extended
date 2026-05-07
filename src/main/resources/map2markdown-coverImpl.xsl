@@ -11,14 +11,31 @@
     <xsl:apply-templates select="." mode="root_element"/>
   </xsl:template>
 
+  <xsl:template match="*[contains(@class, ' map/map ')]" mode="chapterHead">
+    <xsl:variable name="id" select="@id" as="attribute()?"/>
+    <xsl:variable name="fields" as="element()*">
+      <entry key="$schema">urn:oasis:names:tc:dita:xsd:map.xsd</entry>
+      <xsl:if test="$id">
+        <entry key="id"><xsl:value-of select="$id"/></entry>
+      </xsl:if>
+    </xsl:variable>
+    <xsl:if test="exists($fields)">
+      <yaml-frontmatter>
+        <xsl:for-each select="$fields">
+          <yaml-entry key="{@key}" value="{.}"/>
+        </xsl:for-each>
+      </yaml-frontmatter>
+    </xsl:if>
+  </xsl:template>
+
   <xsl:template match="*[contains(@class, ' map/map ')]" mode="chapterBody">
-    
+
       <xsl:apply-templates select="*[contains(@class, ' ditaot-d/ditaval-startprop ')]/@outputclass" mode="add-ditaval-style"/>
       <xsl:if test="@outputclass">
         <xsl:attribute name="class" select="@outputclass"/>
       </xsl:if>
       <xsl:apply-templates select="." mode="addAttributesToBody"/>
-      
+
       <xsl:apply-templates select="*[contains(@class, ' ditaot-d/ditaval-startprop ')]" mode="out-of-line"/>
 
       <xsl:choose>
@@ -31,7 +48,7 @@
       </xsl:choose>
       <xsl:apply-templates select="." mode="toc"/>
       <xsl:apply-templates select="*[contains(@class, ' ditaot-d/ditaval-endprop ')]" mode="out-of-line"/>
-    
+
   </xsl:template>
 
   <xsl:template match="*[contains(@class, ' map/map ')]/*[contains(@class, ' topic/title ')]">

@@ -14,7 +14,6 @@
   <xsl:template match="*[contains(@class, ' map/map ')]" mode="toc">
     <xsl:param name="pathFromMaplist"/>
     <xsl:if test="descendant::*[contains(@class, ' map/topicref ')]
-                               [not(@toc = 'no')]
                                [not(@processing-role = 'resource-only')]">
       <bulletlist>
         <xsl:call-template name="commonattributes"/>
@@ -43,7 +42,7 @@
               <link>
                 <xsl:attribute name="href">
                   <xsl:choose>
-                    <xsl:when test="@copy-to and not(contains(@chunk, 'to-content')) and 
+                    <xsl:when test="@copy-to and not(contains(@chunk, 'to-content')) and
                                     (not(@format) or @format = 'dita' or @format = 'ditamap') ">
                       <xsl:if test="not(@scope = 'external')">
                         <xsl:value-of select="$pathFromMaplist"/>
@@ -73,6 +72,12 @@
                     </xsl:otherwise>
                   </xsl:choose>
                 </xsl:attribute>
+                <xsl:if test="@chunk">
+                  <xsl:attribute name="chunk" select="@chunk"/>
+                </xsl:if>
+                <xsl:if test="@toc">
+                  <xsl:attribute name="toc" select="@toc"/>
+                </xsl:if>
                 <!--xsl:if test="@scope = 'external' or not(not(@format) or @format = 'dita' or @format = 'ditamap')">
                   <xsl:attribute name="target">_blank</xsl:attribute>
                 </xsl:if-->
@@ -80,12 +85,13 @@
               </link>
             </xsl:when>
             <xsl:otherwise>
-              <xsl:value-of select="$title"/>
+              <span class="topichead">
+                <xsl:value-of select="$title"/>
+              </span>
             </xsl:otherwise>
           </xsl:choose>
           <!-- If there are any children that should be in the TOC, process them -->
           <xsl:if test="descendant::*[contains(@class, ' map/topicref ')]
-                                     [not(@toc = 'no')]
                                      [not(@processing-role = 'resource-only')]">
             <bulletlist>
               <xsl:apply-templates select="*[contains(@class, ' map/topicref ')]" mode="toc">
@@ -103,12 +109,31 @@
     </xsl:choose>
   </xsl:template>
 
-  <!-- If toc=no, but a child has toc=yes, that child should bubble up to the top -->
+  <!-- Include toc="no" topicrefs with toc attribute preserved for round-trip fidelity -->
   <xsl:template match="*[contains(@class, ' map/topicref ')]
                         [@toc = 'no']
                         [not(@processing-role = 'resource-only')]"
                 mode="toc">
     <xsl:param name="pathFromMaplist"/>
+    <xsl:variable name="title">
+      <xsl:apply-templates select="." mode="get-navtitle"/>
+    </xsl:variable>
+    <xsl:if test="normalize-space($title) and normalize-space(@href)">
+      <li>
+        <link toc="no">
+          <xsl:attribute name="href">
+            <xsl:call-template name="replace-extension">
+              <xsl:with-param name="filename" select="@href"/>
+              <xsl:with-param name="extension" select="$OUTEXT"/>
+            </xsl:call-template>
+          </xsl:attribute>
+          <xsl:if test="@chunk">
+            <xsl:attribute name="chunk" select="@chunk"/>
+          </xsl:if>
+          <xsl:value-of select="$title"/>
+        </link>
+      </li>
+    </xsl:if>
     <xsl:apply-templates select="*[contains(@class, ' map/topicref ')]" mode="toc">
       <xsl:with-param name="pathFromMaplist" select="$pathFromMaplist"/>
     </xsl:apply-templates>

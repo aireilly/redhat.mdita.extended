@@ -487,19 +487,23 @@
     <xsl:text>(</xsl:text>
     <xsl:value-of select="@href"/>
     <xsl:text>)</xsl:text>
-    <xsl:if test="@format or @scope">
+    <xsl:if test="@format or @scope or @chunk or @toc">
       <xsl:text>{</xsl:text>
-      <xsl:if test="@format">
-        <xsl:text>format="</xsl:text>
-        <xsl:value-of select="@format"/>
-        <xsl:text>"</xsl:text>
-      </xsl:if>
-      <xsl:if test="@scope">
-        <xsl:if test="@format"><xsl:text> </xsl:text></xsl:if>
-        <xsl:text>scope="</xsl:text>
-        <xsl:value-of select="@scope"/>
-        <xsl:text>"</xsl:text>
-      </xsl:if>
+      <xsl:variable name="attrs" as="xs:string*">
+        <xsl:if test="@format">
+          <xsl:sequence select="concat('format=&quot;', @format, '&quot;')"/>
+        </xsl:if>
+        <xsl:if test="@scope">
+          <xsl:sequence select="concat('scope=&quot;', @scope, '&quot;')"/>
+        </xsl:if>
+        <xsl:if test="@chunk">
+          <xsl:sequence select="concat('chunk=&quot;', @chunk, '&quot;')"/>
+        </xsl:if>
+        <xsl:if test="@toc">
+          <xsl:sequence select="concat('toc=&quot;', @toc, '&quot;')"/>
+        </xsl:if>
+      </xsl:variable>
+      <xsl:value-of select="string-join($attrs, ' ')"/>
       <xsl:text>}</xsl:text>
     </xsl:if>
   </xsl:template>
@@ -546,6 +550,11 @@
     <xsl:text>![</xsl:text>
     <xsl:value-of select="@keyref"/>
     <xsl:text>]</xsl:text>
+  </xsl:template>
+
+  <xsl:template match="span[@class = 'topichead']" mode="ast" priority="5">
+    <xsl:apply-templates mode="ast"/>
+    <xsl:text> {.topichead}</xsl:text>
   </xsl:template>
 
   <xsl:template match="span" mode="ast">

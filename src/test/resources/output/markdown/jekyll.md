@@ -1,4 +1,5 @@
 ---
+$schema: urn:oasis:names:tc:dita:xsd:topic.xsd
 id: add-remove-or-edit-menu-items-in-your-online-store
 ---
 

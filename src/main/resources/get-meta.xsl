@@ -9,7 +9,17 @@
 
 <xsl:template name="getMeta">
   <xsl:variable name="id" select="@id | self::dita/*[1]/@id" as="attribute()?"/>
+  <xsl:variable name="topic-type" as="xs:string">
+    <xsl:choose>
+      <xsl:when test="self::dita">topic</xsl:when>
+      <xsl:when test="contains(@class, ' task/task ')">task</xsl:when>
+      <xsl:when test="contains(@class, ' concept/concept ')">concept</xsl:when>
+      <xsl:when test="contains(@class, ' reference/reference ')">reference</xsl:when>
+      <xsl:otherwise>topic</xsl:otherwise>
+    </xsl:choose>
+  </xsl:variable>
   <xsl:variable name="fields" as="element()*">
+    <entry key="$schema">urn:oasis:names:tc:dita:xsd:<xsl:value-of select="$topic-type"/>.xsd</entry>
     <xsl:if test="$id">
       <entry key="id"><xsl:value-of select="$id"/></entry>
     </xsl:if>

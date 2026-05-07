@@ -167,6 +167,12 @@ public class TopicRenderer extends AbstractRenderer {
   private String lastId;
 
   /**
+   * Topic type detected from YAML $schema field (e.g. "task", "concept", "reference").
+   * Null if no $schema or unrecognized schema.
+   */
+  private String schemaType;
+
+  /**
    * Current header level.
    */
   private int headerLevel = 0;
@@ -693,8 +699,17 @@ public class TopicRenderer extends AbstractRenderer {
         atts.add(ATTRIBUTE_NAME_ID, id);
       }
       if (!mditaCoreProfile) {
-        if (!header.classes.isEmpty()) {
-          atts.add(ATTRIBUTE_NAME_OUTPUTCLASS, String.join(" ", header.classes));
+        final Collection<String> topicClasses = new ArrayList<>(header.classes);
+        // Merge $schema-derived type into outputclass for SpecializeFilter
+        if (node.getLevel() == 1) {
+          final String yamlType = getSchemaType(node);
+          if (yamlType != null && !topicClasses.contains(yamlType)) {
+            topicClasses.add(yamlType);
+          }
+          schemaType = yamlType;
+        }
+        if (!topicClasses.isEmpty()) {
+          atts.add(ATTRIBUTE_NAME_OUTPUTCLASS, String.join(" ", topicClasses));
         }
         for (Entry<String, String> attr : header.attributes.entrySet()) {
           atts.add(attr.getKey(), attr.getValue());
@@ -749,6 +764,39 @@ public class TopicRenderer extends AbstractRenderer {
       }
     }
     return getSectionId(node, header);
+  }
+
+  /**
+   * Extract topic type from YAML front matter {@code $schema} field.
+   * Expects values like {@code urn:oasis:names:tc:dita:xsd:task.xsd}.
+   *
+   * @return topic type string (e.g. "task", "concept", "reference") or null
+   */
+  private String getSchemaType(final Node node) {
+    final Document doc = node instanceof Document ? (Document) node : node.getDocument();
+    if (doc.getChildOfType(YamlFrontMatterBlock.class) == null) {
+      return null;
+    }
+    final AbstractYamlFrontMatterVisitor v = new AbstractYamlFrontMatterVisitor();
+    v.visit(doc);
+    final Map<String, List<String>> metadata = v.getData();
+    final List<String> schemas = metadata.get("$schema");
+    if (schemas == null || schemas.isEmpty()) {
+      return null;
+    }
+    final String schema = schemas.get(0);
+    // Parse type from urn:oasis:names:tc:dita:xsd:{type}.xsd
+    final java.util.regex.Matcher m = java.util.regex.Pattern
+      .compile("urn:oasis:names:tc:dita:xsd:(\\w+)\\.xsd")
+      .matcher(schema);
+    if (m.matches()) {
+      final String type = m.group(1);
+      // Only return recognized specialization types
+      if ("task".equals(type) || "concept".equals(type) || "reference".equals(type)) {
+        return type;
+      }
+    }
+    return null;
   }
 
   private void render(final YamlFrontMatterBlock node, final NodeRendererContext context, final SaxWriter html) {

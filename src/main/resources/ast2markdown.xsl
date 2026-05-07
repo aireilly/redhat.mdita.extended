@@ -15,6 +15,29 @@
     <xsl:apply-templates mode="ast"/>
   </xsl:template>
 
+  <xsl:template match="yaml-frontmatter" mode="ast">
+    <xsl:text>---</xsl:text>
+    <xsl:value-of select="$linefeed"/>
+    <xsl:for-each select="yaml-entry">
+      <xsl:value-of select="@key"/>
+      <xsl:text>: </xsl:text>
+      <xsl:choose>
+        <xsl:when test="contains(@value, ' ') or contains(@value, ':') or contains(@value, '#')">
+          <xsl:text>"</xsl:text>
+          <xsl:value-of select="replace(@value, '&quot;', '\\&quot;')"/>
+          <xsl:text>"</xsl:text>
+        </xsl:when>
+        <xsl:otherwise>
+          <xsl:value-of select="@value"/>
+        </xsl:otherwise>
+      </xsl:choose>
+      <xsl:value-of select="$linefeed"/>
+    </xsl:for-each>
+    <xsl:text>---</xsl:text>
+    <xsl:value-of select="$linefeed"/>
+    <xsl:value-of select="$linefeed"/>
+  </xsl:template>
+
   <xsl:template match="div" mode="ast">
     <xsl:apply-templates mode="ast"/>
   </xsl:template>

@@ -101,6 +101,7 @@ H2 headings with recognized default titles produce specialized task sections:
 | About this task | `<context>` |
 | Verification | `<result>` |
 | Next steps | `<postreq>` |
+| Troubleshooting | `<tasktroubleshooting>` |
 
 ```markdown
 ---
@@ -117,16 +118,47 @@ You need administrator access.
 This procedure installs the base package.
 
 1.  Download the installer.
-2.  Run the installer.
+
+2.  Extract the archive.
+
+    This can take several minutes.
+
+3.  Run the setup script.
+
+    1.  Open a terminal.
+    2.  Run `./setup.sh`.
+
+4.  Choose a component:
+
+    -   Base runtime
+    -   Developer tools
+    -   Full installation
 
 ## Verification
 
 The software is now installed.
 
+## Troubleshooting
+
+If the installer fails, check the log file at `/var/log/install.log`.
+
 ## Next steps
 
 Configure the license key.
 ```
+
+The Markdown constructs in this example map to the following DITA
+task elements:
+
+| Markdown construct | DITA element |
+|--------------------|--------------|
+| Ordered list | `<steps>` |
+| Ordered list item | `<step>` |
+| First paragraph in a step | `<cmd>` |
+| Additional paragraphs in a step | `<info>` |
+| Nested ordered list in a step | `<substeps>` / `<substep>` |
+| Nested unordered list in a step | `<choices>` / `<choice>` |
+| Unordered list (at body level) | `<steps-unordered>` |
 
 ## Admonitions
 
@@ -330,7 +362,7 @@ dita -i input.ditamap -f markdown_github -o out
 ### From a release
 
 ``` shell
-dita install https://github.com/aireilly/redhat.mdita.extended/releases/download/0.0.6/redhat.mdita.extended-0.0.6.zip
+dita install https://github.com/aireilly/redhat.mdita.extended/releases/download/0.0.7/redhat.mdita.extended-0.0.7.zip
 ```
 
 ### From source
@@ -344,7 +376,7 @@ dita install https://github.com/aireilly/redhat.mdita.extended/releases/download
 2.  Install the plug-in:
 
     ``` shell
-    dita install build/distributions/redhat.mdita.extended-0.0.6.zip --force
+    dita install build/distributions/redhat.mdita.extended-0.0.7.zip --force
     ```
 
 ### Run a build

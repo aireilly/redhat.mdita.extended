@@ -25,5 +25,9 @@
       <title class="- topic/title ">Next steps</title>
       <p class="- topic/p ">Configure the license.</p>
     </postreq>
+    <tasktroubleshooting class="- topic/section task/tasktroubleshooting ">
+      <title class="- topic/title ">Troubleshooting</title>
+      <p class="- topic/p ">If the installation fails, check the log.</p>
+    </tasktroubleshooting>
   </taskbody>
 </task>

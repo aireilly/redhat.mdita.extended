@@ -99,7 +99,9 @@ public class TopicRenderer extends AbstractRenderer {
     "verification",
     TASK_RESULT.localName,
     "next steps",
-    TASK_POSTREQ.localName
+    TASK_POSTREQ.localName,
+    "troubleshooting",
+    TASK_TASKTROUBLESHOOTING.localName
   );
 
   private static final Map<String, String> DEFAULT_SECTION_TITLES = Map.of(

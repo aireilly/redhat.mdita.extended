@@ -1,3 +1,7 @@
+---
+id: tables
+---
+
 # Tables {#tables}
 
 |Right|Left|Default|Center|

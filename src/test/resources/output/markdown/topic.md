@@ -1,2 +1,6 @@
+---
+id: topic
+---
+
 # Topic {#topic}
 

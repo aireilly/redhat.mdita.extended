@@ -1,1 +1,1 @@
-<?xml version="1.0" encoding="UTF-8"?><pandoc><div><header id="keyref" level="1">Keyref</header><div><para>Foo <span/> baz.</para></div></div></pandoc>
+<?xml version="1.0" encoding="UTF-8"?><pandoc><head><map><entry key="id">keyref</entry></map></head><div><header id="keyref" level="1">Keyref</header><div><para>Foo <span/> baz.</para></div></div></pandoc>

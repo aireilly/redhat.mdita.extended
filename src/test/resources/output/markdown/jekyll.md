@@ -1,3 +1,7 @@
+---
+id: add-remove-or-edit-menu-items-in-your-online-store
+---
+
 # Add, remove, or edit menu items in your online store {#add-remove-or-edit-menu-items-in-your-online-store}
 
 ============================ You can add menu items to your online store menus to build your store's navigation. Menu items are links to products, collections, webpages, blog posts, policies, or other websites. You can also remove or edit menu items.

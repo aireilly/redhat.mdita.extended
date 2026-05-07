@@ -1,3 +1,7 @@
+---
+id: links
+---
+
 # Links {#links}
 
 [Markdown](concept.md)

@@ -1,3 +1,7 @@
+---
+id: tables
+---
+
 # Table with block content {#tables}
 
 <table><thead><tr><th>

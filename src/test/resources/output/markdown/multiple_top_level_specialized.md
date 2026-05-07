@@ -1,3 +1,7 @@
+---
+id: concept
+---
+
 # Concept {#concept .concept}
 
 Content A.

@@ -1,3 +1,7 @@
+---
+id: admonition
+---
+
 # Admonition {#admonition}
 
 Block-Styled Side Content

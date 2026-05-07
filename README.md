@@ -741,7 +741,7 @@ dita install https://github.com/aireilly/redhat.mdita.extended/releases/download
 2.  Install the plug-in from the built ZIP:
 
     ``` shell
-    dita install build/distributions/redhat.mdita.extended-*.zip
+    dita install build/distributions/redhat.mdita.extended-0.0.4.zip --force
     ```
 
 ### Run a build

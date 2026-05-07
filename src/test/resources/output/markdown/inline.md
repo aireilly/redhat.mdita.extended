@@ -1,3 +1,7 @@
+---
+id: test
+---
+
 # Test {#test}
 
 Paragraph *emph* and **strong** or `code`.

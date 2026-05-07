@@ -1,3 +1,7 @@
+---
+id: foo
+---
+
 # My header {#foo}
 
 ## My header \#\# {#foo-section}

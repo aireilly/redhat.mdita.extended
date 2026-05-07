@@ -1,3 +1,7 @@
+---
+id: root
+---
+
 # Root {#root}
 
 ## A {#a}

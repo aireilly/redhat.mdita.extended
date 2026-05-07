@@ -1,3 +1,7 @@
+---
+id: codeblock
+---
+
 # Codeblock {#codeblock}
 
 Code example on `for` loop:

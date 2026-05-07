@@ -1,3 +1,7 @@
+---
+id: images
+---
+
 # Images {#images}
 
 An inline ![Alt](test.jpg).

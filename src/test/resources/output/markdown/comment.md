@@ -1,3 +1,7 @@
+---
+id: comment
+---
+
 # Comment {#comment}
 
 Paragraph

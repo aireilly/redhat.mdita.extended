@@ -1,3 +1,7 @@
+---
+id: escape
+---
+
 # Escape {#escape}
 
 Asterisk \* bracket \[foo\].

@@ -727,7 +727,7 @@ practical MDITA equivalent.
 Install the plug-in directly from a GitHub release:
 
 ``` shell
-dita install https://github.com/aireilly/redhat.mdita.extended/releases/download/0.0.1/redhat.mdita.extended-0.0.1.zip
+dita install https://github.com/aireilly/redhat.mdita.extended/releases/download/0.0.2/redhat.mdita.extended-0.0.2.zip
 ```
 
 ### From source

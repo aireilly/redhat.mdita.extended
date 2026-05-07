@@ -1,3 +1,7 @@
+---
+id: numbered-list
+---
+
 # Numbered list {#numbered-list}
 
 Ordered:

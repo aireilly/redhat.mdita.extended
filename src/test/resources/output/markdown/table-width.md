@@ -1,3 +1,7 @@
+---
+id: tables
+---
+
 # Tables {#tables}
 
 |A|B|C|

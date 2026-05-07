@@ -1,3 +1,7 @@
+---
+id: keys
+---
+
 # Keys {#keys}
 
 This is [an example](test.md) reference-style link.

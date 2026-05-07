@@ -1,3 +1,7 @@
+---
+id: how-to-do-something
+---
+
 # How to do something {#how-to-do-something}
 
 Introduction to this specific task

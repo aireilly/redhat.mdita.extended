@@ -1,3 +1,7 @@
+---
+id: quote
+---
+
 # Quote {#quote}
 
 > This is email And so it this

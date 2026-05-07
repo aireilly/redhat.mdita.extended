@@ -1,3 +1,7 @@
+---
+id: definition-list
+---
+
 # Definition list {#definition-list}
 
 Apple

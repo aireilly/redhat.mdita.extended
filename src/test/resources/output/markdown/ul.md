@@ -1,3 +1,7 @@
+---
+id: bullet-list
+---
+
 # Bullet list {#bullet-list}
 
 Hyphen:

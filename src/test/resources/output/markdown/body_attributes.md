@@ -1,3 +1,7 @@
+---
+id: header
+---
+
 # Header {#header}
 
 Paragraph

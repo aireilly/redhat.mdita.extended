@@ -1,3 +1,7 @@
+---
+id: note
+---
+
 # Note {#note}
 
 **Note:** Note

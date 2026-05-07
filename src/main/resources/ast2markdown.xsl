@@ -51,6 +51,7 @@
 
   <xsl:template name="ast-attibutes">
     <xsl:variable name="profiling-attrs" select="@*[local-name() = $profiling-attr-names]"/>
+    <xsl:variable name="has-id" select="exists(@id)" as="xs:boolean"/>
     <xsl:if test="@id or @class or $profiling-attrs">
       <xsl:text> {</xsl:text>
       <xsl:if test="@id">
@@ -58,7 +59,8 @@
         <xsl:value-of select="@id"/>
       </xsl:if>
       <xsl:for-each select="tokenize(@class, '\s+')">
-        <xsl:text> .</xsl:text>
+        <xsl:if test="position() > 1 or $has-id"><xsl:text> </xsl:text></xsl:if>
+        <xsl:text>.</xsl:text>
         <xsl:value-of select="."/>
       </xsl:for-each>
       <xsl:for-each select="$profiling-attrs">

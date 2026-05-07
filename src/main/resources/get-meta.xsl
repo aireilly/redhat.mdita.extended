@@ -8,7 +8,11 @@
 <xsl:key name="meta-keywords" match="*[ancestor::*[contains(@class,' topic/keywords ')]]" use="text()[1]"/>
 
 <xsl:template name="getMeta">
+  <xsl:variable name="id" select="@id | self::dita/*[1]/@id" as="attribute()?"/>
   <xsl:variable name="fields" as="element()*">
+    <xsl:if test="$id">
+      <entry key="id"><xsl:value-of select="$id"/></entry>
+    </xsl:if>
     <xsl:for-each select="*[contains(@class, ' topic/prolog ')] | /dita/*[1]/*[contains(@class, ' topic/prolog ')]">
       <xsl:call-template name="get-value">
         <xsl:with-param name="values" select="*[contains(@class, ' topic/author ')]"/>

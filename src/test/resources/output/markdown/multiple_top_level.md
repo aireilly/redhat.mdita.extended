@@ -1,3 +1,7 @@
+---
+id: heading-a
+---
+
 # Heading A {#heading-a}
 
 Content A.

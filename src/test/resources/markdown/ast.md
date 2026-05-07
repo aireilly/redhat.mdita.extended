@@ -85,7 +85,7 @@ Ordered:
 14. foo
 15. foo
 
-## Example { .section}
+## Example {.section}
 
 Code example on `for` loop:
 

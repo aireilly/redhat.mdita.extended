@@ -1,3 +1,7 @@
+---
+id: html-block
+---
+
 # HTML Block {#html-block}
 
 Plain **_paragraph_**.

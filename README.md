@@ -5,12 +5,11 @@ MDITA task support for Red Hat documentation workflows.
 
 This plug-in simplifies the Markdown-to-DITA conversion by focusing on text
 fidelity over format fidelity. Complex DITA elements are downsampled to
-bold, italic, or code rather than attempting lossless roundtrip. YAML front
-matter drives topic type detection; no `{attributes}` syntax is used.
+bold, italic, or code.
 
 ## What it does
 
-- Parses Markdown and HTML into DITA XML (SAX-based reader).
+- Parses Markdown into DITA XML (SAX-based reader).
 - Generates Markdown from DITA source (XSLT transtype).
 - Detects topic type (concept, reference, task) from `$schema` in YAML
   front matter.
@@ -42,6 +41,44 @@ Supported schema values:
 | `urn:oasis:names:tc:dita:xsd:reference.xsd` | Reference |
 | `urn:oasis:names:tc:dita:xsd:task.xsd` | Task |
 | `urn:oasis:names:tc:dita:xsd:topic.xsd` | Generic topic |
+
+## YAML front matter
+
+Beyond `$schema` and `id`, the plugin maps standard DITA prolog fields
+from YAML front matter into `<prolog>` elements. Unrecognized fields fall
+through as `<data name="..." value="..."/>`.
+
+```markdown
+---
+$schema: urn:oasis:names:tc:dita:xsd:concept.xsd
+id: metrics-prerequisites
+author: vLLM Documentation Team
+category: AI Inference
+keyword:
+  - metrics
+  - prerequisites
+  - benchmarking
+  - vllm
+workflow: review
+---
+# Metrics prerequisites
+```
+
+Supported fields:
+
+| YAML key | DITA element |
+|----------|--------------|
+| `$schema` | Topic type detection (not emitted) |
+| `id` | Topic `@id` attribute |
+| `author` | `<author>` |
+| `source` | `<source>` |
+| `publisher` | `<publisher>` |
+| `permissions` | `<permissions @view="...">` |
+| `audience` | `<audience @type="...">` |
+| `category` | `<category>` |
+| `keyword` | `<keyword>` (inside `<keywords>`) |
+| `resourceid` | `<resourceid @appid="...">` |
+| *(anything else)* | `<data name="..." value="..."/>` |
 
 ## Task topics
 

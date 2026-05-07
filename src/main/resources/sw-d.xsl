@@ -51,11 +51,11 @@
   </xsl:template>
 
   <xsl:template match="*[contains(@class,' sw-d/varname ')]" name="topic.sw-d.varname">
-    <emph class="varname">
+    <code class="varname">
       <xsl:call-template name="commonattributes"/>
       <xsl:call-template name="setidaname"/>
       <xsl:apply-templates/>
-    </emph>
+    </code>
   </xsl:template>
 
 </xsl:stylesheet>

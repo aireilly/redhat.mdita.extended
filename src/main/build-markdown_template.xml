@@ -126,6 +126,62 @@
     </sequential>
   </macrodef>
   
+  <!-- MDITA -->
+
+  <target name="dita2mdita"
+          depends="build-init,
+                   preprocess,
+                   markdown.init,
+                   markdown.topic,
+                   mdita.map"/>
+
+  <target name="mdita.map"
+          depends="mdita.map.init,
+                   mdita.map.toc"
+          unless="noMap"/>
+
+  <target name="mdita.map.init" unless="noMap">
+    <property name="args.markdown.toc.xsl" value="${dita.plugin.org.lwdita.dir}/xsl/map2markdown-cover.xsl"/>
+    <property name="markdown.toc.generate" value="true"/>
+    <condition property="_markdown.toc.skip" value="true">
+      <or>
+        <isset property="noMap"/>
+        <isfalse value="${markdown.toc.generate}"/>
+      </or>
+    </condition>
+  </target>
+
+  <target name="mdita.map.toc" unless="_markdown.toc.skip" description="Build MDITA map file">
+    <mdita.map>
+      <dita:extension id="dita.conductor.markdown.toc.param" behavior="org.dita.dost.platform.InsertAction"/>
+    </mdita.map>
+  </target>
+
+  <macrodef name="mdita.map">
+    <element name="params" optional="true" implicit="true"/>
+    <sequential>
+      <local name="markdown.toc.output.dir"/>
+      <condition property="markdown.toc.output.dir" value="${dita.output.dir}" else="${_dita.map.output.dir}">
+        <isset property="inner.transform"/>
+      </condition>
+      <pipeline message="Convert DITA map to MDITA map" taskname="xslt">
+        <xslt destdir="${markdown.toc.output.dir}"
+              style="${args.markdown.toc.xsl}">
+          <ditafileset input="true" format="ditamap"/>
+          <param name="FILTERFILE" expression="${dita.input.valfile.url}" if:set="dita.input.valfile"/>
+          <param name="OUTEXT" expression="${out.ext}" if:set="out.ext"/>
+          <param name="contenttarget" expression="${args.markdown.contenttarget}" if:set="args.markdown.contenttarget"/>
+          <param name="CSS" expression="${args.css.file}" if:set="args.css.file"/>
+          <param name="CSSPATH" expression="${user.csspath}" if:set="user.csspath"/>
+          <param name="OUTPUTCLASS" expression="${args.markdown.toc.class}" if:set="args.markdown.toc.class"/>
+          <params/>
+          <mapper type="regexp" from="^(.+)\.[^.]+$$" to="\1.mditamap"/>
+          <xmlcatalog refid="dita.catalog"/>
+        </xslt>
+      </pipeline>
+    </sequential>
+  </macrodef>
+
   <!-- GitBook -->
 
   <target name="dita2markdown_gitbook" depends="markdown_gitbook.init, dita2markdown"/>

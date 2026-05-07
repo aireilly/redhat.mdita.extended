@@ -4,6 +4,7 @@
   <transtype name="markdown" desc="Markdown"/>
   <transtype name="markdown_github" desc="GitHub-flavored Markdown"/>
   <transtype name="markdown_gitbook" desc="GitBook"/>
+  <transtype name="mdita" desc="MDITA"/>
   <feature extension="dita.conductor.target.relative" file="conductor.xml"/>
   <!-- common -->
   <feature extension="dita.conductor.lib.import" file="lib/${id}-${version}.jar"/>

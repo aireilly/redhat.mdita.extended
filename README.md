@@ -1,7 +1,7 @@
 # redhat.mdita.extended
 
-!!! important
-    A fork of [org.lwdita](https://github.com/jelovirt/org.lwdita) with extended MDITA task support for Red Hat documentation workflows.
+> [!IMPORTANT]
+> A fork of [org.lwdita](https://github.com/jelovirt/org.lwdita) with extended MDITA task support for Red Hat documentation workflows.
 
 This plug-in simplifies the Markdown-to-DITA conversion by focusing on text
 fidelity over format fidelity. Complex DITA elements are downsampled to

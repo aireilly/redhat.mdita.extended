@@ -338,7 +338,9 @@
     <xsl:value-of select="."/>
   </xsl:template>
 
-  <xsl:template match="table[*/tr/tablecell/(para | plain | codeblock | rawblock | blockquote | orderedlist | bulletlist | definitionlist | header | table | div)] |
+  <xsl:template match="table[*/tr/tablecell/(codeblock | rawblock | blockquote | orderedlist | bulletlist | definitionlist | header | table | div)] |
+                       table[*/tr/tablecell[count(para | plain) &gt; 1]] |
+                       table[*/tr/tablecell[@colspan or @rowspan]] |
                        table[empty(thead)]"
                 mode="ast" priority="10">
     <xsl:variable name="html" as="element()*">

@@ -171,11 +171,10 @@ public class DitaRenderer {
   private final DataHolder options;
 
   DitaRenderer(DataSet builder) {
-    this.options =
-      new MutableDataSet(builder)
-        // Support legacy LW_DITA as an alias for MDITA_EXTENDED_PROFILE
-        .set(MDITA_EXTENDED_PROFILE, LW_DITA.get(builder) || MDITA_EXTENDED_PROFILE.get(builder))
-        .toImmutable();
+    this.options = new MutableDataSet(builder)
+      // Support legacy LW_DITA as an alias for MDITA_EXTENDED_PROFILE
+      .set(MDITA_EXTENDED_PROFILE, LW_DITA.get(builder) || MDITA_EXTENDED_PROFILE.get(builder))
+      .toImmutable();
     this.ditaOptions = new DitaRendererOptions(this.options);
   }
 
@@ -202,10 +201,9 @@ public class DitaRenderer {
       this.doNotRenderLinksNesting = 0;
       this.options = new ScopedDataSet(options, document);
       this.document = document;
-      this.renderers =
-        DitaRenderer.MAP.get(options)
-          ? new MapRenderer(this.getOptions()).getNodeRenderingHandlers()
-          : new TopicRenderer(this.getOptions()).getNodeRenderingHandlers();
+      this.renderers = DitaRenderer.MAP.get(options)
+        ? new MapRenderer(this.getOptions()).getNodeRenderingHandlers()
+        : new TopicRenderer(this.getOptions()).getNodeRenderingHandlers();
       this.doNotRenderLinksNesting = ditaOptions.doNotRenderLinksInDocument ? 0 : 1;
       this.ditaIdGenerator = new HeaderIdGenerator();
     }

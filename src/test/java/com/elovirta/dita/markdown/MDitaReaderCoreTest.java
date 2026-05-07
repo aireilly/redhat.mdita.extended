@@ -65,13 +65,7 @@ public class MDitaReaderCoreTest extends AbstractReaderTest {
   }
 
   @ParameterizedTest
-  @ValueSource(
-    strings = {
-      "inline_extended.md",
-      "jekyll.md",
-      "dl.md",
-    }
-  )
+  @ValueSource(strings = { "inline_extended.md", "jekyll.md", "dl.md" })
   public void test_unsupported(String file) {
     assertThrows(AssertionFailedError.class, () -> run(file));
   }
@@ -79,15 +73,12 @@ public class MDitaReaderCoreTest extends AbstractReaderTest {
   @ParameterizedTest
   @ValueSource(strings = { "header.md", "invalid_header.md", "invalid_header_third.md" })
   public void test_fail(String file) {
-    assertThrows(
-      SAXException.class,
-      () -> {
-        final String input = "/" + getSrc() + file;
-        try (final InputStream in = getClass().getResourceAsStream(input)) {
-          final InputSource i = new InputSource(in);
-          reader.parse(i);
-        }
+    assertThrows(SAXException.class, () -> {
+      final String input = "/" + getSrc() + file;
+      try (final InputStream in = getClass().getResourceAsStream(input)) {
+        final InputSource i = new InputSource(in);
+        reader.parse(i);
       }
-    );
+    });
   }
 }

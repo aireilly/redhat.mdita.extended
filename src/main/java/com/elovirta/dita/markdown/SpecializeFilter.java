@@ -235,10 +235,7 @@ public class SpecializeFilter extends XMLFilterImpl {
         if (depth == DEPTH_IN_BODY) {
           openImplicitSection(uri);
           doStartElement(uri, localName, qName, atts);
-        } else if (
-          (taskState == TaskState.STEP || taskState == TaskState.INFO) &&
-          depth == 5
-        ) {
+        } else if ((taskState == TaskState.STEP || taskState == TaskState.INFO) && depth == 5) {
           switch (localName) {
             case "p":
             case TIGHT_LIST_P:
@@ -494,8 +491,7 @@ public class SpecializeFilter extends XMLFilterImpl {
       if (outputClassValue.isEmpty()) {
         res.removeAttribute(outputClassIndex);
       } else {
-        final List<String> outputClass = Stream
-          .of(outputClassValue.split("\\s+"))
+        final List<String> outputClass = Stream.of(outputClassValue.split("\\s+"))
           .filter(token -> !token.equals(cls.localName))
           .collect(Collectors.toList());
         if (outputClass.isEmpty()) {
@@ -515,5 +511,4 @@ public class SpecializeFilter extends XMLFilterImpl {
     }
     return Arrays.asList(outputclass.trim().split("\\s+"));
   }
-
 }

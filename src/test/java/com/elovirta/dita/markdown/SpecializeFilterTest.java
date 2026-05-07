@@ -78,7 +78,7 @@ public class SpecializeFilterTest {
   public void test(String name) throws Exception {
     try (
       InputStream srcIn = getClass().getResourceAsStream("/specialize/src/" + name + ".dita");
-      InputStream expIn = getClass().getResourceAsStream("/specialize/exp/" + name + ".dita")
+      InputStream expIn = getClass().getResourceAsStream("/specialize/exp/" + name + ".dita");
     ) {
       run_filter(srcIn, expIn);
     }
@@ -89,7 +89,7 @@ public class SpecializeFilterTest {
   public void generatedTask(int context, int info, int inline) throws Exception {
     try (
       InputStream srcIn = generateSrc(context, Stream.of(Arguments.of(info, inline)));
-      InputStream expIn = generateExp(context, Stream.of(Arguments.of(info, inline)))
+      InputStream expIn = generateExp(context, Stream.of(Arguments.of(info, inline)));
     ) {
       run_filter(srcIn, expIn);
     }
@@ -131,8 +131,7 @@ public class SpecializeFilterTest {
     transformer.transform(new SAXSource(filter, new InputSource(srcIn)), new DOMResult(act));
 
     final Document exp = documentBuilder.parse(new InputSource(expIn));
-    final Diff diff = DiffBuilder
-      .compare(act)
+    final Diff diff = DiffBuilder.compare(act)
       .withTest(exp)
       .normalizeWhitespace()
       .ignoreWhitespace()

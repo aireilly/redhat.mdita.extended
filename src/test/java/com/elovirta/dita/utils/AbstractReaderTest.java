@@ -82,8 +82,7 @@ public abstract class AbstractReaderTest {
     }
 
     try {
-      final Diff diff = DiffBuilder
-        .compare(clean(act))
+      final Diff diff = DiffBuilder.compare(clean(act))
         .withTest(clean(exp))
         .ignoreWhitespace()
         .ignoreComments()

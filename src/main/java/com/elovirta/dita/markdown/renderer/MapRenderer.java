@@ -119,10 +119,11 @@ public class MapRenderer extends AbstractRenderer {
       res
         .stream()
         .collect(
-          Collectors.<NodeRenderingHandler<? extends Node>, Class<? extends Node>, NodeRenderingHandler<? extends Node>>toMap(
-            AstHandler::getNodeType,
-            Function.identity()
-          )
+          Collectors.<
+              NodeRenderingHandler<? extends Node>,
+              Class<? extends Node>,
+              NodeRenderingHandler<? extends Node>
+            >toMap(AstHandler::getNodeType, Function.identity())
         )
     );
     return map;
@@ -139,19 +140,15 @@ public class MapRenderer extends AbstractRenderer {
     if (mditaCoreProfile) {
       atts = new AttributesBuilder(MAP_ATTS).add(ATTRIBUTE_NAME_SPECIALIZATIONS, "");
     } else if (mditaExtendedProfile) {
-      atts =
-        new AttributesBuilder(MAP_ATTS)
-          .add(
-            ATTRIBUTE_NAME_SPECIALIZATIONS,
-            "(topic ui-d)(topic sw-d)(topic pr-d) @props/audience @props/deliveryTarget @props/otherprops @props/platform @props/product"
-          );
+      atts = new AttributesBuilder(MAP_ATTS).add(
+        ATTRIBUTE_NAME_SPECIALIZATIONS,
+        "(topic ui-d)(topic sw-d)(topic pr-d) @props/audience @props/deliveryTarget @props/otherprops @props/platform @props/product"
+      );
     } else {
-      atts =
-        new AttributesBuilder(MAP_ATTS)
-          .add(
-            ATTRIBUTE_NAME_SPECIALIZATIONS,
-            "@props/audience @props/deliveryTarget @props/otherprops @props/platform @props/product"
-          );
+      atts = new AttributesBuilder(MAP_ATTS).add(
+        ATTRIBUTE_NAME_SPECIALIZATIONS,
+        "@props/audience @props/deliveryTarget @props/otherprops @props/platform @props/product"
+      );
     }
 
     String id = null;
@@ -200,8 +197,10 @@ public class MapRenderer extends AbstractRenderer {
   }
 
   private void render(final Image node, final NodeRendererContext context, final SaxWriter html) {
-    final AttributesBuilder atts = new AttributesBuilder(getInlineAttributes(node, IMAGE_ATTS))
-      .add(ATTRIBUTE_NAME_HREF, node.getUrl().toString());
+    final AttributesBuilder atts = new AttributesBuilder(getInlineAttributes(node, IMAGE_ATTS)).add(
+      ATTRIBUTE_NAME_HREF,
+      node.getUrl().toString()
+    );
     writeImage(node, node.getTitle().toString(), null, atts, context, html);
   }
 
@@ -339,40 +338,36 @@ public class MapRenderer extends AbstractRenderer {
   private static final Map<String, Entry<DitaClass, Attributes>> hditaToXdita;
 
   static {
-    htmlToDita =
-      Stream
-        .of(
-          new SimpleImmutableEntry<>("span", TOPIC_PH),
-          new SimpleImmutableEntry<>("code", PR_D_CODEPH),
-          new SimpleImmutableEntry<>("s", HI_D_LINE_THROUGH),
-          new SimpleImmutableEntry<>("tt", HI_D_TT),
-          new SimpleImmutableEntry<>("b", HI_D_B),
-          new SimpleImmutableEntry<>("strong", HI_D_B),
-          new SimpleImmutableEntry<>("i", HI_D_I),
-          new SimpleImmutableEntry<>("em", HI_D_I),
-          new SimpleImmutableEntry<>("sub", HI_D_SUB),
-          new SimpleImmutableEntry<>("sup", HI_D_SUP),
-          new SimpleImmutableEntry<>("u", HI_D_U)
-        )
-        .flatMap(MapRenderer::createHtmlToDita)
-        .collect(Collectors.toUnmodifiableMap(Entry::getKey, Entry::getValue));
-    hditaToXdita =
-      Stream
-        .<Entry<String, DitaClass>>of(
-          new SimpleImmutableEntry<>("span", TOPIC_PH),
-          new SimpleImmutableEntry<>("code", TOPIC_PH),
-          new SimpleImmutableEntry<>("s", TOPIC_PH),
-          new SimpleImmutableEntry<>("tt", HI_D_TT),
-          new SimpleImmutableEntry<>("b", HI_D_B),
-          new SimpleImmutableEntry<>("strong", HI_D_B),
-          new SimpleImmutableEntry<>("i", HI_D_I),
-          new SimpleImmutableEntry<>("em", HI_D_I),
-          new SimpleImmutableEntry<>("sub", HI_D_SUB),
-          new SimpleImmutableEntry<>("sup", HI_D_SUP),
-          new SimpleImmutableEntry<>("u", HI_D_U)
-        )
-        .flatMap(MapRenderer::createHtmlToDita)
-        .collect(Collectors.toUnmodifiableMap(Entry::getKey, Entry::getValue));
+    htmlToDita = Stream.of(
+      new SimpleImmutableEntry<>("span", TOPIC_PH),
+      new SimpleImmutableEntry<>("code", PR_D_CODEPH),
+      new SimpleImmutableEntry<>("s", HI_D_LINE_THROUGH),
+      new SimpleImmutableEntry<>("tt", HI_D_TT),
+      new SimpleImmutableEntry<>("b", HI_D_B),
+      new SimpleImmutableEntry<>("strong", HI_D_B),
+      new SimpleImmutableEntry<>("i", HI_D_I),
+      new SimpleImmutableEntry<>("em", HI_D_I),
+      new SimpleImmutableEntry<>("sub", HI_D_SUB),
+      new SimpleImmutableEntry<>("sup", HI_D_SUP),
+      new SimpleImmutableEntry<>("u", HI_D_U)
+    )
+      .flatMap(MapRenderer::createHtmlToDita)
+      .collect(Collectors.toUnmodifiableMap(Entry::getKey, Entry::getValue));
+    hditaToXdita = Stream.<Entry<String, DitaClass>>of(
+      new SimpleImmutableEntry<>("span", TOPIC_PH),
+      new SimpleImmutableEntry<>("code", TOPIC_PH),
+      new SimpleImmutableEntry<>("s", TOPIC_PH),
+      new SimpleImmutableEntry<>("tt", HI_D_TT),
+      new SimpleImmutableEntry<>("b", HI_D_B),
+      new SimpleImmutableEntry<>("strong", HI_D_B),
+      new SimpleImmutableEntry<>("i", HI_D_I),
+      new SimpleImmutableEntry<>("em", HI_D_I),
+      new SimpleImmutableEntry<>("sub", HI_D_SUB),
+      new SimpleImmutableEntry<>("sup", HI_D_SUP),
+      new SimpleImmutableEntry<>("u", HI_D_U)
+    )
+      .flatMap(MapRenderer::createHtmlToDita)
+      .collect(Collectors.toUnmodifiableMap(Entry::getKey, Entry::getValue));
   }
 
   /**
@@ -421,18 +416,16 @@ public class MapRenderer extends AbstractRenderer {
     html.setDocumentLocator();
   }
 
-  private static final Class<? extends Node>[] INLINE = List
-    .of(
-      Text.class,
-      TextBase.class,
-      Code.class,
-      Emphasis.class,
-      StrongEmphasis.class,
-      Superscript.class,
-      Subscript.class,
-      Strikethrough.class
-    )
-    .toArray(new Class[0]);
+  private static final Class<? extends Node>[] INLINE = List.of(
+    Text.class,
+    TextBase.class,
+    Code.class,
+    Emphasis.class,
+    StrongEmphasis.class,
+    Superscript.class,
+    Subscript.class,
+    Strikethrough.class
+  ).toArray(new Class[0]);
 
   private void render(final ListItem node, final NodeRendererContext context, final SaxWriter html) {
     final Paragraph paragraph = (Paragraph) node.getChildOfType(Paragraph.class);
@@ -466,7 +459,8 @@ public class MapRenderer extends AbstractRenderer {
         final String text = linkRef.getText().toString();
         final String key = linkRef.getReference() != null ? linkRef.getReference().toString() : text;
         final Reference refNode = linkRef.getReferenceNode(linkRef.getDocument());
-        if (refNode == null) { // "fake" reference link
+        if (refNode == null) {
+          // "fake" reference link
           atts.add(ATTRIBUTE_NAME_KEYREF, key);
           if (!text.isBlank()) {
             navtitle = childList(linkRef);
@@ -553,7 +547,6 @@ public class MapRenderer extends AbstractRenderer {
 
   private final boolean onlyImageChild = false;
 
-
   private void render(final Reference node, final NodeRendererContext context, final SaxWriter html) {
     final Attributes atts = getLinkAttributes(node.getUrl().toString(), KEYDEF_ATTS)
       .add(ATTRIBUTE_NAME_KEYS, node.getReference().toString())
@@ -566,7 +559,8 @@ public class MapRenderer extends AbstractRenderer {
     final String text = node.getText().toString();
     final String key = node.getReference() != null ? node.getReference().toString() : text;
     final Reference refNode = node.getReferenceNode(node.getDocument());
-    if (refNode == null) { // "fake" reference image link
+    if (refNode == null) {
+      // "fake" reference image link
       final AttributesBuilder atts = new AttributesBuilder(IMAGE_ATTS).add(ATTRIBUTE_NAME_KEYREF, key);
       if (onlyImageChild) {
         atts.add("placement", "break");
@@ -574,8 +568,10 @@ public class MapRenderer extends AbstractRenderer {
       html.startElement(node, TOPIC_IMAGE, getInlineAttributes(node, atts.build()));
       html.endElement();
     } else {
-      final AttributesBuilder atts = new AttributesBuilder(getInlineAttributes(node, IMAGE_ATTS))
-        .add(ATTRIBUTE_NAME_HREF, refNode.getUrl().toString());
+      final AttributesBuilder atts = new AttributesBuilder(getInlineAttributes(node, IMAGE_ATTS)).add(
+        ATTRIBUTE_NAME_HREF,
+        refNode.getUrl().toString()
+      );
       if (key != null) {
         atts.add(ATTRIBUTE_NAME_KEYREF, key);
       }
@@ -587,7 +583,8 @@ public class MapRenderer extends AbstractRenderer {
     final String text = node.getText().toString();
     final String key = node.getReference() != null ? node.getReference().toString() : text;
     final Reference refNode = node.getReferenceNode(node.getDocument());
-    if (refNode == null) { // "fake" reference link
+    if (refNode == null) {
+      // "fake" reference link
       final AttributesBuilder atts = new AttributesBuilder(TOPICREF_ATTS).add(ATTRIBUTE_NAME_KEYREF, key);
       html.startElement(node, MAP_TOPICREF, atts.build());
       if (!node.getText().toString().isEmpty()) {

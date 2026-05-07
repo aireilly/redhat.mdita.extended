@@ -27,9 +27,17 @@ public class GenerateExpected {
     final DocumentBuilder db = dbf.newDocumentBuilder();
 
     String[] files = {
-      "concept", "reference", "task", "taskTight", "taskOneStep",
-      "multiple_top_level_specialized", "header", "profiling",
-      "related_links", "html_unsupported", "table"
+      "concept",
+      "reference",
+      "task",
+      "taskTight",
+      "taskOneStep",
+      "multiple_top_level_specialized",
+      "header",
+      "profiling",
+      "related_links",
+      "html_unsupported",
+      "table",
     };
 
     for (String file : files) {
@@ -38,14 +46,50 @@ public class GenerateExpected {
     }
 
     String[] astFiles = {
-      "admonition", "ast", "codeblock", "comment", "concept", "conkeyref", "conref",
-      "dl", "entity", "escape", "hdita", "header", "html", "html_unsupported",
-      "image", "inline", "inline_extended", "jekyll", "keyref", "keys",
-      "linebreak", "link", "missing_root_header", "missing_root_header_with_yaml",
-      "multiple_top_level", "multiple_top_level_specialized", "note", "ol",
-      "pandoc_header", "quote", "reference", "short", "shortdesc",
-      "table-block", "table-width", "table", "task", "taskOneStep", "taskTight",
-      "testBOM", "testNoBOM", "topic", "ul", "yaml"
+      "admonition",
+      "ast",
+      "codeblock",
+      "comment",
+      "concept",
+      "conkeyref",
+      "conref",
+      "dl",
+      "entity",
+      "escape",
+      "hdita",
+      "header",
+      "html",
+      "html_unsupported",
+      "image",
+      "inline",
+      "inline_extended",
+      "jekyll",
+      "keyref",
+      "keys",
+      "linebreak",
+      "link",
+      "missing_root_header",
+      "missing_root_header_with_yaml",
+      "multiple_top_level",
+      "multiple_top_level_specialized",
+      "note",
+      "ol",
+      "pandoc_header",
+      "quote",
+      "reference",
+      "short",
+      "shortdesc",
+      "table-block",
+      "table-width",
+      "table",
+      "task",
+      "taskOneStep",
+      "taskTight",
+      "testBOM",
+      "testNoBOM",
+      "topic",
+      "ul",
+      "yaml",
     };
 
     for (String file : astFiles) {
@@ -57,8 +101,13 @@ public class GenerateExpected {
     }
   }
 
-  private static void generateFile(TransformerFactory tf, DocumentBuilder db, XMLReader reader,
-      String srcPath, String expPath) throws Exception {
+  private static void generateFile(
+    TransformerFactory tf,
+    DocumentBuilder db,
+    XMLReader reader,
+    String srcPath,
+    String expPath
+  ) throws Exception {
     try (InputStream in = GenerateExpected.class.getResourceAsStream("/" + srcPath)) {
       if (in == null) {
         System.err.println("SKIP (no source): " + srcPath);
@@ -82,8 +131,7 @@ public class GenerateExpected {
     }
   }
 
-  private static void generateMarkdownFromAst(TransformerFactory tf,
-      String astPath, String mdPath) throws Exception {
+  private static void generateMarkdownFromAst(TransformerFactory tf, String astPath, String mdPath) throws Exception {
     File astFile = new File("src/test/resources/" + astPath);
     if (!astFile.exists()) {
       System.err.println("SKIP (no AST): " + astPath);
@@ -100,8 +148,8 @@ public class GenerateExpected {
     }
   }
 
-  private static void generateAst(TransformerFactory tf, DocumentBuilder db,
-      String ditaPath, String astPath) throws Exception {
+  private static void generateAst(TransformerFactory tf, DocumentBuilder db, String ditaPath, String astPath)
+    throws Exception {
     File ditaFile = new File("src/test/resources/" + ditaPath);
     if (!ditaFile.exists()) {
       System.err.println("SKIP (no DITA): " + ditaPath);

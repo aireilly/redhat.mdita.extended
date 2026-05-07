@@ -86,7 +86,6 @@ public class TopicRenderer extends AbstractRenderer {
 
   public static final String TIGHT_LIST_P = "tight-list-p";
 
-
   /**
    * Default heading titles that map to task section elements without
    * requiring explicit class attributes.
@@ -110,7 +109,6 @@ public class TopicRenderer extends AbstractRenderer {
     "related links",
     "related-links"
   );
-
 
   private final boolean shortdescParagraph;
   private final boolean idFromYaml;
@@ -193,10 +191,11 @@ public class TopicRenderer extends AbstractRenderer {
       res
         .stream()
         .collect(
-          Collectors.<NodeRenderingHandler<? extends Node>, Class<? extends Node>, NodeRenderingHandler<? extends Node>>toMap(
-            AstHandler::getNodeType,
-            Function.identity()
-          )
+          Collectors.<
+              NodeRenderingHandler<? extends Node>,
+              Class<? extends Node>,
+              NodeRenderingHandler<? extends Node>
+            >toMap(AstHandler::getNodeType, Function.identity())
         )
     );
     return map;
@@ -207,14 +206,13 @@ public class TopicRenderer extends AbstractRenderer {
   private void render(final Document node, final NodeRendererContext context, final SaxWriter html) {
     final boolean isCompound = hasMultipleTopLevelHeaders(node);
     if (isCompound) {
-      final AttributesBuilder atts = new AttributesBuilder()
-        .add(
-          DITA_NAMESPACE,
-          ATTRIBUTE_NAME_DITAARCHVERSION,
-          ATTRIBUTE_PREFIX_DITAARCHVERSION + ":" + ATTRIBUTE_NAME_DITAARCHVERSION,
-          "CDATA",
-          "2.0"
-        );
+      final AttributesBuilder atts = new AttributesBuilder().add(
+        DITA_NAMESPACE,
+        ATTRIBUTE_NAME_DITAARCHVERSION,
+        ATTRIBUTE_PREFIX_DITAARCHVERSION + ":" + ATTRIBUTE_NAME_DITAARCHVERSION,
+        "CDATA",
+        "2.0"
+      );
       if (mditaCoreProfile) {
         atts.add(ATTRIBUTE_NAME_SPECIALIZATIONS, "(topic hi-d)(topic em-d)");
       } else if (mditaExtendedProfile) {
@@ -235,7 +233,6 @@ public class TopicRenderer extends AbstractRenderer {
       html.endElement();
     }
   }
-
 
   private void render(final AdmonitionBlock node, final NodeRendererContext context, final SaxWriter html) {
     final String type = node.getInfo().toString();
@@ -275,8 +272,10 @@ public class TopicRenderer extends AbstractRenderer {
 
   private void render(JekyllTag node, final NodeRendererContext context, final SaxWriter html) {
     if (node.getTag().toString().equals("include")) {
-      final AttributesBuilder atts = new AttributesBuilder(REQUIRED_CLEANUP_ATTS)
-        .add(ATTRIBUTE_NAME_CONREF, node.getParameters().toString());
+      final AttributesBuilder atts = new AttributesBuilder(REQUIRED_CLEANUP_ATTS).add(
+        ATTRIBUTE_NAME_CONREF,
+        node.getParameters().toString()
+      );
       html.startElement(node, TOPIC_REQUIRED_CLEANUP, atts.build());
       html.endElement();
     }
@@ -349,8 +348,10 @@ public class TopicRenderer extends AbstractRenderer {
   }
 
   private void render(final Image node, final NodeRendererContext context, final SaxWriter html) {
-    final AttributesBuilder atts = new AttributesBuilder(getInlineAttributes(node, IMAGE_ATTS))
-      .add(ATTRIBUTE_NAME_HREF, node.getUrl().toString());
+    final AttributesBuilder atts = new AttributesBuilder(getInlineAttributes(node, IMAGE_ATTS)).add(
+      ATTRIBUTE_NAME_HREF,
+      node.getUrl().toString()
+    );
     writeImage(node, node.getTitle().toString(), null, atts, context, html);
   }
 
@@ -511,19 +512,15 @@ public class TopicRenderer extends AbstractRenderer {
       if (mditaCoreProfile) {
         atts = new AttributesBuilder(TOPIC_ATTS).add(ATTRIBUTE_NAME_SPECIALIZATIONS, "(topic hi-d)(topic em-d)");
       } else if (mditaExtendedProfile) {
-        atts =
-          new AttributesBuilder(TOPIC_ATTS)
-            .add(
-              ATTRIBUTE_NAME_SPECIALIZATIONS,
-              "(topic hi-d)(topic em-d)(topic ui-d)(topic sw-d)(topic pr-d) @props/audience @props/deliveryTarget @props/otherprops @props/platform @props/product"
-            );
+        atts = new AttributesBuilder(TOPIC_ATTS).add(
+          ATTRIBUTE_NAME_SPECIALIZATIONS,
+          "(topic hi-d)(topic em-d)(topic ui-d)(topic sw-d)(topic pr-d) @props/audience @props/deliveryTarget @props/otherprops @props/platform @props/product"
+        );
       } else {
-        atts =
-          new AttributesBuilder(TOPIC_ATTS)
-            .add(
-              ATTRIBUTE_NAME_SPECIALIZATIONS,
-              "@props/audience @props/deliveryTarget @props/otherprops @props/platform @props/product"
-            );
+        atts = new AttributesBuilder(TOPIC_ATTS).add(
+          ATTRIBUTE_NAME_SPECIALIZATIONS,
+          "@props/audience @props/deliveryTarget @props/otherprops @props/platform @props/product"
+        );
       }
 
       final String id = getTopicId(node);
@@ -602,9 +599,9 @@ public class TopicRenderer extends AbstractRenderer {
     }
     final String schema = schemas.get(0);
     // Parse type from urn:oasis:names:tc:dita:xsd:{type}.xsd
-    final java.util.regex.Matcher m = java.util.regex.Pattern
-      .compile("urn:oasis:names:tc:dita:xsd:(\\w+)\\.xsd")
-      .matcher(schema);
+    final java.util.regex.Matcher m = java.util.regex.Pattern.compile(
+      "urn:oasis:names:tc:dita:xsd:(\\w+)\\.xsd"
+    ).matcher(schema);
     if (m.matches()) {
       final String type = m.group(1);
       // Only return recognized specialization types
@@ -742,7 +739,6 @@ public class TopicRenderer extends AbstractRenderer {
     return false;
   }
 
-
   private void render(final ReferenceNode node, final NodeRendererContext context, final SaxWriter html) {
     throw new RuntimeException();
   }
@@ -755,7 +751,8 @@ public class TopicRenderer extends AbstractRenderer {
     final String text = node.getText().toString();
     final String key = node.getReference() != null ? node.getReference().toString() : text;
     final Reference refNode = node.getReferenceNode(node.getDocument());
-    if (refNode == null) { // "fake" reference image link
+    if (refNode == null) {
+      // "fake" reference image link
       final AttributesBuilder atts = new AttributesBuilder(IMAGE_ATTS).add(ATTRIBUTE_NAME_KEYREF, key);
       if (onlyImageChild) {
         atts.add("placement", "break");
@@ -763,8 +760,10 @@ public class TopicRenderer extends AbstractRenderer {
       html.startElement(node, TOPIC_IMAGE, getInlineAttributes(node, atts.build()));
       html.endElement();
     } else {
-      final AttributesBuilder atts = new AttributesBuilder(getInlineAttributes(node, IMAGE_ATTS))
-        .add(ATTRIBUTE_NAME_HREF, refNode.getUrl().toString());
+      final AttributesBuilder atts = new AttributesBuilder(getInlineAttributes(node, IMAGE_ATTS)).add(
+        ATTRIBUTE_NAME_HREF,
+        refNode.getUrl().toString()
+      );
       if (key != null) {
         atts.add(ATTRIBUTE_NAME_KEYREF, key);
       }
@@ -776,7 +775,8 @@ public class TopicRenderer extends AbstractRenderer {
     final String text = node.getText().toString();
     final String key = node.getReference() != null ? node.getReference().toString() : text;
     final Reference refNode = node.getReferenceNode(node.getDocument());
-    if (refNode == null) { // "fake" reference link
+    if (refNode == null) {
+      // "fake" reference link
       final AttributesBuilder atts = new AttributesBuilder(XREF_ATTS).add(ATTRIBUTE_NAME_KEYREF, key);
       html.startElement(node, TOPIC_XREF, atts.build());
       if (!node.getText().toString().isEmpty()) {
@@ -872,8 +872,13 @@ public class TopicRenderer extends AbstractRenderer {
   // Code block
 
   private void render(final CodeBlock node, final NodeRendererContext context, final SaxWriter html) {
-    final AttributesBuilder atts = new AttributesBuilder(mditaExtendedProfile ? PRE_ATTS : CODEBLOCK_ATTS)
-      .add(XML_NS_URI, "space", "xml:space", "CDATA", "preserve");
+    final AttributesBuilder atts = new AttributesBuilder(mditaExtendedProfile ? PRE_ATTS : CODEBLOCK_ATTS).add(
+      XML_NS_URI,
+      "space",
+      "xml:space",
+      "CDATA",
+      "preserve"
+    );
     html.startElement(node, mditaExtendedProfile ? TOPIC_PRE : PR_D_CODEBLOCK, atts.build());
     String text = node.getChars().toString();
     if (text.endsWith("\n")) {
@@ -884,8 +889,13 @@ public class TopicRenderer extends AbstractRenderer {
   }
 
   private void render(final IndentedCodeBlock node, final NodeRendererContext context, final SaxWriter html) {
-    final AttributesBuilder atts = new AttributesBuilder(mditaExtendedProfile ? PRE_ATTS : CODEBLOCK_ATTS)
-      .add(XML_NS_URI, "space", "xml:space", "CDATA", "preserve");
+    final AttributesBuilder atts = new AttributesBuilder(mditaExtendedProfile ? PRE_ATTS : CODEBLOCK_ATTS).add(
+      XML_NS_URI,
+      "space",
+      "xml:space",
+      "CDATA",
+      "preserve"
+    );
     html.startElement(node, mditaExtendedProfile ? TOPIC_PRE : PR_D_CODEBLOCK, atts.build());
     // FIXME: For compatibility with HTML pre/code, should be removed
     if (mditaExtendedProfile) {
@@ -903,8 +913,13 @@ public class TopicRenderer extends AbstractRenderer {
   }
 
   private void render(final FencedCodeBlock node, final NodeRendererContext context, final SaxWriter html) {
-    final AttributesBuilder atts = new AttributesBuilder(mditaExtendedProfile ? PRE_ATTS : CODEBLOCK_ATTS)
-      .add(XML_NS_URI, "space", "xml:space", "CDATA", "preserve");
+    final AttributesBuilder atts = new AttributesBuilder(mditaExtendedProfile ? PRE_ATTS : CODEBLOCK_ATTS).add(
+      XML_NS_URI,
+      "space",
+      "xml:space",
+      "CDATA",
+      "preserve"
+    );
 
     BasedSequence info = node.getInfo();
     if (info.startsWith("{") && info.endsWith("}")) {
@@ -978,10 +993,8 @@ public class TopicRenderer extends AbstractRenderer {
 
   // helpers
 
-
   @Override
   protected AttributesBuilder getLinkAttributes(final String href) {
     return getLinkAttributes(href, XREF_ATTS);
   }
-
 }

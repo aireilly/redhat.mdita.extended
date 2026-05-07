@@ -56,18 +56,13 @@ public class HeaderIdGenerator implements DitaIdGenerator {
 
     for (int i = 0; i < iMax; i++) {
       char c = headerText.charAt(i);
-      if (isAlphabetic(c)) baseRefId.append(Character.toLowerCase(c)); else if (Character.isDigit(c)) baseRefId.append(
-        c
-      ); else if (
+      if (isAlphabetic(c)) baseRefId.append(Character.toLowerCase(c));
+      else if (Character.isDigit(c)) baseRefId.append(c);
+      else if (
         toDashChars.indexOf(c) != -1 &&
-        (
-          !noDupedDashes ||
-          (
-            (c == '-' && baseRefId.length() == 0) ||
-            baseRefId.length() != 0 &&
-            baseRefId.charAt(baseRefId.length() - 1) != '-'
-          )
-        )
+        (!noDupedDashes ||
+          ((c == '-' && baseRefId.length() == 0) ||
+            (baseRefId.length() != 0 && baseRefId.charAt(baseRefId.length() - 1) != '-')))
       ) baseRefId.append('-');
     }
     return baseRefId.toString();
@@ -75,19 +70,14 @@ public class HeaderIdGenerator implements DitaIdGenerator {
 
   public static boolean isAlphabetic(final char c) {
     return (
-      (
-        (
-          (
-            (1 << Character.UPPERCASE_LETTER) |
+      ((((1 << Character.UPPERCASE_LETTER) |
             (1 << Character.LOWERCASE_LETTER) |
             (1 << Character.TITLECASE_LETTER) |
             (1 << Character.MODIFIER_LETTER) |
             (1 << Character.OTHER_LETTER) |
-            (1 << Character.LETTER_NUMBER)
-          ) >> Character.getType((int) c)
-        ) &
-        1
-      ) !=
+            (1 << Character.LETTER_NUMBER)) >>
+          Character.getType((int) c)) &
+        1) !=
       0
     );
   }

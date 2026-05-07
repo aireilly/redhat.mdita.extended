@@ -125,13 +125,12 @@ public class MarkdownReaderTest extends AbstractReaderTest {
   @ParameterizedTest
   @ValueSource(strings = { "missing_root_header.md", "missing_root_header_with_yaml.md" })
   public void test_missingHeader(String file) throws Exception {
-    reader =
-      new MarkdownReader(
-        new MutableDataSet()
-          .set(Parser.EXTENSIONS, singletonList(YamlFrontMatterExtension.create()))
-          .set(DitaRenderer.FIX_ROOT_HEADING, true)
-          .set(DitaRenderer.ID_FROM_YAML, true)
-      );
+    reader = new MarkdownReader(
+      new MutableDataSet()
+        .set(Parser.EXTENSIONS, singletonList(YamlFrontMatterExtension.create()))
+        .set(DitaRenderer.FIX_ROOT_HEADING, true)
+        .set(DitaRenderer.ID_FROM_YAML, true)
+    );
     final TestErrorHandler errorHandler = new TestErrorHandler();
     reader.setErrorHandler(errorHandler);
 
@@ -148,13 +147,12 @@ public class MarkdownReaderTest extends AbstractReaderTest {
   @ParameterizedTest
   @ValueSource(strings = { "missing_root_header.md", "missing_root_header_with_yaml.md" })
   public void test_missingHeader_wiki(String file) throws Exception {
-    reader =
-      new MarkdownReader(
-        new MutableDataSet()
-          .set(Parser.EXTENSIONS, singletonList(YamlFrontMatterExtension.create()))
-          .set(DitaRenderer.ID_FROM_YAML, true)
-          .set(DitaRenderer.WIKI, true)
-      );
+    reader = new MarkdownReader(
+      new MutableDataSet()
+        .set(Parser.EXTENSIONS, singletonList(YamlFrontMatterExtension.create()))
+        .set(DitaRenderer.ID_FROM_YAML, true)
+        .set(DitaRenderer.WIKI, true)
+    );
     final TestErrorHandler errorHandler = new TestErrorHandler();
     reader.setErrorHandler(errorHandler);
 
@@ -217,16 +215,13 @@ public class MarkdownReaderTest extends AbstractReaderTest {
   @ParameterizedTest
   @ValueSource(strings = { "invalid_header.md" })
   public void test_fail(String file) {
-    assertThrows(
-      SAXException.class,
-      () -> {
-        final String input = "/" + getSrc() + file;
-        try (final InputStream in = getClass().getResourceAsStream(input)) {
-          final InputSource i = new InputSource(in);
-          reader.parse(i);
-        }
+    assertThrows(SAXException.class, () -> {
+      final String input = "/" + getSrc() + file;
+      try (final InputStream in = getClass().getResourceAsStream(input)) {
+        final InputSource i = new InputSource(in);
+        reader.parse(i);
       }
-    );
+    });
   }
 
   @ParameterizedTest
@@ -255,7 +250,7 @@ public class MarkdownReaderTest extends AbstractReaderTest {
   public void getMarkdownContent_characterStream(String input, String encoding) throws Exception {
     try (
       InputStream in = getClass().getResourceAsStream(input);
-      Reader r = new InputStreamReader(in, StandardCharsets.UTF_8)
+      Reader r = new InputStreamReader(in, StandardCharsets.UTF_8);
     ) {
       final InputSource i = new InputSource(r);
       i.setEncoding(encoding);

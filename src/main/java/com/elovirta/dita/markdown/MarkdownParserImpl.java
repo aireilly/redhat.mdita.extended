@@ -157,12 +157,11 @@ public class MarkdownParserImpl implements MarkdownParser {
         }
         String id = header.get("id");
         if (id == null) {
-          id =
-            HeaderIdGenerator.generateId(
-              getTextFromFile(input),
-              DitaRenderer.HEADER_ID_GENERATOR_TO_DASH_CHARS.get(root),
-              DitaRenderer.HEADER_ID_GENERATOR_NO_DUPED_DASHES.get(root)
-            );
+          id = HeaderIdGenerator.generateId(
+            getTextFromFile(input),
+            DitaRenderer.HEADER_ID_GENERATOR_TO_DASH_CHARS.get(root),
+            DitaRenderer.HEADER_ID_GENERATOR_NO_DUPED_DASHES.get(root)
+          );
         }
         generateRootHeading(root, id, header.get("title"));
       }

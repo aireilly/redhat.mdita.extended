@@ -78,24 +78,22 @@ public abstract class AbstractRenderer {
     mditaExtendedProfile = DitaRenderer.MDITA_EXTENDED_PROFILE.get(options);
     mditaCoreProfile = DitaRenderer.MDITA_CORE_PROFILE.get(options);
     rawDita = RAW_DITA.get(options);
-    transformerFactorySupplier =
-      Suppliers.memoize(() -> {
-        final SAXTransformerFactory tf = (SAXTransformerFactory) TransformerFactory.newInstance();
-        tf.setURIResolver(new ClasspathURIResolver(tf.getURIResolver()));
-        return tf;
-      })::get;
-    templatesSupplier =
-      Suppliers.memoize(() -> {
-        final SAXTransformerFactory tf = transformerFactorySupplier.get();
-        final String stylesheet = (mditaCoreProfile || mditaExtendedProfile)
-          ? "/hdita2dita.xsl"
-          : "/hdita2dita-markdown.xsl";
-        try (InputStream in = getClass().getResourceAsStream(stylesheet)) {
-          return tf.newTemplates(new StreamSource(in, "classpath://" + stylesheet));
-        } catch (IOException | TransformerConfigurationException e) {
-          throw new RuntimeException(e);
-        }
-      })::get;
+    transformerFactorySupplier = Suppliers.memoize(() -> {
+      final SAXTransformerFactory tf = (SAXTransformerFactory) TransformerFactory.newInstance();
+      tf.setURIResolver(new ClasspathURIResolver(tf.getURIResolver()));
+      return tf;
+    })::get;
+    templatesSupplier = Suppliers.memoize(() -> {
+      final SAXTransformerFactory tf = transformerFactorySupplier.get();
+      final String stylesheet = (mditaCoreProfile || mditaExtendedProfile)
+        ? "/hdita2dita.xsl"
+        : "/hdita2dita-markdown.xsl";
+      try (InputStream in = getClass().getResourceAsStream(stylesheet)) {
+        return tf.newTemplates(new StreamSource(in, "classpath://" + stylesheet));
+      } catch (IOException | TransformerConfigurationException e) {
+        throw new RuntimeException(e);
+      }
+    })::get;
     formats = FORMATS.get(options);
   }
 
@@ -183,8 +181,7 @@ public abstract class AbstractRenderer {
   }
 
   protected boolean hasMultipleTopLevelHeaders(Document astRoot) {
-    final long count = StreamSupport
-      .stream(astRoot.getChildren().spliterator(), false)
+    final long count = StreamSupport.stream(astRoot.getChildren().spliterator(), false)
       .filter(n -> (n instanceof Heading) && (((Heading) n).getLevel() == 1))
       .count();
     return count > 1;
@@ -246,7 +243,8 @@ public abstract class AbstractRenderer {
       }
 
       if (
-        uri != null && (uri.isAbsolute() || !uri.isAbsolute() && uri.getPath() != null && uri.getPath().startsWith("/"))
+        uri != null &&
+        (uri.isAbsolute() || (!uri.isAbsolute() && uri.getPath() != null && uri.getPath().startsWith("/")))
       ) {
         atts.add(ATTRIBUTE_NAME_SCOPE, ATTR_SCOPE_VALUE_EXTERNAL);
       }
@@ -272,5 +270,4 @@ public abstract class AbstractRenderer {
   protected Attributes getInlineAttributes(Node node, Attributes base) {
     return base;
   }
-
 }

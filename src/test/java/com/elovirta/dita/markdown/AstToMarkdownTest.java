@@ -75,7 +75,7 @@ public class AstToMarkdownTest {
     final ByteArrayOutputStream o = new ByteArrayOutputStream();
     try (
       InputStream style = getClass().getResourceAsStream("/ast.xsl");
-      InputStream ri = getClass().getResourceAsStream("/" + input)
+      InputStream ri = getClass().getResourceAsStream("/" + input);
     ) {
       final TransformerFactory tf = TransformerFactory.newInstance();
       tf.setURIResolver(new ClasspathURIResolver(tf.getURIResolver()));

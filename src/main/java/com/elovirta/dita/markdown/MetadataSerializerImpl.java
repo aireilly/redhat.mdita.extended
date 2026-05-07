@@ -20,18 +20,16 @@ public class MetadataSerializerImpl implements MetadataSerializer {
   private final Set<String> knownKeys;
 
   public MetadataSerializerImpl(Boolean idFromYaml) {
-    final ImmutableSet.Builder<String> keys = ImmutableSet
-      .<String>builder()
-      .add(
-        TOPIC_AUTHOR.localName,
-        TOPIC_SOURCE.localName,
-        TOPIC_PUBLISHER.localName,
-        TOPIC_PERMISSIONS.localName,
-        TOPIC_AUDIENCE.localName,
-        TOPIC_CATEGORY.localName,
-        TOPIC_RESOURCEID.localName,
-        TOPIC_KEYWORD.localName
-      );
+    final ImmutableSet.Builder<String> keys = ImmutableSet.<String>builder().add(
+      TOPIC_AUTHOR.localName,
+      TOPIC_SOURCE.localName,
+      TOPIC_PUBLISHER.localName,
+      TOPIC_PERMISSIONS.localName,
+      TOPIC_AUDIENCE.localName,
+      TOPIC_CATEGORY.localName,
+      TOPIC_RESOURCEID.localName,
+      TOPIC_KEYWORD.localName
+    );
     if (idFromYaml) {
       keys.add(ATTRIBUTE_NAME_ID);
     }
@@ -68,8 +66,7 @@ public class MetadataSerializerImpl implements MetadataSerializer {
       html.endElement();
     }
     write(header, TOPIC_RESOURCEID, "appid", html);
-    final List<String> keys = Sets
-      .difference(header.keySet(), knownKeys)
+    final List<String> keys = Sets.difference(header.keySet(), knownKeys)
       .stream()
       .sorted()
       .collect(Collectors.toList());

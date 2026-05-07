@@ -91,8 +91,7 @@ public class DitaToAstTest {
     final Document act = run("dita/" + name + ".dita");
     final Document exp = read("output/ast/" + name + ".xml");
     try {
-      final Diff diff = DiffBuilder
-        .compare(clean(act))
+      final Diff diff = DiffBuilder.compare(clean(act))
         .withTest(clean(exp))
         .normalizeWhitespace()
         .ignoreWhitespace()
@@ -112,7 +111,7 @@ public class DitaToAstTest {
     final Document output = DocumentBuilderFactory.newInstance().newDocumentBuilder().newDocument();
     try (
       InputStream style = getClass().getResourceAsStream("/dita2ast.xsl");
-      InputStream ri = getClass().getResourceAsStream("/" + input)
+      InputStream ri = getClass().getResourceAsStream("/" + input);
     ) {
       final Transformer t = transformerFactory.newTransformer(new StreamSource(style, "classpath:///dita2ast.xsl"));
       t.transform(new StreamSource(ri), new DOMResult(output));

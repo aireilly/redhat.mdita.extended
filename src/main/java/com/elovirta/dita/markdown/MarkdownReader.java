@@ -364,7 +364,7 @@ public class MarkdownReader implements XMLReader {
         BufferedInputStream is = isUtf8
           ? consumeBOM(input.getByteStream())
           : new BufferedInputStream(input.getByteStream());
-        Reader in = new InputStreamReader(is, encoding)
+        Reader in = new InputStreamReader(is, encoding);
       ) {
         copy(in, out);
       }
@@ -381,7 +381,7 @@ public class MarkdownReader implements XMLReader {
       }
       try (
         BufferedInputStream is = isUtf8 ? consumeBOM(inUrl.openStream()) : new BufferedInputStream(inUrl.openStream());
-        Reader in = new InputStreamReader(is, encoding)
+        Reader in = new InputStreamReader(is, encoding);
       ) {
         copy(in, out);
       }

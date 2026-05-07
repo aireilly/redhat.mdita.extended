@@ -177,8 +177,16 @@
                                               [generate-id(.) = generate-id(key('hideduplicates', related-links:hideduplicates(.))[1])]"/>
        </xsl:apply-templates>
       </xsl:variable>
+      <xsl:variable name="rellinks-head-level" as="xs:integer">
+        <xsl:variable name="headCount" select="count(ancestor::*[contains(@class, ' topic/topic ')]) + 1"/>
+        <xsl:choose>
+          <xsl:when test="$headCount > 6">6</xsl:when>
+          <xsl:otherwise><xsl:sequence select="$headCount"/></xsl:otherwise>
+        </xsl:choose>
+      </xsl:variable>
       <xsl:apply-templates select="$unordered-links">
         <xsl:with-param name="root" select="root()" as="document-node()" tunnel="yes"/>
+        <xsl:with-param name="rellinks-head-level" select="$rellinks-head-level" as="xs:integer" tunnel="yes"/>
       </xsl:apply-templates>
       <!--linklists - last but not least, create all the linklists and their links, with no sorting or re-ordering-->
       <xsl:apply-templates select="*[contains(@class, ' topic/linklist ')]"/>
@@ -281,7 +289,7 @@ Each child is indented, the linktext is bold, and the shortdesc appears in norma
                 as="element(linklist)">
     <xsl:param name="links" as="node()*"/>
     <xsl:if test="exists($links)">
-      <linklist class="- topic/linklist " outputclass="relinfo">
+      <linklist class="- topic/linklist " outputclass="related-links">
         <title class="- topic/title ">
           <xsl:call-template name="getVariable">
             <xsl:with-param name="id" select="'Related information'"/>
@@ -585,6 +593,7 @@ Each child is indented, the linktext is bold, and the shortdesc appears in norma
     <link>
       <xsl:call-template name="commonattributes"/>
       <xsl:apply-templates select="." mode="add-linking-attributes"/>
+      <xsl:copy-of select="@format | @scope"/>
       <xsl:apply-templates select="." mode="add-desc-as-hoverhelp"/>
       <!-- Allow for unknown metadata (future-proofing) -->
       <xsl:apply-templates select="*[contains(@class, ' topic/data ') or contains(@class, ' topic/foreign ')]"/>
@@ -678,10 +687,20 @@ Each child is indented, the linktext is bold, and the shortdesc appears in norma
   </xsl:template>
 
   <xsl:template match="*[contains(@class, ' topic/linklist ')]/*[contains(@class, ' topic/title ')]" name="topic.linklist_title">
-    <strong>
-      <xsl:apply-templates/>
-    </strong>
-    <linebreak/>
+    <xsl:param name="rellinks-head-level" as="xs:integer?" tunnel="yes" select="()"/>
+    <xsl:choose>
+      <xsl:when test="parent::*[@outputclass = 'related-links'] and exists($rellinks-head-level)">
+        <header level="{$rellinks-head-level}" class="related-links">
+          <xsl:apply-templates/>
+        </header>
+      </xsl:when>
+      <xsl:otherwise>
+        <strong>
+          <xsl:apply-templates/>
+        </strong>
+        <linebreak/>
+      </xsl:otherwise>
+    </xsl:choose>
   </xsl:template>
 
   <xsl:template match="*[contains(@class, ' topic/linklist ')]/*[contains(@class, ' topic/desc ')]" name="topic.linklist_desc">

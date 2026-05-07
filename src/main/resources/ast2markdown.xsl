@@ -487,6 +487,21 @@
     <xsl:text>(</xsl:text>
     <xsl:value-of select="@href"/>
     <xsl:text>)</xsl:text>
+    <xsl:if test="@format or @scope">
+      <xsl:text>{</xsl:text>
+      <xsl:if test="@format">
+        <xsl:text>format="</xsl:text>
+        <xsl:value-of select="@format"/>
+        <xsl:text>"</xsl:text>
+      </xsl:if>
+      <xsl:if test="@scope">
+        <xsl:if test="@format"><xsl:text> </xsl:text></xsl:if>
+        <xsl:text>scope="</xsl:text>
+        <xsl:value-of select="@scope"/>
+        <xsl:text>"</xsl:text>
+      </xsl:if>
+      <xsl:text>}</xsl:text>
+    </xsl:if>
   </xsl:template>
   
   <xsl:template match="link[empty(@href) and @keyref]" mode="ast">

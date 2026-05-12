@@ -232,6 +232,81 @@ Blockquotes are converted to DITA `<lq>` (long quote):
 > This becomes a long quote element.
 ```
 
+## Conditional profiling attributes
+
+Profiling attributes can be added to headings, block elements, and inline
+elements using the `{key="value"}` syntax. These attributes are passed
+through to the DITA output and can be used with DITA-OT DITAVAL filtering.
+
+Supported profiling attributes: `audience`, `platform`, `product`,
+`otherprops`, `deliveryTarget`, `props`, `rev`.
+
+**Heading-level profiling:**
+
+```markdown
+## Installing on Linux {platform="linux"}
+```
+
+This produces a section (or nested topic) with `platform="linux"` on the
+element.
+
+**Block-level profiling (leading attribute paragraph):**
+
+```markdown
+{audience="expert"}
+
+* Step one
+* Step two
+```
+
+The `{audience="expert"}` paragraph before the list applies the attribute
+to the `<ul>` element. Supported block elements: lists, definition lists,
+blockquotes, and tables.
+
+**Inline profiling:**
+
+```markdown
+For **advanced users**{audience="expert"}, compile from source.
+```
+
+This produces `<b audience="expert">advanced users</b>` in the DITA output.
+
+**Multiple attributes:**
+
+```markdown
+## Cloud Setup {platform="aws" audience="admin"}
+```
+
+Non-profiling attributes (such as `{.classname}` or `{custom="value"}`) are
+silently ignored.
+
+## Keyword keyrefs
+
+Use `{{key-name}}` double-curly syntax for product name and version
+substitution:
+
+```markdown
+# About {{product-name}}
+
+{{product-name}} is a container platform.
+The current version is {{version}}.
+```
+
+Each `{{key}}` produces a `<keyword keyref="key"/>` element in the DITA
+output. Key names may contain letters, digits, dots, underscores, and
+hyphens. Invalid key names (spaces, empty, special characters) pass through
+as literal text.
+
+The `{{keyref}}` syntax coexists with existing keyref syntaxes:
+
+| Syntax | DITA output | Use case |
+|--------|-------------|----------|
+| `{{key}}` | `<keyword keyref="key"/>` | Product names, versions |
+| `[text][key]` | `<xref keyref="key">text</xref>` | Link-style keyrefs |
+| `<span data-keyref="key">` | `<ph keyref="key"/>` | HDITA compatibility |
+
+Define key values using YAML key definitions in the map (see below).
+
 ## Hard line breaks
 
 A trailing backslash or two spaces at end of line produces a
@@ -348,6 +423,50 @@ Markdown reference-style links at the bottom of a map file become
 ```markdown
 [product-name]: product.md
 ```
+
+### YAML key definitions
+
+Define keyword keyrefs in the YAML front matter of an MDITA map using a
+`keys:` block:
+
+```markdown
+---
+$schema: urn:oasis:names:tc:dita:xsd:map.xsd
+keys:
+  product-name: "Red Hat OpenShift Container Platform"
+  product-short: "OpenShift"
+  version: "4.15"
+  product-url: "https://www.redhat.com/openshift"
+---
+
+# Installation Guide
+
+* [Prerequisites](prereqs.md)
+* [Installing {{product-short}}](install.md)
+```
+
+Plain text values produce keyword-content keydefs:
+
+```xml
+<keydef keys="product-name">
+  <topicmeta>
+    <keywords>
+      <keyword>Red Hat OpenShift Container Platform</keyword>
+    </keywords>
+  </topicmeta>
+</keydef>
+```
+
+URL values (starting with `http://`, `https://`, or ending with `.md`,
+`.dita`, `.html`, `.xml`) produce href-based keydefs:
+
+```xml
+<keydef keys="product-url" href="https://www.redhat.com/openshift"
+        format="html" scope="external"/>
+```
+
+YAML key definitions coexist with reference-style key definitions
+(`[key]: url`). Both appear in the generated DITA map.
 
 ### Relationship tables
 

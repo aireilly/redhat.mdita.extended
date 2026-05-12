@@ -1,0 +1,13 @@
+<topic xmlns:ditaarch="http://dita.oasis-open.org/architecture/2005/"
+       class="- topic/topic "
+       ditaarch:DITAArchVersion="2.0"
+       id="about-product"
+       specializations="(topic hi-d)(topic em-d)(topic ui-d)(topic sw-d)(topic pr-d) @props/audience @props/deliveryTarget @props/otherprops @props/platform @props/product">
+   <title class="- topic/title ">About <keyword class="- topic/keyword " keyref="product-name"/></title>
+   <shortdesc class="- topic/shortdesc "><keyword class="- topic/keyword " keyref="product-name"/> is a container platform.</shortdesc>
+   <prolog class="- topic/prolog "/>
+   <body class="- topic/body ">
+      <p class="- topic/p ">The current version is <keyword class="- topic/keyword " keyref="version"/>.</p>
+      <p class="- topic/p ">Install <b class="+ topic/ph hi-d/b "><keyword class="- topic/keyword " keyref="product-short"/></b> now.</p>
+   </body>
+</topic>

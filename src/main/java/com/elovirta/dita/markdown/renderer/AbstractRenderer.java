@@ -24,6 +24,9 @@ import com.vladsch.flexmark.ext.gfm.strikethrough.Subscript;
 import com.vladsch.flexmark.ext.superscript.Superscript;
 import com.vladsch.flexmark.util.ast.Document;
 import com.vladsch.flexmark.util.ast.Node;
+import com.vladsch.flexmark.ext.attributes.AttributesNode;
+import com.elovirta.dita.markdown.keyref.KeyrefNode;
+import java.util.Set;
 import com.vladsch.flexmark.util.data.DataHolder;
 import com.vladsch.flexmark.util.sequence.BasedSequence;
 import com.vladsch.flexmark.util.visitor.AstHandler;
@@ -62,6 +65,11 @@ public abstract class AbstractRenderer {
   protected static final Attributes IMAGE_ATTS = buildAtts(TOPIC_IMAGE);
   protected static final Attributes ALT_ATTS = buildAtts(TOPIC_ALT);
   protected static final Attributes PH_ATTS = buildAtts(TOPIC_PH);
+  protected static final Attributes KEYWORD_ATTS = buildAtts(TOPIC_KEYWORD);
+
+  protected static final Set<String> PROFILING_ATTRIBUTES = Set.of(
+    "audience", "platform", "product", "otherprops", "deliveryTarget", "props", "rev"
+  );
 
   protected final boolean mditaExtendedProfile;
   protected final boolean mditaCoreProfile;
@@ -116,6 +124,7 @@ public abstract class AbstractRenderer {
     if (!mditaCoreProfile && !mditaExtendedProfile) {
       res.add(new NodeRenderingHandler<>(Strikethrough.class, this::render));
     }
+    res.add(new NodeRenderingHandler<>(KeyrefNode.class, this::render));
 
     return res.stream().collect(Collectors.toMap(AstHandler::getNodeType, Function.identity()));
   }
@@ -174,6 +183,13 @@ public abstract class AbstractRenderer {
 
   private void render(final HtmlInlineComment node, final NodeRendererContext context, final SaxWriter html) {
     // Ignore
+  }
+
+  private void render(final KeyrefNode node, final NodeRendererContext context, final SaxWriter html) {
+    final AttributesBuilder atts = new AttributesBuilder(KEYWORD_ATTS)
+      .add(ATTRIBUTE_NAME_KEYREF, node.getKey());
+    html.startElement(node, TOPIC_KEYWORD, atts.build());
+    html.endElement();
   }
 
   protected List<Node> childList(Node astRoot) {
@@ -268,6 +284,26 @@ public abstract class AbstractRenderer {
   }
 
   protected Attributes getInlineAttributes(Node node, Attributes base) {
+    if (!mditaCoreProfile) {
+      if (node.getChildOfType(AttributesNode.class) != null) {
+        final Title header = Title.getFromChildren(node);
+        final AttributesBuilder builder = new AttributesBuilder(base);
+        return readProfilingAttributes(header, builder).build();
+      } else if (node.getNext() instanceof AttributesNode) {
+        final Title header = Title.getFromNext(node);
+        final AttributesBuilder builder = new AttributesBuilder(base);
+        return readProfilingAttributes(header, builder).build();
+      }
+    }
     return base;
+  }
+
+  protected AttributesBuilder readProfilingAttributes(Title header, AttributesBuilder builder) {
+    for (Map.Entry<String, String> attr : header.attributes.entrySet()) {
+      if (PROFILING_ATTRIBUTES.contains(attr.getKey())) {
+        builder.add(attr.getKey(), attr.getValue());
+      }
+    }
+    return builder;
   }
 }

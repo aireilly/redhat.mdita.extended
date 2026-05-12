@@ -6,6 +6,7 @@ import static java.util.Arrays.asList;
 import com.google.common.annotations.VisibleForTesting;
 import com.vladsch.flexmark.ext.admonition.AdmonitionExtension;
 import com.vladsch.flexmark.ext.anchorlink.AnchorLinkExtension;
+import com.vladsch.flexmark.ext.attributes.AttributesExtension;
 import com.vladsch.flexmark.ext.autolink.AutolinkExtension;
 import com.vladsch.flexmark.ext.definition.DefinitionExtension;
 import com.vladsch.flexmark.ext.gfm.strikethrough.StrikethroughSubscriptExtension;
@@ -14,6 +15,7 @@ import com.vladsch.flexmark.ext.jekyll.tag.JekyllTagExtension;
 import com.vladsch.flexmark.ext.superscript.SuperscriptExtension;
 import com.vladsch.flexmark.ext.tables.TablesExtension;
 import com.vladsch.flexmark.ext.yaml.front.matter.YamlFrontMatterExtension;
+import com.elovirta.dita.markdown.keyref.KeyrefExtension;
 import com.vladsch.flexmark.parser.Parser;
 import com.vladsch.flexmark.util.data.DataKey;
 import com.vladsch.flexmark.util.data.DataSet;
@@ -121,7 +123,9 @@ public class MarkdownReader implements XMLReader {
             AutolinkExtension.create(),
             YamlFrontMatterExtension.create(),
             DefinitionExtension.create(),
-            StrikethroughSubscriptExtension.create()
+            StrikethroughSubscriptExtension.create(),
+            AttributesExtension.create(),
+            KeyrefExtension.create()
           )
         )
         .set(DefinitionExtension.TILDE_MARKER, false)

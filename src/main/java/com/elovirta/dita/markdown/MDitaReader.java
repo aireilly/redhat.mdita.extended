@@ -4,11 +4,13 @@ import static java.util.Arrays.asList;
 
 import com.vladsch.flexmark.ext.admonition.AdmonitionExtension;
 import com.vladsch.flexmark.ext.anchorlink.AnchorLinkExtension;
+import com.vladsch.flexmark.ext.attributes.AttributesExtension;
 import com.vladsch.flexmark.ext.definition.DefinitionExtension;
 import com.vladsch.flexmark.ext.jekyll.tag.JekyllTagExtension;
 import com.vladsch.flexmark.ext.superscript.SuperscriptExtension;
 import com.vladsch.flexmark.ext.tables.TablesExtension;
 import com.vladsch.flexmark.ext.yaml.front.matter.YamlFrontMatterExtension;
+import com.elovirta.dita.markdown.keyref.KeyrefExtension;
 import com.vladsch.flexmark.parser.Parser;
 import com.vladsch.flexmark.util.data.DataSet;
 import com.vladsch.flexmark.util.data.MutableDataSet;
@@ -30,7 +32,8 @@ public class MDitaReader extends MarkdownReader {
         //                    SuperscriptExtension.create(),
         TablesExtension.create(),
         //                    AutolinkExtension.create(),
-        YamlFrontMatterExtension.create()
+        YamlFrontMatterExtension.create(),
+        KeyrefExtension.create()
         //                    DefinitionExtension.create(),
         //                    StrikethroughExtension.create()
       )
@@ -59,7 +62,9 @@ public class MDitaReader extends MarkdownReader {
         SuperscriptExtension.create(),
         TablesExtension.create(),
         YamlFrontMatterExtension.create(),
-        DefinitionExtension.create()
+        DefinitionExtension.create(),
+        AttributesExtension.create(),
+        KeyrefExtension.create()
       )
     )
     .set(DefinitionExtension.TILDE_MARKER, false)

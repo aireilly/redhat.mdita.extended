@@ -5,6 +5,7 @@ import static java.util.Arrays.asList;
 import com.vladsch.flexmark.ext.anchorlink.AnchorLinkExtension;
 import com.vladsch.flexmark.ext.attributes.AttributesExtension;
 import com.vladsch.flexmark.ext.yaml.front.matter.YamlFrontMatterExtension;
+import com.elovirta.dita.markdown.keyref.KeyrefExtension;
 import com.vladsch.flexmark.parser.Parser;
 import com.vladsch.flexmark.util.data.DataSet;
 import com.vladsch.flexmark.util.data.MutableDataSet;
@@ -15,7 +16,7 @@ import com.vladsch.flexmark.util.data.MutableDataSet;
 public class MDitamapReader extends MarkdownReader {
 
   public static final DataSet CORE_PROFILE = new MutableDataSet()
-    .set(Parser.EXTENSIONS, asList(AnchorLinkExtension.create(), YamlFrontMatterExtension.create()))
+    .set(Parser.EXTENSIONS, asList(AnchorLinkExtension.create(), YamlFrontMatterExtension.create(), KeyrefExtension.create()))
     .set(DitaRenderer.MAP, true)
     .set(DitaRenderer.ID_FROM_YAML, true)
     .set(DitaRenderer.MDITA_CORE_PROFILE, true)
@@ -25,7 +26,7 @@ public class MDitamapReader extends MarkdownReader {
   public static final DataSet EXTENDED_PROFILE = new MutableDataSet()
     .set(
       Parser.EXTENSIONS,
-      asList(AnchorLinkExtension.create(), AttributesExtension.create(), YamlFrontMatterExtension.create())
+      asList(AnchorLinkExtension.create(), AttributesExtension.create(), YamlFrontMatterExtension.create(), KeyrefExtension.create())
     )
     .set(DitaRenderer.MAP, true)
     .set(DitaRenderer.ID_FROM_YAML, true)

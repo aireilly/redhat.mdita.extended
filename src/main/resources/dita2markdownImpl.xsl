@@ -1554,6 +1554,12 @@
   <xsl:copy-of select="@audience | @platform | @product | @otherprops | @deliveryTarget | @props | @rev"/>
 </xsl:template>
 
+<xsl:template match="*[contains(@class, ' topic/keyword ')][@keyref][not(normalize-space(.))]" priority="10">
+  <xsl:text>{{</xsl:text>
+  <xsl:value-of select="@keyref"/>
+  <xsl:text>}}</xsl:text>
+</xsl:template>
+
 <!-- Set the class attribute on the resulting output element. The default for a class of elements
      may be passed in with $default, but that default can be overridden with mode="get-output-class". -->
 <xsl:template match="*" mode="set-output-class">

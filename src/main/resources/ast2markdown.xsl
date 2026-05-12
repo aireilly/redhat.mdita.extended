@@ -72,7 +72,20 @@
   
   <xsl:variable name="profiling-attr-names" select="('audience', 'platform', 'product', 'otherprops', 'deliveryTarget', 'props', 'rev')" as="xs:string*"/>
 
-  <xsl:template name="ast-attibutes"/>
+  <xsl:template name="ast-attibutes">
+    <xsl:variable name="profiling-attrs" select="@*[local-name() = $profiling-attr-names]"/>
+    <xsl:if test="$profiling-attrs">
+      <xsl:text> {</xsl:text>
+      <xsl:for-each select="$profiling-attrs">
+        <xsl:if test="position() > 1"><xsl:text> </xsl:text></xsl:if>
+        <xsl:value-of select="local-name()"/>
+        <xsl:text>="</xsl:text>
+        <xsl:value-of select="."/>
+        <xsl:text>"</xsl:text>
+      </xsl:for-each>
+      <xsl:text>}</xsl:text>
+    </xsl:if>
+  </xsl:template>
 
   <xsl:variable name="domain-class-names" select="('uicontrol', 'wintitle', 'menucascade', 'filepath', 'userinput', 'systemoutput', 'sysout', 'cmdname', 'varname', 'msgph', 'codeph', 'option', 'parmname', 'apiname', 'cite')" as="xs:string*"/>
 
@@ -89,17 +102,32 @@
     <xsl:text>**</xsl:text>
   </xsl:template>
 
-  <xsl:template name="block-attributes"/>
+  <xsl:template name="block-attributes">
+    <xsl:variable name="profiling-attrs" select="@*[local-name() = $profiling-attr-names]"/>
+    <xsl:if test="$profiling-attrs">
+      <xsl:text>{</xsl:text>
+      <xsl:for-each select="$profiling-attrs">
+        <xsl:if test="position() > 1"><xsl:text> </xsl:text></xsl:if>
+        <xsl:value-of select="local-name()"/>
+        <xsl:text>="</xsl:text>
+        <xsl:value-of select="."/>
+        <xsl:text>"</xsl:text>
+      </xsl:for-each>
+      <xsl:text>}</xsl:text>
+      <xsl:value-of select="$linefeed"/>
+      <xsl:value-of select="$linefeed"/>
+    </xsl:if>
+  </xsl:template>
 
   <xsl:template match="bulletlist | orderedlist" mode="ast">
     <xsl:param name="indent" tunnel="yes" as="xs:string" select="''"/>
     <xsl:variable name="nested" select="ancestor::bulletlist or ancestor::orderedlist"/>
     <xsl:variable name="lis" select="li"/>
+    <xsl:call-template name="block-attributes"/>
     <xsl:apply-templates select="$lis" mode="ast"/>
     <xsl:if test="not($nested)">
       <xsl:value-of select="$linefeed"/><!-- because last li will not write one -->
     </xsl:if>
-    <xsl:call-template name="block-attributes"/>
   </xsl:template>
 
   <xsl:variable name="default-indent" select="'    '" as="xs:string"/>
@@ -129,8 +157,8 @@
   </xsl:template>
   
   <xsl:template match="definitionlist" mode="ast">
-    <xsl:apply-templates mode="ast"/>
     <xsl:call-template name="block-attributes"/>
+    <xsl:apply-templates mode="ast"/>
   </xsl:template>
 
   <xsl:template match="dlentry" mode="ast">
@@ -196,10 +224,10 @@
 
   <xsl:template match="blockquote" mode="ast">
     <xsl:param name="prefix" tunnel="yes" as="xs:string?" select="()"/>
+    <xsl:call-template name="block-attributes"/>
     <xsl:apply-templates mode="ast">
       <xsl:with-param name="prefix" tunnel="yes" select="concat($prefix, '> ')"/>
     </xsl:apply-templates>
-    <xsl:call-template name="block-attributes"/>
   </xsl:template>
   
   <xsl:template name="process-inline-contents">
@@ -223,6 +251,7 @@
   
   <xsl:template match="table" mode="ast">
     <xsl:param name="indent" tunnel="yes" as="xs:string" select="''"/>
+    <xsl:call-template name="block-attributes"/>
     <xsl:for-each select="thead">
       <xsl:value-of select="$indent"/>
       <xsl:for-each select="tr">
@@ -270,7 +299,6 @@
       </xsl:for-each>
     </xsl:for-each>
     <xsl:value-of select="$linefeed"/>
-    <xsl:call-template name="block-attributes"/>
   </xsl:template>
 
   <xsl:template match="*" mode="render-html">
@@ -411,6 +439,12 @@
   <xsl:template match="span[@class = 'topichead']" mode="ast" priority="5">
     <xsl:apply-templates mode="ast"/>
     <xsl:text> {.topichead}</xsl:text>
+  </xsl:template>
+
+  <xsl:template match="span[@keyref and not(text())]" mode="ast" priority="10">
+    <xsl:text>{{</xsl:text>
+    <xsl:value-of select="@keyref"/>
+    <xsl:text>}}</xsl:text>
   </xsl:template>
 
   <xsl:template match="span" mode="ast">

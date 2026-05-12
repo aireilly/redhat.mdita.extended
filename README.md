@@ -501,7 +501,7 @@ dita -i input.ditamap -f markdown_github -o out
 ### From a release
 
 ``` shell
-dita install https://github.com/aireilly/redhat.mdita.extended/releases/download/0.0.7/redhat.mdita.extended-0.0.7.zip
+dita install https://github.com/aireilly/redhat.mdita.extended/releases/download/0.0.8/redhat.mdita.extended-0.0.8.zip
 ```
 
 ### From source
@@ -515,7 +515,7 @@ dita install https://github.com/aireilly/redhat.mdita.extended/releases/download
 2.  Install the plug-in:
 
     ``` shell
-    dita install build/distributions/redhat.mdita.extended-0.0.7.zip --force
+    dita install build/distributions/redhat.mdita.extended-0.0.8.zip --force
     ```
 
 ### Run a build

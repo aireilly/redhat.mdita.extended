@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map xmlns:ditaarch="http://dita.oasis-open.org/architecture/2005/" class="- map/map " ditaarch:DITAArchVersion="2.0"
+     id="product-guide" specializations="(topic ui-d)(topic sw-d)(topic pr-d) @props/audience @props/deliveryTarget @props/otherprops @props/platform @props/product">
+  <title class="- topic/title ">Product Guide</title>
+  <topicmeta class="- map/topicmeta "/>
+  <keydef class="+ map/topicref mapgroup-d/keydef " keys="product-name">
+    <topicmeta class="- map/topicmeta ">
+      <keywords class="- topic/keywords ">
+        <keyword class="- topic/keyword ">Red Hat OpenShift</keyword>
+      </keywords>
+    </topicmeta>
+  </keydef>
+  <keydef class="+ map/topicref mapgroup-d/keydef " keys="version">
+    <topicmeta class="- map/topicmeta ">
+      <keywords class="- topic/keywords ">
+        <keyword class="- topic/keyword ">4.15</keyword>
+      </keywords>
+    </topicmeta>
+  </keydef>
+  <keydef class="+ map/topicref mapgroup-d/keydef " format="html" href="https://www.redhat.com/openshift" keys="product-url" scope="external"/>
+  <topicref class="- map/topicref " format="md" href="overview.md">
+    <topicmeta class="- map/topicmeta ">
+      <navtitle class="- topic/navtitle ">Overview</navtitle>
+    </topicmeta>
+  </topicref>
+</map>

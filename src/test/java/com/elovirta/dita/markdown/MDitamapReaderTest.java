@@ -32,6 +32,7 @@ public class MDitamapReaderTest extends AbstractReaderTest {
       "map/map_topichead.md",
       "map/map_without_title.md",
       "map/map_yaml.md",
+      "map/map_keys.md",
     }
   )
   public void test_map(String file) throws Exception {

@@ -6,14 +6,14 @@
    <title class="- topic/title ">Installation Guide</title>
    <shortdesc class="- topic/shortdesc ">This guide covers installation on supported platforms.</shortdesc>
    <body class="- topic/body ">
-      <section class="- topic/section " id="installing-on-linux">
+      <section class="- topic/section " id="installing-on-linux" platform="linux">
          <title class="- topic/title ">Installing on Linux</title>
          <p class="- topic/p ">Use the package manager to install.</p>
       </section>
-      <section class="- topic/section " id="installing-on-macos">
+      <section class="- topic/section " id="installing-on-macos" platform="macos">
          <title class="- topic/title ">Installing on macOS</title>
          <p class="- topic/p ">Use Homebrew to install.</p>
-         <p class="- topic/p ">For <b class="+ topic/ph hi-d/b ">expert users</b>, compile from source.</p>
+         <p class="- topic/p ">For <b class="+ topic/ph hi-d/b " audience="expert">expert users</b>, compile from source.</p>
       </section>
    </body>
 </topic>

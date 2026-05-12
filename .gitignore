@@ -5,4 +5,5 @@ src/main/resources/dita2markdown.xsl
 src/main/resources/map2markdown-cover.xsl
 /out
 .claude/
+docs/superpowers/
 node_modules/@chevrotain node_modules/chevrotain node_modules/chevrotain-allstar node_modules/java-parser node_modules/lodash-es node_modules/prettier node_modules/prettier-plugin-java

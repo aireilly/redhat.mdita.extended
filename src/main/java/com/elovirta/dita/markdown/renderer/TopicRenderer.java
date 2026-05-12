@@ -12,6 +12,7 @@ import com.elovirta.dita.markdown.*;
 import com.elovirta.dita.utils.FragmentContentHandler;
 import com.vladsch.flexmark.ast.*;
 import com.vladsch.flexmark.ext.admonition.AdmonitionBlock;
+import com.vladsch.flexmark.ext.attributes.AttributesNode;
 import com.vladsch.flexmark.ext.definition.DefinitionItem;
 import com.vladsch.flexmark.ext.definition.DefinitionList;
 import com.vladsch.flexmark.ext.definition.DefinitionTerm;
@@ -297,16 +298,16 @@ public class TopicRenderer extends AbstractRenderer {
     if (mditaCoreProfile || mditaExtendedProfile) {
       context.renderChildren(node);
     } else {
-      printTag(node, context, html, TOPIC_LQ, BLOCKQUOTE_ATTS);
+      printTag(node, context, html, TOPIC_LQ, getAttributesFromAttributesNode(node, BLOCKQUOTE_ATTS));
     }
   }
 
   private void render(final BulletList node, final NodeRendererContext context, final SaxWriter html) {
-    printTag(node, context, html, TOPIC_UL, UL_ATTS);
+    printTag(node, context, html, TOPIC_UL, getAttributesFromAttributesNode(node, UL_ATTS));
   }
 
   private void render(final DefinitionList node, final NodeRendererContext context, final SaxWriter html) {
-    html.startElement(node, TOPIC_DL, DL_ATTS);
+    html.startElement(node, TOPIC_DL, getAttributesFromAttributesNode(node, DL_ATTS));
     DitaClass previous = null;
     //        for (final Node child : node.getChildren()) {
     //            if (previous == null) {
@@ -494,6 +495,10 @@ public class TopicRenderer extends AbstractRenderer {
           atts.add("outputclass", String.join(" ", classes));
         }
       }
+      if (!mditaCoreProfile) {
+        final Title profilingHeader = Title.getFromChildren(node);
+        readProfilingAttributes(profilingHeader, atts);
+      }
       html.startElement(node, cls, atts.build());
       inSection = true;
       html.startElement(node, TOPIC_TITLE, TITLE_ATTS);
@@ -534,6 +539,10 @@ public class TopicRenderer extends AbstractRenderer {
           atts.add(ATTRIBUTE_NAME_OUTPUTCLASS, yamlType);
         }
         schemaType = yamlType;
+      }
+      if (!mditaCoreProfile) {
+        final Title profilingHeader = Title.getFromChildren(node);
+        readProfilingAttributes(profilingHeader, atts);
       }
       html.startElement(node, TOPIC_TOPIC, atts.build());
       html.startElement(node, TOPIC_TITLE, TITLE_ATTS);
@@ -698,12 +707,15 @@ public class TopicRenderer extends AbstractRenderer {
   }
 
   private void render(final OrderedList node, final NodeRendererContext context, final SaxWriter html) {
-    printTag(node, context, html, TOPIC_OL, OL_ATTS);
+    printTag(node, context, html, TOPIC_OL, getAttributesFromAttributesNode(node, OL_ATTS));
   }
 
   private boolean onlyImageChild = false;
 
   private void render(final Paragraph node, final NodeRendererContext context, final SaxWriter html) {
+    if (isAttributesParagraph(node)) {
+      return;
+    }
     if (shortdescParagraph && !inSection && node.getPrevious() instanceof Heading) {
       // Pulled by Heading
     } else if (containsImage(node)) {
@@ -805,7 +817,7 @@ public class TopicRenderer extends AbstractRenderer {
   // Simple table
 
   private void renderSimpleTableBlock(final TableBlock node, final NodeRendererContext context, final SaxWriter html) {
-    html.startElement(node, TOPIC_SIMPLETABLE, SIMPLETABLE_ATTS);
+    html.startElement(node, TOPIC_SIMPLETABLE, getAttributesFromAttributesNode(node, SIMPLETABLE_ATTS));
     final Node caption = node.getChildOfType(TableCaption.class);
     if (caption != null) {
       html.startElement(caption, TOPIC_TITLE, TITLE_ATTS);
@@ -989,6 +1001,24 @@ public class TopicRenderer extends AbstractRenderer {
     throw new RuntimeException(
       "No renderer configured for " + node.getNodeName() + " = " + node.getClass().getCanonicalName()
     );
+  }
+
+  private boolean isAttributesParagraph(final Node node) {
+    if (node == null) {
+      return false;
+    }
+    final Node firstChild = node.getFirstChild();
+    return firstChild instanceof AttributesNode && firstChild.getNext() == null;
+  }
+
+  private Attributes getAttributesFromAttributesNode(Node node, Attributes base) {
+    if (isAttributesParagraph(node.getPrevious())) {
+      final Title header = Title.getFromChildren(node.getPrevious());
+      final AttributesBuilder builder = new AttributesBuilder(base);
+      return readProfilingAttributes(header, builder).build();
+    } else {
+      return base;
+    }
   }
 
   // helpers

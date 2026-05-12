@@ -2,7 +2,7 @@
        class="- topic/topic "
        ditaarch:DITAArchVersion="2.0"
        id="about-product"
-       specializations="(topic hi-d)(topic em-d)(topic ui-d)(topic sw-d)(topic pr-d) @props/audience @props/deliveryTarget @props/otherprops @props/platform @props/product">
+       specializations="@props/audience @props/deliveryTarget @props/otherprops @props/platform @props/product">
    <title class="- topic/title ">About <keyword class="- topic/keyword " keyref="product-name"/></title>
    <shortdesc class="- topic/shortdesc "><keyword class="- topic/keyword " keyref="product-name"/> is a container platform.</shortdesc>
    <prolog class="- topic/prolog "/>

@@ -17,6 +17,7 @@ import com.vladsch.flexmark.ext.jekyll.tag.JekyllTagExtension;
 import com.vladsch.flexmark.ext.superscript.SuperscriptExtension;
 import com.vladsch.flexmark.ext.tables.TablesExtension;
 import com.vladsch.flexmark.ext.yaml.front.matter.YamlFrontMatterExtension;
+import com.elovirta.dita.markdown.keyref.KeyrefExtension;
 import com.vladsch.flexmark.parser.Parser;
 import com.vladsch.flexmark.util.data.DataSet;
 import com.vladsch.flexmark.util.data.MutableDataSet;
@@ -64,7 +65,8 @@ public class DefaultSchemaProvider implements SchemaProvider {
           AutolinkExtension.create(),
           YamlFrontMatterExtension.create(),
           DefinitionExtension.create(),
-          StrikethroughSubscriptExtension.create()
+          StrikethroughSubscriptExtension.create(),
+          KeyrefExtension.create()
         )
       )
       .set(DefinitionExtension.TILDE_MARKER, false)

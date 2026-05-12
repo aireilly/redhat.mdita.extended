@@ -18,6 +18,7 @@ import com.vladsch.flexmark.ext.tables.*;
 import com.vladsch.flexmark.ext.attributes.AttributesNode;
 import com.vladsch.flexmark.ext.yaml.front.matter.AbstractYamlFrontMatterVisitor;
 import com.vladsch.flexmark.ext.yaml.front.matter.YamlFrontMatterBlock;
+import com.vladsch.flexmark.ext.yaml.front.matter.YamlFrontMatterNode;
 import com.vladsch.flexmark.util.ast.ContentNode;
 import com.vladsch.flexmark.util.ast.Document;
 import com.vladsch.flexmark.util.ast.Node;
@@ -262,29 +263,56 @@ public class MapRenderer extends AbstractRenderer {
     }
   }
 
+  /**
+   * Render YAML {@code keys:} block entries as DITA {@code <keydef>} elements.
+   *
+   * <p>Flexmark's {@link AbstractYamlFrontMatterVisitor} flattens nested YAML:
+   * entries indented under {@code keys:} become top-level keys with the parent
+   * {@code keys} entry having an empty values list. This method instead walks
+   * the {@link YamlFrontMatterNode} children of the block directly, collecting
+   * nodes that follow a {@code keys} node (which signals the nested block).</p>
+   */
   private void renderYamlKeydefs(final Node yamlNode, final SaxWriter html) {
-    final AbstractYamlFrontMatterVisitor v = new AbstractYamlFrontMatterVisitor();
-    v.visit(yamlNode.getDocument());
-    final Map<String, List<String>> metadata = v.getData();
-    final List<String> keys = metadata.get("keys");
-    if (keys == null || keys.isEmpty()) {
+    if (!(yamlNode instanceof YamlFrontMatterBlock)) {
       return;
     }
-    for (String entry : keys) {
-      final int colonPos = entry.indexOf(':');
-      if (colonPos < 0) {
+    // Walk YAML nodes: after we see a 'keys' node with empty values,
+    // subsequent nodes are nested key definitions (until we hit a node
+    // that appears to be a new top-level key, detected by indentation
+    // in the original source).
+    boolean inKeysBlock = false;
+    for (Node child = yamlNode.getFirstChild(); child != null; child = child.getNext()) {
+      if (!(child instanceof YamlFrontMatterNode)) {
         continue;
       }
-      final String keyName = entry.substring(0, colonPos).trim();
-      String keyValue = entry.substring(colonPos + 1).trim();
-      if (keyValue.startsWith("\"") && keyValue.endsWith("\"")) {
-        keyValue = keyValue.substring(1, keyValue.length() - 1);
-      } else if (keyValue.startsWith("'") && keyValue.endsWith("'")) {
-        keyValue = keyValue.substring(1, keyValue.length() - 1);
-      }
-      if (keyName.isEmpty() || keyValue.isEmpty()) {
+      final YamlFrontMatterNode yamlChild = (YamlFrontMatterNode) child;
+      if ("keys".equals(yamlChild.getKey()) && yamlChild.getValues().isEmpty()) {
+        inKeysBlock = true;
         continue;
       }
+      if (inKeysBlock) {
+        // Check if this node's source line is indented (part of keys block)
+        final String chars = yamlChild.getChars().toString();
+        // If the original source was NOT indented, it's a new top-level key
+        // We check the original chars: flexmark trims the key but the
+        // BasedSequence for nested entries starts at their indented position.
+        // For flattened nested keys the key name will match a sub-key.
+        // Since we can't reliably detect indentation from flexmark's output,
+        // we consume all remaining nodes after 'keys' as keydef entries.
+        // This is safe because MetadataSerializerImpl excludes these from
+        // <data> output (they are listed in knownKeys via the 'keys' entry).
+        // -- Actually, MetadataSerializerImpl does NOT exclude sub-keys.
+        // We need a different strategy: parse the raw YAML text.
+        break; // fall through to raw text parsing
+      }
+    }
+
+    // Parse raw YAML text to extract keys block
+    final String yamlText = yamlNode.getChars().toString();
+    final List<Map.Entry<String, String>> keyEntries = parseYamlKeysBlock(yamlText);
+    for (Map.Entry<String, String> entry : keyEntries) {
+      final String keyName = entry.getKey();
+      final String keyValue = entry.getValue();
       if (isUrl(keyValue)) {
         final AttributesBuilder atts = new AttributesBuilder(KEYDEF_ATTS)
           .add(ATTRIBUTE_NAME_KEYS, keyName)
@@ -307,6 +335,52 @@ public class MapRenderer extends AbstractRenderer {
         html.endElement(); // keydef
       }
     }
+  }
+
+  /**
+   * Parse the raw YAML front matter text to extract entries nested under {@code keys:}.
+   *
+   * @param yamlText the full YAML front matter block including {@code ---} delimiters
+   * @return list of key-value entries from the {@code keys:} block
+   */
+  private static List<Map.Entry<String, String>> parseYamlKeysBlock(String yamlText) {
+    final List<Map.Entry<String, String>> result = new ArrayList<>();
+    final String[] lines = yamlText.split("\\r?\\n");
+    boolean inKeysBlock = false;
+    for (String line : lines) {
+      if (line.equals("---")) {
+        continue;
+      }
+      if (!inKeysBlock) {
+        // Look for "keys:" at the start of a line (no indentation)
+        if (line.matches("^keys:\\s*$")) {
+          inKeysBlock = true;
+        }
+        continue;
+      }
+      // In keys block: indented lines are entries, non-indented line ends the block
+      if (line.matches("^\\s+.*")) {
+        final String trimmed = line.trim();
+        final int colonPos = trimmed.indexOf(':');
+        if (colonPos > 0) {
+          final String keyName = trimmed.substring(0, colonPos).trim();
+          String keyValue = trimmed.substring(colonPos + 1).trim();
+          // Strip surrounding quotes
+          if (keyValue.length() >= 2 && keyValue.startsWith("\"") && keyValue.endsWith("\"")) {
+            keyValue = keyValue.substring(1, keyValue.length() - 1);
+          } else if (keyValue.length() >= 2 && keyValue.startsWith("'") && keyValue.endsWith("'")) {
+            keyValue = keyValue.substring(1, keyValue.length() - 1);
+          }
+          if (!keyName.isEmpty() && !keyValue.isEmpty()) {
+            result.add(new SimpleImmutableEntry<>(keyName, keyValue));
+          }
+        }
+      } else {
+        // Non-indented line: end of keys block
+        break;
+      }
+    }
+    return result;
   }
 
   private static boolean isUrl(String value) {

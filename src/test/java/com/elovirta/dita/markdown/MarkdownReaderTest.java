@@ -92,6 +92,7 @@ public class MarkdownReaderTest extends AbstractReaderTest {
       "schema/reference.md",
       "schema/task.md",
       "schema/topic.md",
+      "keyref_variable.md",
     }
   )
   public void test(String file) throws Exception {

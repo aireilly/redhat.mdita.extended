@@ -71,6 +71,7 @@ public class MDitaReaderExtendedTest extends AbstractReaderTest {
       "ul.md",
       "yaml.md",
       "related_links.md",
+      "keyref_variable.md",
     }
   )
   public void test(String file) throws Exception {

@@ -68,7 +68,13 @@ public class MetadataSerializerImpl implements MetadataSerializer {
       html.endElement();
     }
     write(header, TOPIC_RESOURCEID, "appid", html);
-    final List<String> keys = Sets.difference(header.keySet(), knownKeys)
+    // Exclude keys that are nested under 'keys:' in the YAML front matter,
+    // since flexmark flattens nested YAML into top-level entries.
+    final Set<String> dynamicExclusions = getNestedKeysNames(node);
+    final Set<String> allExclusions = dynamicExclusions.isEmpty()
+      ? knownKeys
+      : ImmutableSet.<String>builder().addAll(knownKeys).addAll(dynamicExclusions).build();
+    final List<String> keys = Sets.difference(header.keySet(), allExclusions)
       .stream()
       .sorted()
       .collect(Collectors.toList());
@@ -98,6 +104,39 @@ public class MetadataSerializerImpl implements MetadataSerializer {
         html.endElement();
       }
     }
+  }
+
+  /**
+   * Parse the raw YAML front matter text to find key names nested under {@code keys:}.
+   * Flexmark flattens these into top-level entries, so we need to identify and
+   * exclude them from the generic {@code <data>} output.
+   */
+  private static Set<String> getNestedKeysNames(YamlFrontMatterBlock node) {
+    final String yamlText = node.getChars().toString();
+    final Set<String> result = new java.util.HashSet<>();
+    final String[] lines = yamlText.split("\\r?\\n");
+    boolean inKeysBlock = false;
+    for (String line : lines) {
+      if (line.equals("---")) {
+        continue;
+      }
+      if (!inKeysBlock) {
+        if (line.matches("^keys:\\s*$")) {
+          inKeysBlock = true;
+        }
+        continue;
+      }
+      if (line.matches("^\\s+.*")) {
+        final String trimmed = line.trim();
+        final int colonPos = trimmed.indexOf(':');
+        if (colonPos > 0) {
+          result.add(trimmed.substring(0, colonPos).trim());
+        }
+      } else {
+        break;
+      }
+    }
+    return result;
   }
 
   private void write(final Map<String, List<String>> header, final DitaClass elem, final String attr, SaxWriter html) {

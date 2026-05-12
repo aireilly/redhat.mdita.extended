@@ -125,6 +125,7 @@ public abstract class AbstractRenderer {
       res.add(new NodeRenderingHandler<>(Strikethrough.class, this::render));
     }
     res.add(new NodeRenderingHandler<>(KeyrefNode.class, this::render));
+    res.add(new NodeRenderingHandler<>(AttributesNode.class, this::render));
 
     return res.stream().collect(Collectors.toMap(AstHandler::getNodeType, Function.identity()));
   }
@@ -146,11 +147,11 @@ public abstract class AbstractRenderer {
   }
 
   protected void render(final Emphasis node, final NodeRendererContext context, final SaxWriter html) {
-    printTag(node, context, html, HI_D_I, I_ATTS);
+    printTag(node, context, html, HI_D_I, getInlineAttributes(node, I_ATTS));
   }
 
   protected void render(final StrongEmphasis node, final NodeRendererContext context, final SaxWriter html) {
-    printTag(node, context, html, HI_D_B, B_ATTS);
+    printTag(node, context, html, HI_D_B, getInlineAttributes(node, B_ATTS));
   }
 
   protected void render(final Superscript node, final NodeRendererContext context, final SaxWriter html) {
@@ -190,6 +191,14 @@ public abstract class AbstractRenderer {
       .add(ATTRIBUTE_NAME_KEYREF, node.getKey());
     html.startElement(node, TOPIC_KEYWORD, atts.build());
     html.endElement();
+  }
+
+  /**
+   * No-op render for AttributesNode. Profiling attributes from these nodes are
+   * already extracted by getInlineAttributes() and applied to parent elements.
+   */
+  private void render(final AttributesNode node, final NodeRendererContext context, final SaxWriter html) {
+    // Intentionally empty — attributes are consumed by getInlineAttributes()
   }
 
   protected List<Node> childList(Node astRoot) {

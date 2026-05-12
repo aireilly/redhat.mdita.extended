@@ -1,5 +1,6 @@
 package com.elovirta.dita.markdown.renderer;
 
+import com.vladsch.flexmark.ext.anchorlink.AnchorLink;
 import com.vladsch.flexmark.ext.attributes.AttributeNode;
 import com.vladsch.flexmark.ext.attributes.AttributesNode;
 import com.vladsch.flexmark.util.ast.Node;
@@ -38,12 +39,16 @@ class Title {
 
   private static List<AttributesNode> getPreviousAttributesNodes(Node current) {
     final List<AttributesNode> res = new ArrayList<>();
-    Node node = current.getLastChild();
+    // When AnchorLinkExtension is active, heading content is wrapped in
+    // an AnchorLink node. Look inside it for trailing AttributesNode children.
+    Node startNode = current.getLastChild();
+    if (startNode instanceof AnchorLink) {
+      startNode = startNode.getLastChild();
+    }
+    Node node = startNode;
     while (node != null) {
       if (node instanceof AttributesNode) {
         res.add((AttributesNode) node);
-        //            } else if (node instanceof AnchorLink) {
-        //                // Ignore
       } else {
         break;
       }

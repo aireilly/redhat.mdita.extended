@@ -28,7 +28,9 @@ public class MetadataSerializerImpl implements MetadataSerializer {
       TOPIC_AUDIENCE.localName,
       TOPIC_CATEGORY.localName,
       TOPIC_RESOURCEID.localName,
-      TOPIC_KEYWORD.localName
+      TOPIC_KEYWORD.localName,
+      "keys",
+      "$schema"
     );
     if (idFromYaml) {
       keys.add(ATTRIBUTE_NAME_ID);

@@ -15,6 +15,7 @@ import com.vladsch.flexmark.ext.gfm.strikethrough.Strikethrough;
 import com.vladsch.flexmark.ext.gfm.strikethrough.Subscript;
 import com.vladsch.flexmark.ext.superscript.Superscript;
 import com.vladsch.flexmark.ext.tables.*;
+import com.vladsch.flexmark.ext.attributes.AttributesNode;
 import com.vladsch.flexmark.ext.yaml.front.matter.AbstractYamlFrontMatterVisitor;
 import com.vladsch.flexmark.ext.yaml.front.matter.YamlFrontMatterBlock;
 import com.vladsch.flexmark.util.ast.ContentNode;
@@ -256,8 +257,62 @@ public class MapRenderer extends AbstractRenderer {
         html.startElement(firstChild, MAP_TOPICMETA, TOPICMETA_ATTS);
         metadataSerializer.render((YamlFrontMatterBlock) firstChild, context, html);
         html.endElement();
+        renderYamlKeydefs(firstChild, html);
       }
     }
+  }
+
+  private void renderYamlKeydefs(final Node yamlNode, final SaxWriter html) {
+    final AbstractYamlFrontMatterVisitor v = new AbstractYamlFrontMatterVisitor();
+    v.visit(yamlNode.getDocument());
+    final Map<String, List<String>> metadata = v.getData();
+    final List<String> keys = metadata.get("keys");
+    if (keys == null || keys.isEmpty()) {
+      return;
+    }
+    for (String entry : keys) {
+      final int colonPos = entry.indexOf(':');
+      if (colonPos < 0) {
+        continue;
+      }
+      final String keyName = entry.substring(0, colonPos).trim();
+      String keyValue = entry.substring(colonPos + 1).trim();
+      if (keyValue.startsWith("\"") && keyValue.endsWith("\"")) {
+        keyValue = keyValue.substring(1, keyValue.length() - 1);
+      } else if (keyValue.startsWith("'") && keyValue.endsWith("'")) {
+        keyValue = keyValue.substring(1, keyValue.length() - 1);
+      }
+      if (keyName.isEmpty() || keyValue.isEmpty()) {
+        continue;
+      }
+      if (isUrl(keyValue)) {
+        final AttributesBuilder atts = new AttributesBuilder(KEYDEF_ATTS)
+          .add(ATTRIBUTE_NAME_KEYS, keyName)
+          .add(ATTRIBUTE_NAME_HREF, keyValue)
+          .add(ATTRIBUTE_NAME_FORMAT, "html")
+          .add(ATTRIBUTE_NAME_SCOPE, ATTR_SCOPE_VALUE_EXTERNAL);
+        html.startElement(yamlNode, MAPGROUP_D_KEYDEF, atts.build());
+        html.endElement();
+      } else {
+        final AttributesBuilder atts = new AttributesBuilder(KEYDEF_ATTS)
+          .add(ATTRIBUTE_NAME_KEYS, keyName);
+        html.startElement(yamlNode, MAPGROUP_D_KEYDEF, atts.build());
+        html.startElement(yamlNode, MAP_TOPICMETA, TOPICMETA_ATTS);
+        html.startElement(yamlNode, TOPIC_KEYWORDS, buildAtts(TOPIC_KEYWORDS));
+        html.startElement(yamlNode, TOPIC_KEYWORD, buildAtts(TOPIC_KEYWORD));
+        html.characters(keyValue);
+        html.endElement(); // keyword
+        html.endElement(); // keywords
+        html.endElement(); // topicmeta
+        html.endElement(); // keydef
+      }
+    }
+  }
+
+  private static boolean isUrl(String value) {
+    return value.startsWith("http://") || value.startsWith("https://")
+      || value.endsWith(".md") || value.endsWith(".dita")
+      || value.endsWith(".html") || value.endsWith(".xml");
   }
 
   private String getSectionId(Heading node, Title header) {
@@ -694,6 +749,14 @@ public class MapRenderer extends AbstractRenderer {
     throw new RuntimeException(
       "No renderer configured for " + node.getNodeName() + " = " + node.getClass().getCanonicalName()
     );
+  }
+
+  private boolean isAttributesParagraph(final Node node) {
+    if (node == null) {
+      return false;
+    }
+    final Node firstChild = node.getFirstChild();
+    return firstChild instanceof AttributesNode && firstChild.getNext() == null;
   }
 
   // helpers

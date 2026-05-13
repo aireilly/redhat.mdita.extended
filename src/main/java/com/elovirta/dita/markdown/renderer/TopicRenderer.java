@@ -85,6 +85,7 @@ public class TopicRenderer extends AbstractRenderer {
   private static final Attributes STENTRY_ATTS = buildAtts(TOPIC_STENTRY);
   private static final Attributes XREF_ATTS = buildAtts(TOPIC_XREF);
   private static final Pattern KEYREF_URL_PATTERN = Pattern.compile("\\{\\{([a-zA-Z0-9_.\\-]+)\\}\\}");
+  private static final Pattern TRAILING_ATTRS_PATTERN = Pattern.compile("\\s*\\{[^}]*\\}\\s*$");
   private static final Attributes FIG_ATTS = buildAtts(TOPIC_FIG);
   private static final Attributes REQUIRED_CLEANUP_ATTS = buildAtts(TOPIC_REQUIRED_CLEANUP);
 
@@ -452,7 +453,7 @@ public class TopicRenderer extends AbstractRenderer {
     }
     final DitaClass cls;
     final boolean isSection;
-    final String headingText = node.getText().toString().trim().toLowerCase();
+    final String headingText = TRAILING_ATTRS_PATTERN.matcher(node.getText().toString()).replaceAll("").trim().toLowerCase();
     if ((mditaCoreProfile || mditaExtendedProfile) && node.getLevel() == 2) {
       isSection = true;
       cls = TOPIC_SECTION;
@@ -588,7 +589,7 @@ public class TopicRenderer extends AbstractRenderer {
     if (node.getAnchorRefId() != null) {
       return node.getAnchorRefId();
     }
-    return getId(node.getText().toString());
+    return getId(TRAILING_ATTRS_PATTERN.matcher(node.getText().toString()).replaceAll(""));
   }
 
   /**

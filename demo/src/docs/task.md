@@ -8,7 +8,7 @@ keyword:
 
 # Installing the widget {.task}
 
-You can install and configure a widget on your cluster using the CLI.
+You can install and configure a widget on your {{product-short}} cluster using the CLI.
 
 ## Prerequisites
 
@@ -18,7 +18,7 @@ You can install and configure a widget on your cluster using the CLI.
 
 ## About this task
 
-This procedure deploys a widget into a dedicated namespace.
+This procedure deploys a widget into a dedicated namespace on {{product-name}} {{version}}.
 The widget is available to all projects in the cluster after installation.
 
 1. Create the widget namespace:
@@ -112,4 +112,5 @@ Configure additional widgets by repeating this procedure with a new `widget.yaml
 
 - [Understanding widgets](concept.md)
 - [Widget configuration reference](reference.md)
+- [{{product-name}} documentation]({{product-url}})
 - [Kubernetes documentation](https://kubernetes.io/docs/)

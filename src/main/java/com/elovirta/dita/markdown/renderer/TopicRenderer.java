@@ -32,6 +32,8 @@ import java.io.IOException;
 import java.io.StringReader;
 import java.util.*;
 import java.util.function.Function;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 import javax.xml.transform.Transformer;
 import javax.xml.transform.TransformerConfigurationException;
@@ -82,6 +84,7 @@ public class TopicRenderer extends AbstractRenderer {
   private static final Attributes STROW_ATTS = buildAtts(TOPIC_STROW);
   private static final Attributes STENTRY_ATTS = buildAtts(TOPIC_STENTRY);
   private static final Attributes XREF_ATTS = buildAtts(TOPIC_XREF);
+  private static final Pattern KEYREF_URL_PATTERN = Pattern.compile("\\{\\{([a-zA-Z0-9_.\\-]+)\\}\\}");
   private static final Attributes FIG_ATTS = buildAtts(TOPIC_FIG);
   private static final Attributes REQUIRED_CLEANUP_ATTS = buildAtts(TOPIC_REQUIRED_CLEANUP);
 
@@ -808,8 +811,16 @@ public class TopicRenderer extends AbstractRenderer {
   }
 
   private void render(final Link node, final NodeRendererContext context, final SaxWriter html) {
-    final AttributesBuilder atts = getLinkAttributes(node.getUrl().toString());
-    html.startElement(node, TOPIC_XREF, getInlineAttributes(node, atts.build()));
+    final String url = node.getUrl().toString();
+    final Matcher m = KEYREF_URL_PATTERN.matcher(url);
+    if (m.matches()) {
+      final AttributesBuilder atts = new AttributesBuilder(XREF_ATTS)
+        .add(ATTRIBUTE_NAME_KEYREF, m.group(1));
+      html.startElement(node, TOPIC_XREF, getInlineAttributes(node, atts.build()));
+    } else {
+      final AttributesBuilder atts = getLinkAttributes(url);
+      html.startElement(node, TOPIC_XREF, getInlineAttributes(node, atts.build()));
+    }
     context.renderChildren(node);
     html.endElement();
   }

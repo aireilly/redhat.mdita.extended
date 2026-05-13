@@ -1,0 +1,12 @@
+<topic xmlns:ditaarch="http://dita.oasis-open.org/architecture/2005/"
+       class="- topic/topic "
+       ditaarch:DITAArchVersion="2.0"
+       id="keyref-link"
+       specializations="@props/audience @props/deliveryTarget @props/otherprops @props/platform @props/product">
+   <title class="- topic/title ">Keyref link</title>
+   <shortdesc class="- topic/shortdesc "><xref class="- topic/xref " keyref="product-url">Product documentation</xref></shortdesc>
+   <prolog class="- topic/prolog "/>
+   <body class="- topic/body ">
+      <p class="- topic/p "><xref class="- topic/xref " keyref="product-url"><keyword class="- topic/keyword " keyref="product-name"/> docs</xref></p>
+   </body>
+</topic>

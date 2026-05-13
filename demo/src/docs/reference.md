@@ -8,7 +8,7 @@ keyword:
 
 # Widget configuration reference {.reference}
 
-The `widget.yaml`{.filepath} configuration file controls widget behavior, resource limits, and connectivity.
+The `widget.yaml`{.filepath} configuration file controls widget behavior, resource limits, and connectivity in {{product-name}} {{version}}.
 All fields are optional unless marked **required**.
 
 ## Configuration fields

@@ -8,10 +8,10 @@ keyword:
 
 # Understanding widgets {.concept}
 
-Widgets are modular components that extend the core platform with additional functionality.
-Each widget runs in an isolated namespace and communicates with the platform through a well-defined API.
+Widgets are modular components that extend {{product-name}} with additional functionality.
+Each widget runs in an isolated namespace and communicates with {{product-short}} through a well-defined API.
 
-Understanding widget architecture helps you plan deployments and troubleshoot issues.
+Understanding widget architecture helps you plan deployments and troubleshoot issues in {{product-short}} {{version}}.
 
 ## Widget types
 

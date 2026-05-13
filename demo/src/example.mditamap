@@ -1,5 +1,10 @@
 ---
 $schema: urn:oasis:names:tc:dita:xsd:map.xsd
+keys:
+  product-name: "Acme Widget Platform"
+  product-short: "AWP"
+  version: "2.4"
+  product-url: "https://example.com/acme-widgets"
 ---
 
 # MDITA Extended Demo
@@ -8,6 +13,6 @@ $schema: urn:oasis:names:tc:dita:xsd:map.xsd
 - [Widget configuration reference](docs/reference.md)
 - [Installing the widget](docs/task.md)
 
-| [Understanding widgets](docs/concept.md)             | [Widget configuration reference](docs/reference.md) |
-|------------------------------------------------------|------------------------------------------------------|
-| [Installing the widget](docs/task.md)                |                                                      |
+| [Understanding widgets](docs/concept.md) | [Widget configuration](docs/reference.md) |
+|------------------------------------------|-------------------------------------------|
+| [Installing the widget](docs/task.md)    |                                           |

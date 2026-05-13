@@ -1,4 +1,5 @@
 ---
+$schema: urn:oasis:names:tc:dita:xsd:reference.xsd
 author: Demo Author
 category: Reference
 keyword:
@@ -6,7 +7,7 @@ keyword:
   - configuration
 ---
 
-# Widget configuration reference {.reference}
+# Widget configuration reference
 
 The `widget.yaml`{.filepath} configuration file controls widget behavior, resource limits, and connectivity in {{product-name}} {{version}}.
 All fields are optional unless marked **required**.

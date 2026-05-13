@@ -1,4 +1,5 @@
 ---
+$schema: urn:oasis:names:tc:dita:xsd:concept.xsd
 author: Demo Author
 category: Concept
 keyword:
@@ -6,7 +7,7 @@ keyword:
   - architecture
 ---
 
-# Understanding widgets {.concept}
+# Understanding widgets
 
 Widgets are modular components that extend {{product-name}} with additional functionality.
 Each widget runs in an isolated namespace and communicates with {{product-short}} through a well-defined API.

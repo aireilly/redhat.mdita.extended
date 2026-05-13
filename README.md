@@ -297,12 +297,23 @@ output. Key names may contain letters, digits, dots, underscores, and
 hyphens. Invalid key names (spaces, empty, special characters) pass through
 as literal text.
 
+The `{{keyref}}` syntax also works in link URLs:
+
+```markdown
+[{{product-name}} documentation]({{product-url}})
+```
+
+This produces `<xref keyref="product-url"><keyword keyref="product-name"/> documentation</xref>`.
+The link text keyrefs resolve via inline keyword substitution, while the URL
+keyref resolves via the DITA-OT key resolution pipeline.
+
 The `{{keyref}}` syntax coexists with existing keyref syntaxes:
 
 | Syntax | DITA output | Use case |
 |--------|-------------|----------|
 | `{{key}}` | `<keyword keyref="key"/>` | Product names, versions |
-| `[text][key]` | `<xref keyref="key">text</xref>` | Link-style keyrefs |
+| `[text]({{key}})` | `<xref keyref="key">text</xref>` | Inline link keyrefs |
+| `[text][key]` | `<xref keyref="key">text</xref>` | Reference-style link keyrefs |
 | `<span data-keyref="key">` | `<ph keyref="key"/>` | HDITA compatibility |
 
 Define key values using YAML key definitions in the map (see below).
@@ -497,6 +508,17 @@ dita -i input.ditamap -f markdown_github -o out
 ```
 
 ## Install
+
+### Prerequisite: remove `org.lwdita`
+
+This plug-in replaces `org.lwdita`. Both contain the same Java classes
+(`com.elovirta.dita.markdown.*`) and having both installed creates a
+classpath conflict where the DITA-OT may load the wrong implementation.
+Uninstall `org.lwdita` before installing this plug-in:
+
+``` shell
+dita uninstall org.lwdita
+```
 
 ### From a release
 

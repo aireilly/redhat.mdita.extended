@@ -1,4 +1,5 @@
 ---
+$schema: urn:oasis:names:tc:dita:xsd:task.xsd
 author: Demo Author
 category: Task
 keyword:
@@ -6,7 +7,7 @@ keyword:
   - installation
 ---
 
-# Installing the widget {.task}
+# Installing the widget
 
 You can install and configure a widget on your {{product-short}} cluster using the CLI.
 
@@ -95,7 +96,7 @@ oc get widgets -n widgets -o wide
 
 The `STATUS` column should show `Running` and `READY` should show `1/1`.
 
-## Troubleshooting {.tasktroubleshooting platform="openshift"}
+## Troubleshooting {platform="openshift"}
 
 If the widget fails to start on OpenShift, check the Security Context Constraints:
 

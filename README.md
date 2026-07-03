@@ -3,9 +3,10 @@
 > [!IMPORTANT]
 > A fork of [org.lwdita](https://github.com/jelovirt/org.lwdita) with extended MDITA task support for Red Hat documentation workflows.
 
-This plug-in simplifies the Markdown-to-DITA conversion by focusing on text
-fidelity over format fidelity. Complex DITA elements are downsampled to
-bold, italic, or code.
+The MDITA → DITA conversion is non-lossy: every MDITA element maps to its
+correct DITA equivalent, including domain specializations (ui-d, sw-d,
+pr-d) via class attributes. The reverse direction (DITA → MDITA) is
+inherently lossy, as DITA has constructs with no Markdown equivalent.
 
 ## What it does
 
@@ -15,6 +16,8 @@ bold, italic, or code.
   front matter.
 - Specializes task topics: steps, substeps, choices, and task sections
   (prerequisites, context, result, postreq) via default heading titles.
+- Maps inline class attributes to DITA domain elements (`{.uicontrol}`,
+  `{.filepath}`, `{.cmdname}`, etc.).
 - Supports pipe tables (simpletable), admonitions, fenced code blocks,
   definition lists, and key/content references.
 - Supports relationship tables in MDITA maps.
@@ -277,8 +280,73 @@ This produces `<b audience="expert">advanced users</b>` in the DITA output.
 ## Cloud Setup {platform="aws" audience="admin"}
 ```
 
-Non-profiling attributes (such as `{.classname}` or `{custom="value"}`) are
-silently ignored.
+## Domain element class mapping
+
+Use `{.classname}` on bold, italic, or code spans to produce specialized
+DITA domain elements instead of generic `<b>`, `<i>`, or `<codeph>`:
+
+```markdown
+Click **Save**{.uicontrol} to save the file.
+Edit the `config.yaml`{.filepath} file.
+Run the `ansible-playbook`{.cmdname} command.
+Set the `MAX_RETRIES`{.varname} variable.
+See *Planning Guide*{.cite} for details.
+```
+
+Supported class-to-element mappings:
+
+| Class | DITA element | Domain |
+|-------|-------------|--------|
+| `{.uicontrol}` | `<uicontrol>` | ui-d |
+| `{.wintitle}` | `<wintitle>` | ui-d |
+| `{.menucascade}` | `<menucascade>` | ui-d |
+| `{.filepath}` | `<filepath>` | sw-d |
+| `{.cmdname}` | `<cmdname>` | sw-d |
+| `{.varname}` | `<varname>` | sw-d |
+| `{.msgph}` | `<msgph>` | sw-d |
+| `{.userinput}` | `<userinput>` | sw-d |
+| `{.systemoutput}` | `<systemoutput>` | sw-d |
+| `{.option}` | `<option>` | pr-d |
+| `{.parmname}` | `<parmname>` | pr-d |
+| `{.apiname}` | `<apiname>` | pr-d |
+| `{.codeph}` | `<codeph>` | pr-d |
+| `{.cite}` | `<cite>` | topic |
+
+Classes that do not match a known domain element are passed through as
+`outputclass` on the DITA element.
+
+## Image sizing
+
+Use `{height=... width=...}` attributes on images to set dimensions:
+
+```markdown
+![Alt text](image.png){height=50px width=100px}
+```
+
+This produces `<image href="image.png" height="50px" width="100px">`.
+
+## Explicit heading IDs
+
+Use `{#id}` on headings to set an explicit ID instead of the
+auto-generated one:
+
+```markdown
+## My Section {#custom-id}
+```
+
+This produces a section or nested topic with `id="custom-id"`.
+
+## Strikethrough and subscript
+
+Strikethrough and subscript are supported in the extended profile:
+
+```markdown
+This is ~~deleted text~~ in a sentence.
+H~2~O is the formula for water.
+```
+
+These produce `<line-through>` and `<sub>` elements respectively.
+Superscript uses `^text^` syntax and produces `<sup>`.
 
 ## Keyword keyrefs
 

@@ -6,6 +6,7 @@ import com.vladsch.flexmark.ext.admonition.AdmonitionExtension;
 import com.vladsch.flexmark.ext.anchorlink.AnchorLinkExtension;
 import com.vladsch.flexmark.ext.attributes.AttributesExtension;
 import com.vladsch.flexmark.ext.definition.DefinitionExtension;
+import com.vladsch.flexmark.ext.gfm.strikethrough.StrikethroughSubscriptExtension;
 import com.vladsch.flexmark.ext.jekyll.tag.JekyllTagExtension;
 import com.vladsch.flexmark.ext.superscript.SuperscriptExtension;
 import com.vladsch.flexmark.ext.tables.TablesExtension;
@@ -60,6 +61,7 @@ public class MDitaReader extends MarkdownReader {
         AnchorLinkExtension.create(),
         JekyllTagExtension.create(),
         SuperscriptExtension.create(),
+        StrikethroughSubscriptExtension.create(),
         TablesExtension.create(),
         YamlFrontMatterExtension.create(),
         DefinitionExtension.create(),

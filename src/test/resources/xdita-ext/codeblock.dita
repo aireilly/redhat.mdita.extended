@@ -1,18 +1,18 @@
-<?xml version="1.0" encoding="UTF-8"?>
 <topic xmlns:ditaarch="http://dita.oasis-open.org/architecture/2005/"
+       class="- topic/topic "
        ditaarch:DITAArchVersion="2.0"
-       specializations="(topic hi-d)(topic em-d)(topic ui-d)(topic sw-d)(topic pr-d) @props/audience @props/deliveryTarget @props/otherprops @props/platform @props/product" class="- topic/topic " id="codeblock">
-  <title class="- topic/title ">Codeblock</title>
-  <shortdesc class="- topic/shortdesc ">Code example on <tt class="+ topic/ph hi-d/tt ">for</tt> loop:
-  </shortdesc>
-  <body class="- topic/body ">
-    <pre class="- topic/pre " xml:space="preserve"><tt class="+ topic/ph hi-d/tt ">for i in items:
-    println(i)</tt></pre>
-    <p class="- topic/p ">Fenced block:</p>
-    <pre class="- topic/pre " id="foreach-example" outputclass="scala" xml:space="preserve"><tt class="+ topic/ph hi-d/tt ">items.foreach(println)</tt></pre>
-    <p class="- topic/p ">Syntax highlighting:</p>
-    <pre class="- topic/pre " outputclass="language-js" xml:space="preserve"><tt class="+ topic/ph hi-d/tt ">function add(a, b) {
+       id="codeblock"
+       specializations="(topic hi-d)(topic em-d)(topic ui-d)(topic sw-d)(topic pr-d) @props/audience @props/deliveryTarget @props/otherprops @props/platform @props/product">
+   <title class="- topic/title ">Codeblock</title>
+   <shortdesc class="- topic/shortdesc ">Code example on <codeph class="+ topic/ph pr-d/codeph ">for</codeph> loop:</shortdesc>
+   <body class="- topic/body ">
+      <codeblock class="+ topic/pre pr-d/codeblock " xml:space="preserve">for i in items:
+    println(i)</codeblock>
+      <p class="- topic/p ">Fenced block:</p>
+      <codeblock class="+ topic/pre pr-d/codeblock " id="foreach-example" outputclass="scala" xml:space="preserve">items.foreach(println)</codeblock>
+      <p class="- topic/p ">Syntax highlighting:</p>
+      <codeblock class="+ topic/pre pr-d/codeblock " outputclass="language-js" xml:space="preserve">function add(a, b) {
   return a + b;
-}</tt></pre>
-  </body>
+}</codeblock>
+   </body>
 </topic>

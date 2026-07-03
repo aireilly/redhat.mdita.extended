@@ -6,7 +6,10 @@
    <title class="- topic/title ">Images</title>
    <body class="- topic/body ">
       <p class="- topic/p ">
-         <image class="- topic/image " href="test.jpg">
+         <image class="- topic/image "
+                height="50px"
+                href="test.jpg"
+                width="100px">
             <alt class="- topic/alt ">Alt</alt>
          </image>
       </p>

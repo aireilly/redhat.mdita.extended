@@ -16,11 +16,11 @@
          </li>
          <li class="- topic/li ">
             <p class="- topic/p ">codeblock</p>
-            <pre class="- topic/pre " xml:space="preserve"><tt class="+ topic/ph hi-d/tt ">codeblock</tt></pre>
+            <codeblock class="+ topic/pre pr-d/codeblock " xml:space="preserve">codeblock</codeblock>
          </li>
          <li class="- topic/li ">
             <p class="- topic/p ">fenced block</p>
-            <pre class="- topic/pre " xml:space="preserve"><tt class="+ topic/ph hi-d/tt ">fenced</tt></pre>
+            <codeblock class="+ topic/pre pr-d/codeblock " xml:space="preserve">fenced</codeblock>
          </li>
          <li class="- topic/li ">
             <p class="- topic/p ">definition list</p>
@@ -56,8 +56,10 @@
          </li>
          <li class="- topic/li ">
             <p class="- topic/p ">quote</p>
-            <p class="- topic/p ">quote
+            <lq class="- topic/lq ">
+               <p class="- topic/p ">quote
 quote</p>
+            </lq>
          </li>
       </ul>
    </body>

@@ -1,7 +1,8 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
 <topic xmlns:ditaarch="http://dita.oasis-open.org/architecture/2005/"
+       class="- topic/topic "
        ditaarch:DITAArchVersion="2.0"
-       specializations="@props/audience @props/deliveryTarget @props/otherprops @props/platform @props/product" id="x" class="- topic/topic ">
-    <title class="- topic/title ">x</title>
-    <body class="- topic/body "/>
+       id="x"
+       specializations="@props/audience @props/deliveryTarget @props/otherprops @props/platform @props/product">
+   <title class="- topic/title ">x</title>
+   <body class="- topic/body "/>
 </topic>

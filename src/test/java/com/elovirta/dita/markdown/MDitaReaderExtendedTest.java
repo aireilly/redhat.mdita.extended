@@ -47,6 +47,7 @@ public class MDitaReaderExtendedTest extends AbstractReaderTest {
       "html_unsupported.md",
       "image.md",
       "inline.md",
+      "inline_extended.md",
       "jekyll.md",
       "keyref.md",
       "keys.md",

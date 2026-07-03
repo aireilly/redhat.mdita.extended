@@ -10,14 +10,12 @@ Code example on `for` loop:
 ```
 for i in items:
     println(i)
-
 ```
 
 Fenced block:
 
 ```
 items.foreach(println)
-
 ```
 
 Syntax highlighting:

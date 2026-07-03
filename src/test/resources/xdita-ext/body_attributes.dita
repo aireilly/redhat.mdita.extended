@@ -6,9 +6,11 @@
    <title class="- topic/title ">Header</title>
    <shortdesc class="- topic/shortdesc ">Paragraph</shortdesc>
    <body class="- topic/body ">
-      <p class="- topic/p ">Inline <b class="+ topic/ph hi-d/b ">bold</b>.</p>
-      <p class="- topic/p ">Inline <i class="+ topic/ph hi-d/i ">inline</i>.</p>
-      <p class="- topic/p ">Quote</p>
+      <p class="- topic/p ">Inline <b class="+ topic/ph hi-d/b " outputclass="red">bold</b>.</p>
+      <p class="- topic/p ">Inline <i class="+ topic/ph hi-d/i " outputclass="red">inline</i>.</p>
+      <lq class="- topic/lq ">
+         <p class="- topic/p ">Quote</p>
+      </lq>
       <ul audience="novice" class="- topic/ul ">
          <li class="- topic/li ">
             <p class="- topic/p ">List item</p>
@@ -46,17 +48,23 @@
             </stentry>
          </strow>
       </simpletable>
-      <pre audience="novice" class="- topic/pre " id="id" outputclass="lang" xml:space="preserve"><tt class="+ topic/ph hi-d/tt ">code</tt></pre>
+      <codeblock audience="novice" class="+ topic/pre pr-d/codeblock " id="id" outputclass="lang" xml:space="preserve">code</codeblock>
       <p class="- topic/p ">
          <fig class="- topic/fig ">
             <title class="- topic/title ">Title</title>
-            <image class="- topic/image " href="test.jpg">
+            <image class="- topic/image "
+                   href="test.jpg"
+                   id="carrot"
+                   outputclass="juice">
                <alt class="- topic/alt ">Alt</alt>
             </image>
          </fig>
       </p>
       <p class="- topic/p ">
-         <image class="- topic/image " keyref="img_id"/>
+         <image class="- topic/image "
+                id="key-carrot"
+                keyref="img_id"
+                outputclass="juice"/>
       </p>
    </body>
 </topic>

@@ -71,6 +71,28 @@ public abstract class AbstractRenderer {
     "audience", "platform", "product", "otherprops", "deliveryTarget", "props", "rev"
   );
 
+  protected static final Set<String> PASSTHROUGH_ATTRIBUTES = Set.of(
+    "audience", "platform", "product", "otherprops", "deliveryTarget", "props", "rev",
+    "height", "width"
+  );
+
+  protected static final Map<String, DitaClass> DOMAIN_CLASS_MAP = Map.ofEntries(
+    Map.entry("uicontrol", UI_D_UICONTROL),
+    Map.entry("wintitle", UI_D_WINTITLE),
+    Map.entry("menucascade", UI_D_MENUCASCADE),
+    Map.entry("filepath", SW_D_FILEPATH),
+    Map.entry("cmdname", SW_D_CMDNAME),
+    Map.entry("varname", SW_D_VARNAME),
+    Map.entry("msgph", SW_D_MSGPH),
+    Map.entry("userinput", SW_D_USERINPUT),
+    Map.entry("systemoutput", SW_D_SYSTEMOUTPUT),
+    Map.entry("option", PR_D_OPTION),
+    Map.entry("parmname", PR_D_PARMNAME),
+    Map.entry("apiname", PR_D_APINAME),
+    Map.entry("codeph", PR_D_CODEPH),
+    Map.entry("cite", TOPIC_CITE)
+  );
+
   protected final boolean mditaExtendedProfile;
   protected final boolean mditaCoreProfile;
   protected final boolean rawDita;
@@ -121,7 +143,7 @@ public abstract class AbstractRenderer {
       res.add(new NodeRenderingHandler<>(Superscript.class, this::render));
       res.add(new NodeRenderingHandler<>(Subscript.class, this::render));
     }
-    if (!mditaCoreProfile && !mditaExtendedProfile) {
+    if (!mditaCoreProfile) {
       res.add(new NodeRenderingHandler<>(Strikethrough.class, this::render));
     }
     res.add(new NodeRenderingHandler<>(KeyrefNode.class, this::render));
@@ -135,11 +157,17 @@ public abstract class AbstractRenderer {
   }
 
   private void render(final Code node, final NodeRendererContext context, final SaxWriter html) {
-    if (mditaExtendedProfile) {
-      printTag(node, context, html, HI_D_TT, TT_ATTS);
-    } else {
-      printTag(node, context, html, PR_D_CODEPH, CODEPH_ATTS);
+    if (!mditaCoreProfile) {
+      final Title header = getTitle(node);
+      if (header != null) {
+        final DitaClass domainClass = getDomainClass(header);
+        if (domainClass != null) {
+          printTag(node, context, html, domainClass, getDomainAttributes(domainClass, header));
+          return;
+        }
+      }
     }
+    printTag(node, context, html, PR_D_CODEPH, CODEPH_ATTS);
   }
 
   protected void render(final TextBase node, final NodeRendererContext context, final SaxWriter html) {
@@ -147,10 +175,30 @@ public abstract class AbstractRenderer {
   }
 
   protected void render(final Emphasis node, final NodeRendererContext context, final SaxWriter html) {
+    if (!mditaCoreProfile) {
+      final Title header = getTitle(node);
+      if (header != null) {
+        final DitaClass domainClass = getDomainClass(header);
+        if (domainClass != null) {
+          printTag(node, context, html, domainClass, getDomainAttributes(domainClass, header));
+          return;
+        }
+      }
+    }
     printTag(node, context, html, HI_D_I, getInlineAttributes(node, I_ATTS));
   }
 
   protected void render(final StrongEmphasis node, final NodeRendererContext context, final SaxWriter html) {
+    if (!mditaCoreProfile) {
+      final Title header = getTitle(node);
+      if (header != null) {
+        final DitaClass domainClass = getDomainClass(header);
+        if (domainClass != null) {
+          printTag(node, context, html, domainClass, getDomainAttributes(domainClass, header));
+          return;
+        }
+      }
+    }
     printTag(node, context, html, HI_D_B, getInlineAttributes(node, B_ATTS));
   }
 
@@ -163,11 +211,7 @@ public abstract class AbstractRenderer {
   }
 
   private void render(final Strikethrough node, final NodeRendererContext context, final SaxWriter html) {
-    if (mditaExtendedProfile) {
-      printTag(node, context, html, TOPIC_PH, PH_ATTS);
-    } else {
-      printTag(node, context, html, HI_D_LINE_THROUGH, getInlineAttributes(node, LINE_THROUGH_ATTS));
-    }
+    printTag(node, context, html, HI_D_LINE_THROUGH, getInlineAttributes(node, LINE_THROUGH_ATTS));
   }
 
   /**
@@ -309,10 +353,47 @@ public abstract class AbstractRenderer {
 
   protected AttributesBuilder readProfilingAttributes(Title header, AttributesBuilder builder) {
     for (Map.Entry<String, String> attr : header.attributes.entrySet()) {
-      if (PROFILING_ATTRIBUTES.contains(attr.getKey())) {
+      if (PASSTHROUGH_ATTRIBUTES.contains(attr.getKey())) {
         builder.add(attr.getKey(), attr.getValue());
       }
     }
+    header.id.ifPresent(id -> builder.add(ATTRIBUTE_NAME_ID, id));
+    if (!header.classes.isEmpty()) {
+      final DitaClass domainClass = getDomainClass(header);
+      if (domainClass == null) {
+        builder.add("outputclass", String.join(" ", header.classes));
+      }
+    }
     return builder;
+  }
+
+  private Title getTitle(Node node) {
+    if (node.getChildOfType(AttributesNode.class) != null) {
+      return Title.getFromChildren(node);
+    } else if (node.getNext() instanceof AttributesNode) {
+      return Title.getFromNext(node);
+    }
+    return null;
+  }
+
+  protected DitaClass getDomainClass(Title header) {
+    for (String cls : header.classes) {
+      final DitaClass mapped = DOMAIN_CLASS_MAP.get(cls);
+      if (mapped != null) {
+        return mapped;
+      }
+    }
+    return null;
+  }
+
+  protected Attributes getDomainAttributes(DitaClass domainClass, Title header) {
+    final AttributesBuilder builder = new AttributesBuilder(buildAtts(domainClass));
+    for (Map.Entry<String, String> attr : header.attributes.entrySet()) {
+      if (PASSTHROUGH_ATTRIBUTES.contains(attr.getKey())) {
+        builder.add(attr.getKey(), attr.getValue());
+      }
+    }
+    header.id.ifPresent(id -> builder.add(ATTRIBUTE_NAME_ID, id));
+    return builder.build();
   }
 }

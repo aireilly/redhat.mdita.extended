@@ -8,7 +8,7 @@
       <section class="- topic/section " id="a1">
          <title class="- topic/title ">A.1</title>
       </section>
-      <section class="- topic/section " id="a2">
+      <section class="- topic/section " id="a2" outputclass="section">
          <title class="- topic/title ">A.2</title>
       </section>
    </body>

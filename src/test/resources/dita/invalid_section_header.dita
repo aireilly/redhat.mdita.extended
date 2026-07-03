@@ -15,6 +15,7 @@
    <topic class="- topic/topic "
           ditaarch:DITAArchVersion="2.0"
           id="a2"
+          outputclass="section"
           specializations="@props/audience @props/deliveryTarget @props/otherprops @props/platform @props/product">
       <title class="- topic/title ">A.2</title>
       <body class="- topic/body "/>

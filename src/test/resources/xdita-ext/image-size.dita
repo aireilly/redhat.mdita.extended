@@ -5,7 +5,10 @@
        specializations="(topic hi-d)(topic em-d)(topic ui-d)(topic sw-d)(topic pr-d) @props/audience @props/deliveryTarget @props/otherprops @props/platform @props/product">
    <title class="- topic/title ">Images</title>
    <shortdesc class="- topic/shortdesc ">
-      <image class="- topic/image " href="test.jpg">
+      <image class="- topic/image "
+             height="50px"
+             href="test.jpg"
+             width="100px">
          <alt class="- topic/alt ">Alt</alt>
       </image>
    </shortdesc>

@@ -299,7 +299,7 @@ public class TopicRenderer extends AbstractRenderer {
   }
 
   private void render(final BlockQuote node, final NodeRendererContext context, final SaxWriter html) {
-    if (mditaCoreProfile || mditaExtendedProfile) {
+    if (mditaCoreProfile) {
       context.renderChildren(node);
     } else {
       printTag(node, context, html, TOPIC_LQ, getAttributesFromAttributesNode(node, BLOCKQUOTE_ATTS));
@@ -573,6 +573,12 @@ public class TopicRenderer extends AbstractRenderer {
     if (node.getAnchorRefId() != null) {
       return node.getAnchorRefId();
     }
+    if (!mditaCoreProfile) {
+      final Title header = Title.getFromChildren(node);
+      if (header.id.isPresent()) {
+        return header.id.get();
+      }
+    }
     return null;
   }
 
@@ -588,6 +594,12 @@ public class TopicRenderer extends AbstractRenderer {
     }
     if (node.getAnchorRefId() != null) {
       return node.getAnchorRefId();
+    }
+    if (!mditaCoreProfile) {
+      final Title header = Title.getFromChildren(node);
+      if (header.id.isPresent()) {
+        return header.id.get();
+      }
     }
     return getId(TRAILING_ATTRS_PATTERN.matcher(node.getText().toString()).replaceAll(""));
   }
@@ -896,14 +908,14 @@ public class TopicRenderer extends AbstractRenderer {
   // Code block
 
   private void render(final CodeBlock node, final NodeRendererContext context, final SaxWriter html) {
-    final AttributesBuilder atts = new AttributesBuilder(mditaExtendedProfile ? PRE_ATTS : CODEBLOCK_ATTS).add(
+    final AttributesBuilder atts = new AttributesBuilder(CODEBLOCK_ATTS).add(
       XML_NS_URI,
       "space",
       "xml:space",
       "CDATA",
       "preserve"
     );
-    html.startElement(node, mditaExtendedProfile ? TOPIC_PRE : PR_D_CODEBLOCK, atts.build());
+    html.startElement(node, PR_D_CODEBLOCK, atts.build());
     String text = node.getChars().toString();
     if (text.endsWith("\n")) {
       text = text.substring(0, text.length() - 1);
@@ -913,31 +925,24 @@ public class TopicRenderer extends AbstractRenderer {
   }
 
   private void render(final IndentedCodeBlock node, final NodeRendererContext context, final SaxWriter html) {
-    final AttributesBuilder atts = new AttributesBuilder(mditaExtendedProfile ? PRE_ATTS : CODEBLOCK_ATTS).add(
+    final AttributesBuilder atts = new AttributesBuilder(CODEBLOCK_ATTS).add(
       XML_NS_URI,
       "space",
       "xml:space",
       "CDATA",
       "preserve"
     );
-    html.startElement(node, mditaExtendedProfile ? TOPIC_PRE : PR_D_CODEBLOCK, atts.build());
-    // FIXME: For compatibility with HTML pre/code, should be removed
-    if (mditaExtendedProfile) {
-      html.startElement(node, HI_D_TT, TT_ATTS);
-    }
+    html.startElement(node, PR_D_CODEBLOCK, atts.build());
     String text = node.getContentChars().toString();
     if (text.endsWith("\n")) {
       text = text.substring(0, text.length() - 1);
     }
     html.characters(text);
-    if (mditaExtendedProfile) {
-      html.endElement();
-    }
     html.endElement();
   }
 
   private void render(final FencedCodeBlock node, final NodeRendererContext context, final SaxWriter html) {
-    final AttributesBuilder atts = new AttributesBuilder(mditaExtendedProfile ? PRE_ATTS : CODEBLOCK_ATTS).add(
+    final AttributesBuilder atts = new AttributesBuilder(CODEBLOCK_ATTS).add(
       XML_NS_URI,
       "space",
       "xml:space",
@@ -973,19 +978,12 @@ public class TopicRenderer extends AbstractRenderer {
       }
     }
 
-    html.startElement(node, mditaExtendedProfile ? TOPIC_PRE : PR_D_CODEBLOCK, atts.build());
-    // FIXME: For compatibility with HTML pre/code, should be removed
-    if (mditaExtendedProfile) {
-      html.startElement(node, HI_D_TT, TT_ATTS);
-    }
+    html.startElement(node, PR_D_CODEBLOCK, atts.build());
     String text = node.getContentChars().normalizeEOL();
     if (text.endsWith("\n")) {
       text = text.substring(0, text.length() - 1);
     }
     html.characters(text);
-    if (mditaExtendedProfile) {
-      html.endElement();
-    }
     html.endElement();
   }
 

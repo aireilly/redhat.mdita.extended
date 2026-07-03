@@ -30,17 +30,47 @@ public class GenerateExpected {
     final DocumentBuilder db = dbf.newDocumentBuilder();
 
     String[] files = {
+      "codeblock",
+      "comment",
       "concept",
+      "conkeyref",
+      "conref",
+      "dl",
+      "entity",
+      "escape",
+      "html",
+      "html_unsupported",
+      "image",
+      "inline",
+      "inline_extended",
+      "jekyll",
+      "keyref",
+      "keyref_link",
+      "keyref_variable",
+      "keys",
+      "linebreak",
+      "link",
+      "multiple_top_level",
+      "multiple_top_level_specialized",
+      "note",
+      "ol",
+      "header",
+      "profiling",
+      "quote",
       "reference",
+      "related_links",
+      "related_links_variant",
+      "short",
+      "shortdesc",
+      "table",
+      "table-width",
       "task",
       "taskTight",
       "taskOneStep",
-      "multiple_top_level_specialized",
-      "header",
-      "profiling",
-      "related_links",
-      "html_unsupported",
-      "table",
+      "testBOM",
+      "testNoBOM",
+      "ul",
+      "yaml",
       "body_attributes",
       "header_attributes",
       "image-size",
@@ -50,10 +80,8 @@ public class GenerateExpected {
       "admonition",
       "invalid_section_header",
       "nested",
-      "keyref_link",
       "thematic_break",
       "task_default_titles",
-      "related_links_variant",
     };
 
     for (String file : files) {
@@ -80,7 +108,17 @@ public class GenerateExpected {
       generateSpecialize(tf, db, spf, "specialize/src/" + file + ".dita", "specialize/exp/" + file + ".dita");
     }
 
-    String[] mditaMapFiles = { "map_reltable", "map_mapref" };
+    String[] mditaMapFiles = {
+      "map",
+      "map_ol",
+      "map_title",
+      "map_topichead",
+      "map_without_title",
+      "map_yaml",
+      "map_keys",
+      "map_reltable",
+      "map_mapref",
+    };
 
     for (String file : mditaMapFiles) {
       generateFile(tf, db, new MDitamapReader(), "mdita/map/" + file + ".md", "xdita-ext/map/" + file + ".dita");

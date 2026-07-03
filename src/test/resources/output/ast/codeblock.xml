@@ -10,11 +10,9 @@
       <div>
          <para>Code example on <code>for</code> loop:</para>
          <codeblock xml:space="preserve">for i in items:
-    println(i)
-</codeblock>
+    println(i)</codeblock>
          <para>Fenced block:</para>
-         <codeblock class="scala" id="foreach-example" xml:space="preserve">items.foreach(println)
-</codeblock>
+         <codeblock class="scala" id="foreach-example" xml:space="preserve">items.foreach(println)</codeblock>
          <para>Syntax highlighting:</para>
          <codeblock class="language-js" xml:space="preserve">function add(a, b) {
   return a + b;

@@ -1,17 +1,17 @@
 <topic xmlns:ditaarch="http://dita.oasis-open.org/architecture/2005/"
        class="- topic/topic "
        ditaarch:DITAArchVersion="2.0"
-       id="my-header"
+       id="foo"
        specializations="(topic hi-d)(topic em-d)(topic ui-d)(topic sw-d)(topic pr-d) @props/audience @props/deliveryTarget @props/otherprops @props/platform @props/product">
    <title class="- topic/title ">My header</title>
    <body class="- topic/body ">
       <section audience="novice"
                class="- topic/section "
-               id="my-header-"
+               id="foo-section"
                platform="osx">
          <title class="- topic/title ">My header ##</title>
       </section>
-      <section class="- topic/section " id="my-other-header---">
+      <section class="- topic/section " id="the-site" outputclass="main shine">
          <title class="- topic/title ">My other header   </title>
       </section>
    </body>

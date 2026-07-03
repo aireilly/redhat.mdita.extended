@@ -1,14 +1,14 @@
 <topic xmlns:ditaarch="http://dita.oasis-open.org/architecture/2005/"
        class="- topic/topic "
        ditaarch:DITAArchVersion="2.0"
-       id="my-header"
+       id="foo"
        specializations="@props/audience @props/deliveryTarget @props/otherprops @props/platform @props/product">
    <title class="- topic/title ">My header</title>
    <body class="- topic/body "/>
    <topic audience="novice"
           class="- topic/topic "
           ditaarch:DITAArchVersion="2.0"
-          id="my-header-"
+          id="foo-section"
           platform="osx"
           specializations="@props/audience @props/deliveryTarget @props/otherprops @props/platform @props/product">
       <title class="- topic/title ">My header ##</title>
@@ -16,7 +16,8 @@
    </topic>
    <topic class="- topic/topic "
           ditaarch:DITAArchVersion="2.0"
-          id="my-other-header---"
+          id="the-site"
+          outputclass="main shine"
           specializations="@props/audience @props/deliveryTarget @props/otherprops @props/platform @props/product">
       <title class="- topic/title ">My other header   </title>
       <body class="- topic/body "/>

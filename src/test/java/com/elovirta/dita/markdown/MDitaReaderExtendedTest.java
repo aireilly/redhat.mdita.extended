@@ -73,6 +73,18 @@ public class MDitaReaderExtendedTest extends AbstractReaderTest {
       "related_links.md",
       "keyref_variable.md",
       "keyref_link.md",
+      "body_attributes.md",
+      "header_attributes.md",
+      "image-size.md",
+      "domain_elements.md",
+      "admonition.md",
+      "invalid_section_header.md",
+      "abbreviation.md",
+      "footnote.md",
+      "thematic_break.md",
+      "task_default_titles.md",
+      "related_links_variant.md",
+      "nested.md",
     }
   )
   public void test(String file) throws Exception {

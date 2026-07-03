@@ -1,0 +1,29 @@
+<task xmlns:ditaarch="http://dita.oasis-open.org/architecture/2005/"
+      class="- topic/topic task/task "
+      ditaarch:DITAArchVersion="2.0"
+      id="install-the-software"
+      specializations="@props/audience @props/deliveryTarget @props/otherprops @props/platform @props/product">
+   <title class="- topic/title ">Install the software</title>
+   <shortdesc class="- topic/shortdesc ">Run the installer.</shortdesc>
+   <prolog class="- topic/prolog "/>
+   <taskbody class="- topic/body task/taskbody ">
+      <context class="- topic/section task/context ">
+         <section class="- topic/section "
+                  id="related-information"
+                  outputclass="related-links">
+            <title class="- topic/title ">Related information</title>
+            <ul class="- topic/ul ">
+               <li class="- topic/li ">
+                  <xref class="- topic/xref " href="reference.dita">Widget reference</xref>
+               </li>
+               <li class="- topic/li ">
+                  <xref class="- topic/xref "
+                        format="html"
+                        href="https://example.com"
+                        scope="external">Online docs</xref>
+               </li>
+            </ul>
+         </section>
+      </context>
+   </taskbody>
+</task>

@@ -1,0 +1,49 @@
+<task xmlns:ditaarch="http://dita.oasis-open.org/architecture/2005/"
+      class="- topic/topic task/task "
+      ditaarch:DITAArchVersion="2.0"
+      id="install-the-package"
+      specializations="@props/audience @props/deliveryTarget @props/otherprops @props/platform @props/product">
+   <title class="- topic/title ">Install the package</title>
+   <shortdesc class="- topic/shortdesc ">This topic describes how to install the package.</shortdesc>
+   <prolog class="- topic/prolog "/>
+   <taskbody class="- topic/body task/taskbody ">
+      <prereq class="- topic/section task/prereq " id="prerequisites">
+         <title class="- topic/title ">Prerequisites</title>
+         <ul class="- topic/ul ">
+            <li class="- topic/li ">A supported operating system.</li>
+            <li class="- topic/li ">Administrator access.</li>
+         </ul>
+      </prereq>
+      <context class="- topic/section task/context " id="about-this-task">
+         <title class="- topic/title ">About this task</title>
+         <p class="- topic/p ">This procedure walks you through a standard installation.</p>
+         <ol class="- topic/ol ">
+            <li class="- topic/li ">
+               <p class="- topic/p ">Download the installer.</p>
+               <p class="- topic/p ">Save the file to your local drive.</p>
+            </li>
+            <li class="- topic/li ">
+               <p class="- topic/p ">Run the installer.</p>
+            </li>
+         </ol>
+      </context>
+      <result class="- topic/section task/result " id="verification">
+         <title class="- topic/title ">Verification</title>
+         <p class="- topic/p ">Check the installation was successful:</p>
+         <ol class="- topic/ol ">
+            <li class="- topic/li ">Run the version command.</li>
+         </ol>
+      </result>
+      <postreq class="- topic/section task/postreq " id="next-steps">
+         <title class="- topic/title ">Next steps</title>
+         <ul class="- topic/ul ">
+            <li class="- topic/li ">Configure the application.</li>
+            <li class="- topic/li ">Set up authentication.</li>
+         </ul>
+      </postreq>
+      <tasktroubleshooting class="- topic/section task/tasktroubleshooting " id="troubleshooting">
+         <title class="- topic/title ">Troubleshooting</title>
+         <p class="- topic/p ">If the installation fails, check the logs.</p>
+      </tasktroubleshooting>
+   </taskbody>
+</task>

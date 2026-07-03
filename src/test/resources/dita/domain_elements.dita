@@ -1,0 +1,24 @@
+<topic xmlns:ditaarch="http://dita.oasis-open.org/architecture/2005/"
+       class="- topic/topic "
+       ditaarch:DITAArchVersion="2.0"
+       id="domain-elements"
+       specializations="@props/audience @props/deliveryTarget @props/otherprops @props/platform @props/product">
+   <title class="- topic/title ">Domain elements</title>
+   <body class="- topic/body ">
+      <p class="- topic/p ">Click <b class="+ topic/ph hi-d/b ">Save</b> to save the file.</p>
+      <p class="- topic/p ">The <b class="+ topic/ph hi-d/b ">Dashboard</b> window opens.</p>
+      <p class="- topic/p ">Navigate to <b class="+ topic/ph hi-d/b ">File &gt; Open &gt; Recent</b> to see recent files.</p>
+      <p class="- topic/p ">Edit the <codeph class="+ topic/ph pr-d/codeph ">config.yaml</codeph> file.</p>
+      <p class="- topic/p ">Run the <codeph class="+ topic/ph pr-d/codeph ">ansible-playbook</codeph> command.</p>
+      <p class="- topic/p ">Enter <codeph class="+ topic/ph pr-d/codeph ">admin</codeph> as the username.</p>
+      <p class="- topic/p ">The system returns <codeph class="+ topic/ph pr-d/codeph ">OK</codeph>.</p>
+      <p class="- topic/p ">Set the <codeph class="+ topic/ph pr-d/codeph ">verbose</codeph> option.</p>
+      <p class="- topic/p ">Use the <codeph class="+ topic/ph pr-d/codeph ">inventory</codeph> parameter.</p>
+      <p class="- topic/p ">Call the <codeph class="+ topic/ph pr-d/codeph ">getHosts</codeph> API.</p>
+      <p class="- topic/p ">Set the <codeph class="+ topic/ph pr-d/codeph ">MAX_RETRIES</codeph> variable.</p>
+      <p class="- topic/p ">Check the <codeph class="+ topic/ph pr-d/codeph ">ERR_TIMEOUT</codeph> message.</p>
+      <p class="- topic/p ">Use <codeph class="+ topic/ph pr-d/codeph ">codeph</codeph> for code phrases.</p>
+      <p class="- topic/p ">See <i class="+ topic/ph hi-d/i ">Ansible Automation Platform Planning Guide</i> for details.</p>
+      <p class="- topic/p ">This needs review.</p>
+   </body>
+</topic>

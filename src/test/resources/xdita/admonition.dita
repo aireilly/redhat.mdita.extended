@@ -1,0 +1,58 @@
+<topic xmlns:ditaarch="http://dita.oasis-open.org/architecture/2005/"
+       class="- topic/topic "
+       ditaarch:DITAArchVersion="2.0"
+       id="admonition"
+       specializations="(topic hi-d)(topic em-d)">
+   <title class="- topic/title ">Admonition</title>
+   <shortdesc class="- topic/shortdesc ">Block-Styled Side Content</shortdesc>
+   <body class="- topic/body ">
+      <p class="- topic/p ">!!! qualifier "Optional Title"
+block content</p>
+      <codeblock class="+ topic/pre pr-d/codeblock " xml:space="preserve">block content</codeblock>
+      <p class="- topic/p ">No-Heading Content</p>
+      <p class="- topic/p ">!!! qualifier ""
+block content</p>
+      <p class="- topic/p ">!!! qualifier
+block content</p>
+      <p class="- topic/p ">Collapsible Block-Styled Side Content:</p>
+      <p class="- topic/p ">Collapsed by default</p>
+      <p class="- topic/p ">??? qualifier "Optional Title"
+block content</p>
+      <p class="- topic/p ">Open by default</p>
+      <p class="- topic/p ">???+ qualifier "Optional Title"
+block content</p>
+      <p class="- topic/p ">!!! note</p>
+      <codeblock class="+ topic/pre pr-d/codeblock " xml:space="preserve">block content</codeblock>
+      <p class="- topic/p ">!!! tip ""
+block content</p>
+      <p class="- topic/p ">!!! fastpath ""
+block content</p>
+      <p class="- topic/p ">!!! restriction ""
+block content</p>
+      <p class="- topic/p ">!!! important ""
+block content</p>
+      <p class="- topic/p ">!!! remember ""
+block content</p>
+      <p class="- topic/p ">!!! attention ""
+block content</p>
+      <p class="- topic/p ">!!! caution ""
+block content</p>
+      <p class="- topic/p ">!!! notice ""
+block content</p>
+      <p class="- topic/p ">!!! danger ""
+block content</p>
+      <p class="- topic/p ">!!! warning ""
+block content</p>
+      <p class="- topic/p ">!!! trouble ""
+block content</p>
+      <p class="- topic/p ">!!! CAUTION
+Uppercase type</p>
+      <ol class="- topic/ol ">
+         <li class="- topic/li ">
+            <p class="- topic/p ">List item
+!!! note
+block content</p>
+         </li>
+      </ol>
+   </body>
+</topic>

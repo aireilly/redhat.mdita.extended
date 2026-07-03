@@ -1,0 +1,22 @@
+<topic xmlns:ditaarch="http://dita.oasis-open.org/architecture/2005/"
+       class="- topic/topic "
+       ditaarch:DITAArchVersion="2.0"
+       id="a"
+       specializations="@props/audience @props/deliveryTarget @props/otherprops @props/platform @props/product">
+   <title class="- topic/title ">A</title>
+   <body class="- topic/body "/>
+   <topic class="- topic/topic "
+          ditaarch:DITAArchVersion="2.0"
+          id="a1"
+          specializations="@props/audience @props/deliveryTarget @props/otherprops @props/platform @props/product">
+      <title class="- topic/title ">A.1</title>
+      <body class="- topic/body "/>
+   </topic>
+   <topic class="- topic/topic "
+          ditaarch:DITAArchVersion="2.0"
+          id="a2"
+          specializations="@props/audience @props/deliveryTarget @props/otherprops @props/platform @props/product">
+      <title class="- topic/title ">A.2</title>
+      <body class="- topic/body "/>
+   </topic>
+</topic>

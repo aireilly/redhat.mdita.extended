@@ -1,13 +1,16 @@
 package com.elovirta.dita.utils;
 
 import com.elovirta.dita.markdown.MDitaReader;
+import com.elovirta.dita.markdown.MDitamapReader;
 import com.elovirta.dita.markdown.MarkdownReader;
+import com.elovirta.dita.markdown.SpecializeFilter;
 import java.io.*;
 import java.net.URI;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.transform.Transformer;
 import javax.xml.transform.TransformerFactory;
+import javax.xml.parsers.SAXParserFactory;
 import javax.xml.transform.dom.DOMResult;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.sax.SAXSource;
@@ -38,11 +41,63 @@ public class GenerateExpected {
       "related_links",
       "html_unsupported",
       "table",
+      "body_attributes",
+      "header_attributes",
+      "image-size",
+      "abbreviation",
+      "footnote",
+      "domain_elements",
+      "admonition",
+      "invalid_section_header",
+      "nested",
+      "keyref_link",
+      "thematic_break",
+      "task_default_titles",
+      "related_links_variant",
     };
 
     for (String file : files) {
       generateFile(tf, db, new MarkdownReader(), "markdown/" + file + ".md", "dita/" + file + ".dita");
       generateFile(tf, db, new MDitaReader(), "markdown/" + file + ".md", "xdita-ext/" + file + ".dita");
+      generateFile(
+        tf,
+        db,
+        new MarkdownReader(MDitaReader.CORE_PROFILE),
+        "markdown/" + file + ".md",
+        "xdita/" + file + ".dita"
+      );
+    }
+
+    String[] specializeFiles = {
+      "concept_related_links",
+      "task_choicetable",
+      "task_draft_comment",
+      "task_related_links",
+    };
+
+    SAXParserFactory spf = SAXParserFactory.newInstance();
+    for (String file : specializeFiles) {
+      generateSpecialize(tf, db, spf, "specialize/src/" + file + ".dita", "specialize/exp/" + file + ".dita");
+    }
+
+    String[] mditaMapFiles = { "map_reltable", "map_mapref" };
+
+    for (String file : mditaMapFiles) {
+      generateFile(tf, db, new MDitamapReader(), "mdita/map/" + file + ".md", "xdita-ext/map/" + file + ".dita");
+    }
+
+    String[] rawDitaFiles = { "dita_inline" };
+
+    for (String file : rawDitaFiles) {
+      MarkdownReader rawReader = new MarkdownReader();
+      rawReader.setFeature("http://lwdita.org/sax/features/raw-dita", true);
+      generateFile(tf, db, rawReader, "markdown/" + file + ".md", "dita/" + file + ".dita");
+    }
+
+    String[] markdownMapFiles = { "map_keys" };
+
+    for (String file : markdownMapFiles) {
+      generateFile(tf, db, new MarkdownReader(), "markdown/map/" + file + ".md", "dita/map/" + file + ".dita");
     }
 
     String[] astFiles = {
@@ -145,6 +200,37 @@ public class GenerateExpected {
       System.out.println("Generated MD: " + mdPath);
     } catch (Exception e) {
       System.err.println("ERROR generating MD " + mdPath + ": " + e.getMessage());
+    }
+  }
+
+  private static void generateSpecialize(
+    TransformerFactory tf,
+    DocumentBuilder db,
+    SAXParserFactory spf,
+    String srcPath,
+    String expPath
+  ) throws Exception {
+    try (InputStream in = GenerateExpected.class.getResourceAsStream("/" + srcPath)) {
+      if (in == null) {
+        System.err.println("SKIP (no source): " + srcPath);
+        return;
+      }
+      SpecializeFilter filter = new SpecializeFilter();
+      filter.setParent(spf.newSAXParser().getXMLReader());
+      Document act = db.newDocument();
+      Transformer t = tf.newTransformer();
+      t.transform(new SAXSource(filter, new InputSource(in)), new DOMResult(act));
+
+      File outFile = new File("src/test/resources/" + expPath);
+      outFile.getParentFile().mkdirs();
+      t = tf.newTransformer();
+      t.setOutputProperty(javax.xml.transform.OutputKeys.INDENT, "yes");
+      t.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "2");
+      t.setOutputProperty(javax.xml.transform.OutputKeys.OMIT_XML_DECLARATION, "yes");
+      t.transform(new DOMSource(act), new StreamResult(outFile));
+      System.out.println("Generated specialize: " + expPath);
+    } catch (Exception e) {
+      System.err.println("ERROR generating " + expPath + ": " + e.getMessage());
     }
   }
 

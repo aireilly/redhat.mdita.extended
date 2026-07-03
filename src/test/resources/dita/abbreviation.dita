@@ -1,12 +1,13 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<topic xmlns:ditaarch="http://dita.oasis-open.org/architecture/2005/" class="- topic/topic "
-  ditaarch:DITAArchVersion="2.0"
-  specializations="@props/audience @props/deliveryTarget @props/otherprops @props/platform @props/product"
-  id="abbreviation">
-  <title class="- topic/title ">Abbreviation</title>
-  <body class="- topic/body ">
-    <p class="- topic/p ">The HTML specification
-      is maintained by the W3C.
-    </p>
-  </body>
+<topic xmlns:ditaarch="http://dita.oasis-open.org/architecture/2005/"
+       class="- topic/topic "
+       ditaarch:DITAArchVersion="2.0"
+       id="abbreviation"
+       specializations="@props/audience @props/deliveryTarget @props/otherprops @props/platform @props/product">
+   <title class="- topic/title ">Abbreviation</title>
+   <body class="- topic/body ">
+      <p class="- topic/p ">The HTML specification
+is maintained by the W3C.</p>
+      <p class="- topic/p ">*<xref class="- topic/xref " keyref="HTML"/>: Hyper Text Markup Language
+*<xref class="- topic/xref " keyref="W3C"/>:  World Wide Web Consortium</p>
+   </body>
 </topic>

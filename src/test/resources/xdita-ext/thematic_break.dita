@@ -1,0 +1,13 @@
+<topic xmlns:ditaarch="http://dita.oasis-open.org/architecture/2005/"
+       class="- topic/topic "
+       ditaarch:DITAArchVersion="2.0"
+       id="thematic-break"
+       specializations="(topic hi-d)(topic em-d)(topic ui-d)(topic sw-d)(topic pr-d) @props/audience @props/deliveryTarget @props/otherprops @props/platform @props/product">
+   <title class="- topic/title ">Thematic break</title>
+   <shortdesc class="- topic/shortdesc ">Before the break.</shortdesc>
+   <body class="- topic/body ">
+      <p class="- topic/p ">After the break.</p>
+      <p class="- topic/p ">Another paragraph.</p>
+      <p class="- topic/p ">Final paragraph.</p>
+   </body>
+</topic>

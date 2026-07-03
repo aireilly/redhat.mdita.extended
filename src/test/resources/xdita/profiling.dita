@@ -1,0 +1,19 @@
+<topic xmlns:ditaarch="http://dita.oasis-open.org/architecture/2005/"
+       class="- topic/topic "
+       ditaarch:DITAArchVersion="2.0"
+       id="installation-guide"
+       specializations="(topic hi-d)(topic em-d)">
+   <title class="- topic/title ">Installation Guide</title>
+   <shortdesc class="- topic/shortdesc ">This guide covers installation on supported platforms.</shortdesc>
+   <body class="- topic/body ">
+      <section class="- topic/section " id="installing-on-linux-platformlinux">
+         <title class="- topic/title ">Installing on Linux {platform="linux"}</title>
+         <p class="- topic/p ">Use the package manager to install.</p>
+      </section>
+      <section class="- topic/section " id="installing-on-macos-platformmacos">
+         <title class="- topic/title ">Installing on macOS {platform="macos"}</title>
+         <p class="- topic/p ">Use Homebrew to install.</p>
+         <p class="- topic/p ">For <b class="+ topic/ph hi-d/b ">expert users</b>{audience="expert"}, compile from source.</p>
+      </section>
+   </body>
+</topic>

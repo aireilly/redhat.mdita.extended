@@ -1,18 +1,24 @@
-<topic xmlns:ditaarch="http://dita.oasis-open.org/architecture/2005/" class="- topic/topic "
-  specializations="@props/audience @props/deliveryTarget @props/otherprops @props/platform @props/product"
-  id="foo" ditaarch:DITAArchVersion="2.0">
-  <title class="- topic/title ">My header </title>
-  <body class="- topic/body "/>
-  <topic class="- topic/topic "
-    specializations="@props/audience @props/deliveryTarget @props/otherprops @props/platform @props/product"
-    id="foo-section" platform="osx" audience="novice" ditaarch:DITAArchVersion="2.0">
-    <title class="- topic/title ">My header ##    </title>
-    <body class="- topic/body "/>
-  </topic>
-  <topic class="- topic/topic "
-         specializations="@props/audience @props/deliveryTarget @props/otherprops @props/platform @props/product"
-         id="the-site" ditaarch:DITAArchVersion="2.0" outputclass="main shine">
-    <title class="- topic/title ">My other header </title>
-    <body class="- topic/body "/>
-  </topic>
+<topic xmlns:ditaarch="http://dita.oasis-open.org/architecture/2005/"
+       class="- topic/topic "
+       ditaarch:DITAArchVersion="2.0"
+       id="my-header"
+       specializations="@props/audience @props/deliveryTarget @props/otherprops @props/platform @props/product">
+   <title class="- topic/title ">My header</title>
+   <body class="- topic/body "/>
+   <topic audience="novice"
+          class="- topic/topic "
+          ditaarch:DITAArchVersion="2.0"
+          id="my-header-"
+          platform="osx"
+          specializations="@props/audience @props/deliveryTarget @props/otherprops @props/platform @props/product">
+      <title class="- topic/title ">My header ##</title>
+      <body class="- topic/body "/>
+   </topic>
+   <topic class="- topic/topic "
+          ditaarch:DITAArchVersion="2.0"
+          id="my-other-header---"
+          specializations="@props/audience @props/deliveryTarget @props/otherprops @props/platform @props/product">
+      <title class="- topic/title ">My other header   </title>
+      <body class="- topic/body "/>
+   </topic>
 </topic>

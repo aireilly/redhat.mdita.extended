@@ -1,14 +1,13 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<topic xmlns:ditaarch="http://dita.oasis-open.org/architecture/2005/" class="- topic/topic "
+<topic xmlns:ditaarch="http://dita.oasis-open.org/architecture/2005/"
+       class="- topic/topic "
        ditaarch:DITAArchVersion="2.0"
-       specializations="@props/audience @props/deliveryTarget @props/otherprops @props/platform @props/product"
-       id="footnote">
-  <title class="- topic/title ">Footnote</title>
-  <body class="- topic/body ">
-    <p class="- topic/p ">Press<fn class="- topic/fn " callout="1" id="fn_1">If you reset the remote control, you must
-      reprogram all lighting groups on it.
-    </fn><xref class="- topic/xref " type="fn" href="#footnote/fn_1"/> and hold for 10 seconds<fn callout="2" class="- topic/fn ">Second footnote</fn> to reset the remote
-      control and all lighting group programming on it<xref class="- topic/xref " type="fn" href="#footnote/fn_1"/>.
-    </p>
-  </body>
+       id="footnote"
+       specializations="@props/audience @props/deliveryTarget @props/otherprops @props/platform @props/product">
+   <title class="- topic/title ">Footnote</title>
+   <body class="- topic/body ">
+      <p class="- topic/p ">Press<xref class="- topic/xref " keyref="^1"/> and hold for 10 seconds<xref class="- topic/xref " keyref="^2"/> to reset the remote control and all lighting group programming on it<xref class="- topic/xref " keyref="^1"/>.</p>
+      <p class="- topic/p ">
+         <xref class="- topic/xref " keyref="^2"/>: Second footnote
+<xref class="- topic/xref " keyref="^1"/>: If you reset the remote control, you must reprogram all lighting groups on it.</p>
+   </body>
 </topic>

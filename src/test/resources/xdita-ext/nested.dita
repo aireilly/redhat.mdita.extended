@@ -1,0 +1,64 @@
+<topic xmlns:ditaarch="http://dita.oasis-open.org/architecture/2005/"
+       class="- topic/topic "
+       ditaarch:DITAArchVersion="2.0"
+       id="nested-blocks"
+       specializations="(topic hi-d)(topic em-d)(topic ui-d)(topic sw-d)(topic pr-d) @props/audience @props/deliveryTarget @props/otherprops @props/platform @props/product">
+   <title class="- topic/title ">Nested blocks</title>
+   <body class="- topic/body ">
+      <ul class="- topic/ul ">
+         <li class="- topic/li ">
+            <p class="- topic/p ">bullet list</p>
+            <ul class="- topic/ul ">
+               <li class="- topic/li ">
+                  <p class="- topic/p ">list</p>
+               </li>
+            </ul>
+         </li>
+         <li class="- topic/li ">
+            <p class="- topic/p ">codeblock</p>
+            <pre class="- topic/pre " xml:space="preserve"><tt class="+ topic/ph hi-d/tt ">codeblock</tt></pre>
+         </li>
+         <li class="- topic/li ">
+            <p class="- topic/p ">fenced block</p>
+            <pre class="- topic/pre " xml:space="preserve"><tt class="+ topic/ph hi-d/tt ">fenced</tt></pre>
+         </li>
+         <li class="- topic/li ">
+            <p class="- topic/p ">definition list</p>
+            <dl class="- topic/dl ">
+               <dlentry class="- topic/dlentry ">
+                  <dt class="- topic/dt ">term</dt>
+                  <dd class="- topic/dd ">
+                     <p class="- topic/p ">definition</p>
+                  </dd>
+               </dlentry>
+            </dl>
+         </li>
+         <li class="- topic/li ">
+            <p class="- topic/p ">table</p>
+            <simpletable class="- topic/simpletable ">
+               <sthead class="- topic/sthead ">
+                  <stentry class="- topic/stentry ">
+                     <p class="- topic/p ">simple</p>
+                  </stentry>
+                  <stentry class="- topic/stentry ">
+                     <p class="- topic/p ">table</p>
+                  </stentry>
+               </sthead>
+               <strow class="- topic/strow ">
+                  <stentry class="- topic/stentry ">
+                     <p class="- topic/p ">simple</p>
+                  </stentry>
+                  <stentry class="- topic/stentry ">
+                     <p class="- topic/p ">table</p>
+                  </stentry>
+               </strow>
+            </simpletable>
+         </li>
+         <li class="- topic/li ">
+            <p class="- topic/p ">quote</p>
+            <p class="- topic/p ">quote
+quote</p>
+         </li>
+      </ul>
+   </body>
+</topic>

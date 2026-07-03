@@ -1,0 +1,31 @@
+<map xmlns:ditaarch="http://dita.oasis-open.org/architecture/2005/"
+     class="- map/map "
+     ditaarch:DITAArchVersion="2.0"
+     id="product-guide"
+     specializations="(topic ui-d)(topic sw-d)(topic pr-d) @props/audience @props/deliveryTarget @props/otherprops @props/platform @props/product">
+   <title class="- topic/title ">Product Guide</title>
+   <topicref class="- map/topicref " format="md" href="overview.md">
+      <topicmeta class="- map/topicmeta ">
+         <navtitle class="- topic/navtitle ">Overview</navtitle>
+      </topicmeta>
+   </topicref>
+   <mapref class="+ map/topicref mapgroup-d/mapref "
+           format="ditamap"
+           href="install.ditamap">
+      <topicmeta class="- map/topicmeta ">
+         <navtitle class="- topic/navtitle ">Install Guide</navtitle>
+      </topicmeta>
+   </mapref>
+   <mapref class="+ map/topicref mapgroup-d/mapref "
+           format="ditamap"
+           href="reference.mditamap">
+      <topicmeta class="- map/topicmeta ">
+         <navtitle class="- topic/navtitle ">Reference</navtitle>
+      </topicmeta>
+   </mapref>
+   <topicref class="- map/topicref " format="md" href="appendix.md">
+      <topicmeta class="- map/topicmeta ">
+         <navtitle class="- topic/navtitle ">Appendix</navtitle>
+      </topicmeta>
+   </topicref>
+</map>

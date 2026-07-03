@@ -1,0 +1,24 @@
+<topic xmlns:ditaarch="http://dita.oasis-open.org/architecture/2005/"
+       class="- topic/topic "
+       ditaarch:DITAArchVersion="2.0"
+       id="domain-elements"
+       specializations="(topic hi-d)(topic em-d)">
+   <title class="- topic/title ">Domain elements</title>
+   <shortdesc class="- topic/shortdesc ">Click <b class="+ topic/ph hi-d/b ">Save</b>{.uicontrol} to save the file.</shortdesc>
+   <body class="- topic/body ">
+      <p class="- topic/p ">The <b class="+ topic/ph hi-d/b ">Dashboard</b>{.wintitle} window opens.</p>
+      <p class="- topic/p ">Navigate to <b class="+ topic/ph hi-d/b ">File &gt; Open &gt; Recent</b>{.menucascade} to see recent files.</p>
+      <p class="- topic/p ">Edit the <codeph class="+ topic/ph pr-d/codeph ">config.yaml</codeph>{.filepath} file.</p>
+      <p class="- topic/p ">Run the <codeph class="+ topic/ph pr-d/codeph ">ansible-playbook</codeph>{.cmdname} command.</p>
+      <p class="- topic/p ">Enter <codeph class="+ topic/ph pr-d/codeph ">admin</codeph>{.userinput} as the username.</p>
+      <p class="- topic/p ">The system returns <codeph class="+ topic/ph pr-d/codeph ">OK</codeph>{.systemoutput}.</p>
+      <p class="- topic/p ">Set the <codeph class="+ topic/ph pr-d/codeph ">verbose</codeph>{.option} option.</p>
+      <p class="- topic/p ">Use the <codeph class="+ topic/ph pr-d/codeph ">inventory</codeph>{.parmname} parameter.</p>
+      <p class="- topic/p ">Call the <codeph class="+ topic/ph pr-d/codeph ">getHosts</codeph>{.apiname} API.</p>
+      <p class="- topic/p ">Set the <codeph class="+ topic/ph pr-d/codeph ">MAX_RETRIES</codeph>{.varname} variable.</p>
+      <p class="- topic/p ">Check the <codeph class="+ topic/ph pr-d/codeph ">ERR_TIMEOUT</codeph>{.msgph} message.</p>
+      <p class="- topic/p ">Use <codeph class="+ topic/ph pr-d/codeph ">codeph</codeph>{.codeph} for code phrases.</p>
+      <p class="- topic/p ">See <i class="+ topic/ph hi-d/i ">Ansible Automation Platform Planning Guide</i>{.cite} for details.</p>
+      <p class="- topic/p ">This needs review.{.draft-comment author="jsmith"}</p>
+   </body>
+</topic>

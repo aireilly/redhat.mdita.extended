@@ -1,12 +1,13 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<topic xmlns:ditaarch="http://dita.oasis-open.org/architecture/2005/" class="- topic/topic "
-  ditaarch:DITAArchVersion="2.0"
-  specializations="(topic hi-d)(topic em-d)(topic ui-d)(topic sw-d)(topic pr-d) @props/audience @props/deliveryTarget @props/otherprops @props/platform @props/product"
-  id="images">
-  <title class="- topic/title ">Images</title>
-  <body class="- topic/body ">
-    <image class="- topic/image " height="50px" href="test.jpg" placement="break" width="100px">
-      <alt class="- topic/alt ">Alt</alt>
-    </image>
-  </body>
+<topic xmlns:ditaarch="http://dita.oasis-open.org/architecture/2005/"
+       class="- topic/topic "
+       ditaarch:DITAArchVersion="2.0"
+       id="images"
+       specializations="(topic hi-d)(topic em-d)(topic ui-d)(topic sw-d)(topic pr-d) @props/audience @props/deliveryTarget @props/otherprops @props/platform @props/product">
+   <title class="- topic/title ">Images</title>
+   <shortdesc class="- topic/shortdesc ">
+      <image class="- topic/image " href="test.jpg">
+         <alt class="- topic/alt ">Alt</alt>
+      </image>
+   </shortdesc>
+   <body class="- topic/body "/>
 </topic>

@@ -58,6 +58,11 @@ public class MDitaReaderCoreTest extends AbstractReaderTest {
       "testNoBOM.md",
       "ul.md",
       "yaml.md",
+      "body_attributes.md",
+      "header_attributes.md",
+      "abbreviation.md",
+      "invalid_section_header.md",
+      "footnote.md",
     }
   )
   public void test(String file) throws Exception {

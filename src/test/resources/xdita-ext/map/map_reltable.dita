@@ -1,0 +1,50 @@
+<map xmlns:ditaarch="http://dita.oasis-open.org/architecture/2005/"
+     class="- map/map "
+     ditaarch:DITAArchVersion="2.0"
+     id="title"
+     specializations="(topic ui-d)(topic sw-d)(topic pr-d) @props/audience @props/deliveryTarget @props/otherprops @props/platform @props/product">
+   <title class="- topic/title ">Title</title>
+   <topicref class="- map/topicref " format="md" href="topic-a.md">
+      <topicmeta class="- map/topicmeta ">
+         <navtitle class="- topic/navtitle ">A</navtitle>
+      </topicmeta>
+   </topicref>
+   <topicref class="- map/topicref " format="md" href="topic-b.md">
+      <topicmeta class="- map/topicmeta ">
+         <navtitle class="- topic/navtitle ">B</navtitle>
+      </topicmeta>
+   </topicref>
+   <topicref class="- map/topicref "
+             format="md"
+             href="topic-c.md"
+             keyref="C"/>
+   <topicref class="- map/topicref "
+             format="md"
+             href="topic-d.md"
+             keyref="D"/>| <topicref class="- map/topicref " format="md" href="topic-a.md">
+      <topicmeta class="- map/topicmeta ">
+         <navtitle class="- topic/navtitle ">A</navtitle>
+      </topicmeta>
+   </topicref> | <topicref class="- map/topicref " format="md" href="topic-c.md">
+      <topicmeta class="- map/topicmeta ">
+         <navtitle class="- topic/navtitle ">C</navtitle>
+      </topicmeta>
+   </topicref> |
+|-----------------|-----|
+| <topicref class="- map/topicref " format="md" href="topic-b.md">
+      <topicmeta class="- map/topicmeta ">
+         <navtitle class="- topic/navtitle ">B</navtitle>
+      </topicmeta>
+   </topicref> | <topicref class="- map/topicref " format="md" href="topic-d.md">
+      <topicmeta class="- map/topicmeta ">
+         <navtitle class="- topic/navtitle ">D</navtitle>
+      </topicmeta>
+   </topicref> |<keydef class="+ map/topicref mapgroup-d/keydef "
+           format="md"
+           href="topic-c.md"
+           keys="C"/>
+   <keydef class="+ map/topicref mapgroup-d/keydef "
+           format="md"
+           href="topic-d.md"
+           keys="D"/>
+</map>

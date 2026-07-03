@@ -93,6 +93,20 @@ public class MarkdownReaderTest extends AbstractReaderTest {
       "schema/task.md",
       "schema/topic.md",
       "keyref_variable.md",
+      "body_attributes.md",
+      "header_attributes.md",
+      "image-size.md",
+      "abbreviation.md",
+      "domain_elements.md",
+      "footnote.md",
+      "profiling.md",
+      "related_links.md",
+      "keyref_link.md",
+      "invalid_section_header.md",
+      "nested.md",
+      "thematic_break.md",
+      "task_default_titles.md",
+      "related_links_variant.md",
     }
   )
   public void test(String file) throws Exception {
@@ -100,7 +114,7 @@ public class MarkdownReaderTest extends AbstractReaderTest {
   }
 
   @ParameterizedTest
-  @ValueSource(strings = { "dita_block.md", "dita_block_unsupported.md" })
+  @ValueSource(strings = { "dita_block.md", "dita_block_unsupported.md", "dita_inline.md" })
   public void test_rawDITA(String file) throws Exception {
     reader.setFeature("http://lwdita.org/sax/features/raw-dita", true);
 
@@ -117,6 +131,7 @@ public class MarkdownReaderTest extends AbstractReaderTest {
       "map/map_topichead.md",
       "map/map_without_title.md",
       "map/map_yaml.md",
+      "map/map_keys.md",
     }
   )
   public void test_map(String file) throws Exception {

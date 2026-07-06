@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE task PUBLIC "-//RED HAT//DTD MDITA 1.3 Task//EN" "mditaTask.dtd">
+<task id="test-13-task">
+  <title>DITA 1.3 Task Test</title>
+  <taskbody>
+    <context><p>Context paragraph.</p></context>
+    <steps>
+      <step>
+        <cmd>Run the command.</cmd>
+        <substeps>
+          <substep><cmd>Substep A.</cmd></substep>
+        </substeps>
+      </step>
+    </steps>
+  </taskbody>
+</task>

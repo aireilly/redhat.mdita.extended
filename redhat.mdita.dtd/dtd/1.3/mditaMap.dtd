@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- ============================================================= -->
+<!--  MODULE:    MDITA Map Shell (DITA 1.3)                        -->
+<!-- ============================================================= -->
+
+<!-- mapgroup-d: exclude anchorref, topicgroup, topicset, topicsetref -->
+<!ENTITY % mapgroup-d-topicref
+  "keydef |
+   mapref |
+   topichead"
+>
+
+<!-- hi-d for formatted map titles -->
+<!ENTITY % hi-d-ph
+  "b | i | line-through | sup | sub | tt | u"
+>
+
+<!ENTITY % mapgroup-d-dec
+  PUBLIC "-//OASIS//ENTITIES DITA 1.3 Map Group Domain//EN"
+         "mapGroup.ent"
+>%mapgroup-d-dec;
+
+<!ENTITY % hi-d-dec
+  PUBLIC "-//OASIS//ENTITIES DITA 1.3 Highlight Domain//EN"
+         "highlightDomain.ent"
+>%hi-d-dec;
+
+<!ENTITY % topicref      "topicref | %mapgroup-d-topicref;">
+<!ENTITY % ph             "ph | %hi-d-ph;">
+<!ENTITY % data           "data">
+<!ENTITY % keyword        "keyword">
+
+<!ENTITY % props-attribute-extensions  "">
+<!ENTITY % base-attribute-extensions   "">
+
+<!ENTITY included-domains
+  "&mapgroup-d-att; &hi-d-att;"
+>
+
+<!ENTITY % mditaMapConstraint-def
+  PUBLIC "-//RED HAT//ELEMENTS MDITA 1.3 Map Constraint//EN"
+         "mditaMapConstraint.mod"
+>%mditaMapConstraint-def;
+
+<!ENTITY % map-type
+  PUBLIC "-//OASIS//ELEMENTS DITA 1.3 Map//EN"
+         "map.mod"
+>%map-type;
+
+<!ENTITY % mapgroup-d-def
+  PUBLIC "-//OASIS//ELEMENTS DITA 1.3 Map Group Domain//EN"
+         "mapGroup.mod"
+>%mapgroup-d-def;
+
+<!ENTITY % hi-d-def
+  PUBLIC "-//OASIS//ELEMENTS DITA 1.3 Highlight Domain//EN"
+         "highlightDomain.mod"
+>%hi-d-def;

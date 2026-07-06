@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- ============================================================= -->
+<!--  MODULE:    MDITA Topic Shell (DITA 1.3)                      -->
+<!--  PURPOSE:   DTD shell constraining DITA 1.3 topic to the MDITA -->
+<!--             extended profile element subset                    -->
+<!-- ============================================================= -->
+
+<!-- ============================================================= -->
+<!--        DOMAIN SUB-ENTITY OVERRIDES                            -->
+<!-- ============================================================= -->
+
+<!ENTITY % hi-d-ph
+  "b | i | line-through | sup | sub | tt | u"
+>
+<!ENTITY % pr-d-ph  "codeph">
+<!ENTITY % pr-d-fig "">
+<!ENTITY % sw-d-keyword  "cmdname | varname">
+<!ENTITY % ui-d-pre "">
+<!ENTITY % sw-d-pre "">
+
+<!-- ============================================================= -->
+<!--             DOMAIN ENTITY DECLARATIONS                        -->
+<!-- ============================================================= -->
+
+<!ENTITY % hi-d-dec
+  PUBLIC "-//OASIS//ENTITIES DITA 1.3 Highlight Domain//EN"
+         "highlightDomain.ent"
+>%hi-d-dec;
+
+<!ENTITY % pr-d-dec
+  PUBLIC "-//OASIS//ENTITIES DITA 1.3 Programming Domain//EN"
+         "programmingDomain.ent"
+>%pr-d-dec;
+
+<!ENTITY % sw-d-dec
+  PUBLIC "-//OASIS//ENTITIES DITA 1.3 Software Domain//EN"
+         "softwareDomain.ent"
+>%sw-d-dec;
+
+<!ENTITY % ui-d-dec
+  PUBLIC "-//OASIS//ENTITIES DITA 1.3 User Interface Domain//EN"
+         "uiDomain.ent"
+>%ui-d-dec;
+
+<!-- ============================================================= -->
+<!--                    DOMAIN EXTENSIONS                          -->
+<!-- ============================================================= -->
+
+<!ENTITY % ph           "ph |
+                         %hi-d-ph; |
+                         %pr-d-ph; |
+                         %sw-d-ph; |
+                         %ui-d-ph;
+                        ">
+<!ENTITY % keyword      "keyword |
+                         %pr-d-keyword; |
+                         %sw-d-keyword; |
+                         %ui-d-keyword;
+                        ">
+<!ENTITY % pre          "pre |
+                         %pr-d-pre;
+                        ">
+<!ENTITY % fig          "fig">
+<!ENTITY % note         "note">
+<!ENTITY % data         "data">
+<!ENTITY % dl           "dl">
+<!ENTITY % term         "term">
+<!ENTITY % div          "div">
+<!ENTITY % foreign      "foreign">
+<!ENTITY % metadata     "metadata">
+
+<!-- ============================================================= -->
+<!--                    DOMAIN ATTRIBUTE EXTENSIONS                -->
+<!-- ============================================================= -->
+
+<!ENTITY % props-attribute-extensions  "">
+<!ENTITY % base-attribute-extensions   "">
+
+<!-- ============================================================= -->
+<!--                    TOPIC NESTING OVERRIDE                     -->
+<!-- ============================================================= -->
+
+<!ENTITY % topic-info-types  "topic">
+
+<!-- ============================================================= -->
+<!--                    DOMAINS ATTRIBUTE OVERRIDE                 -->
+<!-- ============================================================= -->
+
+<!ENTITY included-domains
+  "&hi-d-att;
+   &pr-d-att;
+   &sw-d-att;
+   &ui-d-att;"
+>
+
+<!-- ============================================================= -->
+<!--                    CONTENT CONSTRAINT INTEGRATION             -->
+<!-- ============================================================= -->
+
+<!ENTITY % mditaTopicConstraint-def
+  PUBLIC "-//RED HAT//ELEMENTS MDITA 1.3 Topic Constraint//EN"
+         "mditaTopicConstraint.mod"
+>%mditaTopicConstraint-def;
+
+<!-- ============================================================= -->
+<!--                    TOPIC ELEMENT INTEGRATION                  -->
+<!-- ============================================================= -->
+
+<!ENTITY % topic-type
+  PUBLIC "-//OASIS//ELEMENTS DITA 1.3 Topic//EN"
+         "topic.mod"
+>%topic-type;
+
+<!-- ============================================================= -->
+<!--                    DOMAIN ELEMENT INTEGRATION                 -->
+<!-- ============================================================= -->
+
+<!ENTITY % hi-d-def
+  PUBLIC "-//OASIS//ELEMENTS DITA 1.3 Highlight Domain//EN"
+         "highlightDomain.mod"
+>%hi-d-def;
+
+<!ENTITY % pr-d-def
+  PUBLIC "-//OASIS//ELEMENTS DITA 1.3 Programming Domain//EN"
+         "programmingDomain.mod"
+>%pr-d-def;
+
+<!ENTITY % sw-d-def
+  PUBLIC "-//OASIS//ELEMENTS DITA 1.3 Software Domain//EN"
+         "softwareDomain.mod"
+>%sw-d-def;
+
+<!ENTITY % ui-d-def
+  PUBLIC "-//OASIS//ELEMENTS DITA 1.3 User Interface Domain//EN"
+         "uiDomain.mod"
+>%ui-d-def;
+
+<!-- ================= End of MDITA Topic Shell (1.3) ================= -->

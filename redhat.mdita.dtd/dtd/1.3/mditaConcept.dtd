@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- ============================================================= -->
+<!--  MODULE:    MDITA Concept Shell (DITA 1.3)                    -->
+<!-- ============================================================= -->
+
+<!ENTITY % hi-d-ph  "b | i | line-through | sup | sub | tt | u">
+<!ENTITY % pr-d-ph  "codeph">
+<!ENTITY % pr-d-fig "">
+<!ENTITY % sw-d-keyword  "cmdname | varname">
+<!ENTITY % ui-d-pre "">
+<!ENTITY % sw-d-pre "">
+
+<!ENTITY % hi-d-dec
+  PUBLIC "-//OASIS//ENTITIES DITA 1.3 Highlight Domain//EN"
+         "highlightDomain.ent"
+>%hi-d-dec;
+<!ENTITY % pr-d-dec
+  PUBLIC "-//OASIS//ENTITIES DITA 1.3 Programming Domain//EN"
+         "programmingDomain.ent"
+>%pr-d-dec;
+<!ENTITY % sw-d-dec
+  PUBLIC "-//OASIS//ENTITIES DITA 1.3 Software Domain//EN"
+         "softwareDomain.ent"
+>%sw-d-dec;
+<!ENTITY % ui-d-dec
+  PUBLIC "-//OASIS//ENTITIES DITA 1.3 User Interface Domain//EN"
+         "uiDomain.ent"
+>%ui-d-dec;
+
+<!ENTITY % ph           "ph | %hi-d-ph; | %pr-d-ph; | %sw-d-ph; | %ui-d-ph;">
+<!ENTITY % keyword      "keyword | %pr-d-keyword; | %sw-d-keyword; | %ui-d-keyword;">
+<!ENTITY % pre          "pre | %pr-d-pre;">
+<!ENTITY % fig          "fig">
+<!ENTITY % note         "note">
+<!ENTITY % data         "data">
+<!ENTITY % dl           "dl">
+<!ENTITY % term         "term">
+<!ENTITY % div          "div">
+<!ENTITY % foreign      "foreign">
+<!ENTITY % metadata     "metadata">
+
+<!ENTITY % props-attribute-extensions  "">
+<!ENTITY % base-attribute-extensions   "">
+
+<!ENTITY % topic-info-types    "topic">
+<!ENTITY % concept-info-types  "concept">
+
+<!ENTITY included-domains
+  "&hi-d-att; &pr-d-att; &sw-d-att; &ui-d-att;"
+>
+
+<!ENTITY % mditaTopicConstraint-def
+  PUBLIC "-//RED HAT//ELEMENTS MDITA 1.3 Topic Constraint//EN"
+         "mditaTopicConstraint.mod"
+>%mditaTopicConstraint-def;
+
+<!ENTITY % concept.content
+              "(title, shortdesc?, prolog?, conbody?,
+                (%concept-info-types;)*)"
+>
+<!ENTITY % conbody.content
+              "(%body.cnt; | section)*"
+>
+
+<!ENTITY % topic-type
+  PUBLIC "-//OASIS//ELEMENTS DITA 1.3 Topic//EN"
+         "topic.mod"
+>%topic-type;
+<!ENTITY % concept-type
+  PUBLIC "-//OASIS//ELEMENTS DITA 1.3 Concept//EN"
+         "concept.mod"
+>%concept-type;
+
+<!ENTITY % hi-d-def
+  PUBLIC "-//OASIS//ELEMENTS DITA 1.3 Highlight Domain//EN"
+         "highlightDomain.mod"
+>%hi-d-def;
+<!ENTITY % pr-d-def
+  PUBLIC "-//OASIS//ELEMENTS DITA 1.3 Programming Domain//EN"
+         "programmingDomain.mod"
+>%pr-d-def;
+<!ENTITY % sw-d-def
+  PUBLIC "-//OASIS//ELEMENTS DITA 1.3 Software Domain//EN"
+         "softwareDomain.mod"
+>%sw-d-def;
+<!ENTITY % ui-d-def
+  PUBLIC "-//OASIS//ELEMENTS DITA 1.3 User Interface Domain//EN"
+         "uiDomain.mod"
+>%ui-d-def;

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE topic PUBLIC "-//RED HAT//DTD MDITA 1.3 Topic//EN" "mditaTopic.dtd">
+<topic id="test-13">
+  <title>DITA 1.3 Topic Test</title>
+  <shortdesc>Tests the 1.3 topic constraint.</shortdesc>
+  <body>
+    <p>Inline: <b>bold</b>, <i>italic</i>, <codeph>code</codeph>,
+       <cmdname>oc</cmdname>, <uicontrol>OK</uicontrol>.</p>
+    <codeblock>echo hello</codeblock>
+    <note>A note.</note>
+  </body>
+</topic>

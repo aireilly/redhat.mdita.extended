@@ -558,6 +558,77 @@ A Markdown table placed after the topic list is converted to a DITA
 | [Installation](install.md) | [Troubleshooting](troubleshoot.md) |
 ```
 
+## Included plugin: `redhat.mdita.dtd`
+
+The repository includes a companion DITA-OT DTD plugin (`redhat.mdita.dtd/`)
+that constrains standard DITA to only the elements representable in the MDITA
+extended profile. Any DITA file that validates against these DTDs is guaranteed
+to round-trip losslessly through MDITA conversion.
+
+Standard DITA has hundreds of elements; MDITA supports a useful subset. If a
+writer uses an element outside that subset, the converter must drop or
+approximate it. This plugin catches that at authoring time: if it validates, it
+round-trips.
+
+### Supported document types
+
+Shell DTDs are provided for both DITA 2.0 and DITA 1.3:
+
+| Type | DTD file |
+|-----------|-----------------|
+| Topic | `mditaTopic.dtd` |
+| Concept | `mditaConcept.dtd` |
+| Task | `mditaTask.dtd` |
+| Reference | `mditaReference.dtd` |
+| Map | `mditaMap.dtd` |
+
+### DOCTYPE declarations
+
+Use the appropriate PUBLIC identifier in your DITA files:
+
+```xml
+<!DOCTYPE topic PUBLIC "-//RED HAT//DTD MDITA 2.0 Topic//EN" "mditaTopic.dtd">
+<!DOCTYPE concept PUBLIC "-//RED HAT//DTD MDITA 2.0 Concept//EN" "mditaConcept.dtd">
+<!DOCTYPE task PUBLIC "-//RED HAT//DTD MDITA 2.0 Task//EN" "mditaTask.dtd">
+<!DOCTYPE reference PUBLIC "-//RED HAT//DTD MDITA 2.0 Reference//EN" "mditaReference.dtd">
+<!DOCTYPE map PUBLIC "-//RED HAT//DTD MDITA 2.0 Map//EN" "mditaMap.dtd">
+```
+
+For DITA 1.3, replace `2.0` with `1.3` in the PUBLIC identifier.
+
+### Installing the DTD plugin
+
+Install into an existing DITA-OT instance:
+
+```shell
+dita install redhat.mdita.dtd
+```
+
+The plugin registers its catalog entries automatically via `plugin.xml`.
+
+For standalone validation with `xmllint` (without DITA-OT):
+
+```shell
+export XML_CATALOG_FILES=redhat.mdita.dtd/test/catalog.xml
+xmllint --valid --noout --max-ampl 100 your-topic.dita
+```
+
+The `--max-ampl 100` flag is required — libxml2 2.12.10+ enforces entity
+amplification limits that DITA DTDs exceed at the default threshold.
+
+### Running DTD tests
+
+```shell
+bash redhat.mdita.dtd/test/validate.sh
+```
+
+The suite validates curated test files and converter output fixtures (42
+positive tests) and confirms that 6 negative test files are correctly
+rejected. Requires `xmllint` (libxml2).
+
+See [`redhat.mdita.dtd/README.md`](redhat.mdita.dtd/README.md) for full
+details on allowed/rejected elements and plugin structure.
+
 ## Output transtypes
 
 The plug-in registers four DITA-to-Markdown output transtypes:

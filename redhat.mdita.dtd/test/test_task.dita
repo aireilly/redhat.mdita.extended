@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE task PUBLIC "-//RED HAT//DTD MDITA 2.0 Task//EN" "mditaTask.dtd">
+<task id="test-task">
+  <title>MDITA Task Validation Test</title>
+  <shortdesc>Tests the task shell DTD with substeps.</shortdesc>
+  <taskbody>
+    <prereq>
+      <p>You need a terminal.</p>
+    </prereq>
+    <context>
+      <p>This task tests the MDITA task constraint.</p>
+    </context>
+    <steps>
+      <step>
+        <cmd>Run the first command.</cmd>
+        <info>
+          <p>Some additional info.</p>
+        </info>
+        <substeps>
+          <substep>
+            <cmd>Run substep A.</cmd>
+          </substep>
+          <substep>
+            <cmd>Run substep B.</cmd>
+          </substep>
+        </substeps>
+      </step>
+      <step>
+        <cmd>Verify the output.</cmd>
+      </step>
+    </steps>
+    <result>
+      <p>The test passes.</p>
+    </result>
+  </taskbody>
+</task>

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE reference PUBLIC "-//RED HAT//DTD MDITA 2.0 Reference//EN" "mditaReference.dtd">
+<reference id="test-reference">
+  <title>MDITA Reference Validation Test</title>
+  <shortdesc>Tests the reference shell DTD.</shortdesc>
+  <refbody>
+    <section>
+      <title>Overview</title>
+      <p>Reference content with <cmdname>oc</cmdname> and <varname>$HOME</varname>.</p>
+    </section>
+    <simpletable>
+      <sthead>
+        <stentry>Option</stentry>
+        <stentry>Description</stentry>
+      </sthead>
+      <strow>
+        <stentry><codeph>--verbose</codeph></stentry>
+        <stentry>Enable verbose output.</stentry>
+      </strow>
+    </simpletable>
+  </refbody>
+</reference>

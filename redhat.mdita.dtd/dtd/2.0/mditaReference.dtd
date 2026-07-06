@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- ============================================================= -->
+<!--  MODULE:    MDITA Reference Shell (DITA 2.0)                  -->
+<!--  PURPOSE:   DTD shell constraining DITA reference to the MDITA -->
+<!--             extended profile element subset                    -->
+<!-- ============================================================= -->
+
+<!-- ============================================================= -->
+<!--        DOMAIN SUB-ENTITY OVERRIDES                            -->
+<!-- ============================================================= -->
+
+<!ENTITY % hi-d-ph
+  "b | i | line-through | sup | sub | tt | u"
+>
+<!ENTITY % sw-d-keyword  "cmdname | varname">
+<!ENTITY % ui-d-pre "">
+<!ENTITY % sw-d-pre "">
+
+<!-- ============================================================= -->
+<!--             DOMAIN ENTITY DECLARATIONS                        -->
+<!-- ============================================================= -->
+
+<!ENTITY % hi-d-dec
+  PUBLIC "-//OASIS//ENTITIES DITA 2.0 Highlight Domain//EN"
+         "highlightDomain.ent"
+>%hi-d-dec;
+
+<!ENTITY % pr-d-dec
+  PUBLIC "-//OASIS//ENTITIES DITA 2.0 Programming Domain//EN"
+         "programmingDomain.ent"
+>%pr-d-dec;
+
+<!ENTITY % sw-d-dec
+  PUBLIC "-//OASIS//ENTITIES DITA 2.0 Software Domain//EN"
+         "softwareDomain.ent"
+>%sw-d-dec;
+
+<!ENTITY % ui-d-dec
+  PUBLIC "-//OASIS//ENTITIES DITA 2.0 User Interface Domain//EN"
+         "uiDomain.ent"
+>%ui-d-dec;
+
+<!-- ============================================================= -->
+<!--             DOMAIN ATTRIBUTES DECLARATIONS                    -->
+<!-- ============================================================= -->
+
+<!ENTITY % audienceAtt-d-dec
+  PUBLIC "-//OASIS//ENTITIES DITA 2.0 Audience Attribute Domain//EN"
+         "audienceAttDomain.ent"
+>%audienceAtt-d-dec;
+
+<!ENTITY % deliveryTargetAtt-d-dec
+  PUBLIC "-//OASIS//ENTITIES DITA 2.0 Delivery Target Attribute Domain//EN"
+         "deliveryTargetAttDomain.ent"
+>%deliveryTargetAtt-d-dec;
+
+<!ENTITY % platformAtt-d-dec
+  PUBLIC "-//OASIS//ENTITIES DITA 2.0 Platform Attribute Domain//EN"
+         "platformAttDomain.ent"
+>%platformAtt-d-dec;
+
+<!ENTITY % productAtt-d-dec
+  PUBLIC "-//OASIS//ENTITIES DITA 2.0 Product Attribute Domain//EN"
+         "productAttDomain.ent"
+>%productAtt-d-dec;
+
+<!ENTITY % otherpropsAtt-d-dec
+  PUBLIC "-//OASIS//ENTITIES DITA 2.0 Otherprops Attribute Domain//EN"
+         "otherpropsAttDomain.ent"
+>%otherpropsAtt-d-dec;
+
+<!-- ============================================================= -->
+<!--                    DOMAIN EXTENSIONS                          -->
+<!-- ============================================================= -->
+
+<!ENTITY % ph           "ph |
+                         %hi-d-ph; |
+                         %pr-d-ph; |
+                         %sw-d-ph; |
+                         %ui-d-ph;
+                        ">
+<!ENTITY % keyword      "keyword |
+                         %pr-d-keyword; |
+                         %sw-d-keyword; |
+                         %ui-d-keyword;
+                        ">
+<!ENTITY % pre          "pre |
+                         %pr-d-pre;
+                        ">
+<!ENTITY % fig          "fig">
+<!ENTITY % note         "note">
+<!ENTITY % data         "data">
+<!ENTITY % dl           "dl">
+<!ENTITY % term         "term">
+<!ENTITY % div          "div">
+<!ENTITY % foreign      "foreign">
+<!ENTITY % metadata     "metadata">
+
+<!-- ============================================================= -->
+<!--                    DOMAIN ATTRIBUTE EXTENSIONS                -->
+<!-- ============================================================= -->
+
+<!ENTITY % props-attribute-extensions
+  "%audienceAtt-d-attribute;
+   %deliveryTargetAtt-d-attribute;
+   %platformAtt-d-attribute;
+   %productAtt-d-attribute;
+   %otherpropsAtt-d-attribute;"
+>
+<!ENTITY % base-attribute-extensions  "">
+
+<!-- ============================================================= -->
+<!--                    TOPIC NESTING OVERRIDE                     -->
+<!-- ============================================================= -->
+
+<!ENTITY % topic-info-types  "topic">
+<!ENTITY % reference-info-types  "reference">
+
+<!-- ============================================================= -->
+<!--                    DOMAINS ATTRIBUTE OVERRIDE                 -->
+<!-- ============================================================= -->
+
+<!ENTITY included-domains
+                          "&audienceAtt-d-att;
+                           &deliveryTargetAtt-d-att;
+                           &otherpropsAtt-d-att;
+                           &platformAtt-d-att;
+                           &productAtt-d-att;
+  "
+>
+
+<!-- ============================================================= -->
+<!--                    CONTENT CONSTRAINT INTEGRATION             -->
+<!-- ============================================================= -->
+
+<!ENTITY % mditaTopicConstraint-def
+  PUBLIC "-//RED HAT//ELEMENTS MDITA 2.0 Topic Constraint//EN"
+         "mditaTopicConstraint.mod"
+>%mditaTopicConstraint-def;
+
+<!-- Override reference-specific content models.
+     Remove: refbodydiv, refsyn, properties, table, example.
+     NOTE: bare element names used for entities not yet defined. -->
+<!ENTITY % refbody.content
+              "(%body.cnt; |
+                section |
+                simpletable)*"
+>
+
+<!-- Override reference topic.content to remove abstract, related-links -->
+<!ENTITY % reference.content
+              "(title,
+                shortdesc?,
+                prolog?,
+                refbody?,
+                (%reference-info-types;)*)"
+>
+
+<!-- ============================================================= -->
+<!--                    TOPIC ELEMENT INTEGRATION                  -->
+<!-- ============================================================= -->
+
+<!ENTITY % topic-type
+  PUBLIC "-//OASIS//ELEMENTS DITA 2.0 Topic//EN"
+         "topic.mod"
+>%topic-type;
+
+<!ENTITY % reference-type
+  PUBLIC "-//OASIS//ELEMENTS DITA 2.0 Reference//EN"
+         "reference.mod"
+>%reference-type;
+
+<!-- ============================================================= -->
+<!--                    DOMAIN ELEMENT INTEGRATION                 -->
+<!-- ============================================================= -->
+
+<!ENTITY % hi-d-def
+  PUBLIC "-//OASIS//ELEMENTS DITA 2.0 Highlight Domain//EN"
+         "highlightDomain.mod"
+>%hi-d-def;
+
+<!ENTITY % pr-d-def
+  PUBLIC "-//OASIS//ELEMENTS DITA 2.0 Programming Domain//EN"
+         "programmingDomain.mod"
+>%pr-d-def;
+
+<!ENTITY % sw-d-def
+  PUBLIC "-//OASIS//ELEMENTS DITA 2.0 Software Domain//EN"
+         "softwareDomain.mod"
+>%sw-d-def;
+
+<!ENTITY % ui-d-def
+  PUBLIC "-//OASIS//ELEMENTS DITA 2.0 User Interface Domain//EN"
+         "uiDomain.mod"
+>%ui-d-def;
+
+<!-- ================= End of MDITA Reference Shell ================= -->

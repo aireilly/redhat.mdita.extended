@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE concept PUBLIC "-//RED HAT//DTD MDITA 2.0 Concept//EN" "mditaConcept.dtd">
+<concept id="test-concept">
+  <title>MDITA Concept Validation Test</title>
+  <shortdesc>Tests the concept shell DTD.</shortdesc>
+  <conbody>
+    <p>A concept paragraph with <b>bold</b> and <codeph>code</codeph>.</p>
+    <section>
+      <title>Details</title>
+      <p>Section content with <xref href="http://example.com" format="html" scope="external">a link</xref>.</p>
+    </section>
+  </conbody>
+</concept>

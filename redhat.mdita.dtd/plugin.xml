@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<plugin id="redhat.mdita.dtd">
+  <require plugin="org.oasis-open.dita.v2_0"/>
+  <require plugin="org.oasis-open.dita.techcomm.v2_0"/>
+  <feature extension="dita.specialization.catalog.relative"
+           file="catalog.xml"/>
+</plugin>

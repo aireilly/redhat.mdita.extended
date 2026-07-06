@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE topic PUBLIC "-//RED HAT//DTD MDITA 2.0 Topic//EN" "mditaTopic.dtd">
+<topic id="test-screen">
+  <title>Screen test</title>
+  <body>
+    <screen>$ ls -la</screen>
+  </body>
+</topic>

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE topic PUBLIC "-//RED HAT//DTD MDITA 2.0 Topic//EN" "mditaTopic.dtd">
+<topic id="test-abstract">
+  <title>Abstract test</title>
+  <abstract>
+    <shortdesc>Short description.</shortdesc>
+    <p>Extended abstract content.</p>
+  </abstract>
+  <body>
+    <p>Body content.</p>
+  </body>
+</topic>

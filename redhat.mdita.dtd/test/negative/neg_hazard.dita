@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE topic PUBLIC "-//RED HAT//DTD MDITA 2.0 Topic//EN" "mditaTopic.dtd">
+<topic id="test-hazard">
+  <title>Hazard test</title>
+  <body>
+    <hazardstatement type="danger">
+      <messagepanel><typeofhazard>Electric shock</typeofhazard></messagepanel>
+    </hazardstatement>
+  </body>
+</topic>

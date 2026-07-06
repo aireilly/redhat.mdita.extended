@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE task PUBLIC "-//RED HAT//DTD MDITA 2.0 Task//EN" "mditaTask.dtd">
+<task id="test-choicetable">
+  <title>Choicetable test</title>
+  <taskbody>
+    <steps>
+      <step>
+        <cmd>Choose one:</cmd>
+        <choicetable>
+          <chrow><choption>A</choption><chdesc>Option A</chdesc></chrow>
+        </choicetable>
+      </step>
+    </steps>
+  </taskbody>
+</task>

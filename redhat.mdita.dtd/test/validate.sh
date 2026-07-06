@@ -131,5 +131,28 @@ echo "--- Converter Output Fixtures (maps) ---"
 echo "  SKIP: converter map fixtures use DITA 1.3 navtitle element"
 
 echo ""
-echo "=== Results: $PASS passed, $FAIL failed, $SKIP skipped ==="
-[ "$FAIL" -eq 0 ] || exit 1
+echo "--- Negative Tests (must FAIL validation) ---"
+NEG_PASS=0
+NEG_FAIL=0
+validate_negative() {
+  local file="$1"
+  if xmllint --valid --noout --max-ampl 100 "$file" 2>/dev/null; then
+    echo "  UNEXPECTED PASS: $(basename "$file") — should have been rejected"
+    NEG_FAIL=$((NEG_FAIL + 1))
+  else
+    echo "  CORRECTLY REJECTED: $(basename "$file")"
+    NEG_PASS=$((NEG_PASS + 1))
+  fi
+}
+
+for f in "$SCRIPT_DIR"/negative/neg_*.dita; do
+  if [ -f "$f" ]; then
+    validate_negative "$f"
+  fi
+done
+
+echo ""
+echo "=== Results ==="
+echo "  Positive: $PASS passed, $FAIL failed, $SKIP skipped"
+echo "  Negative: $NEG_PASS correctly rejected, $NEG_FAIL unexpected passes"
+[ "$FAIL" -eq 0 ] && [ "$NEG_FAIL" -eq 0 ] || exit 1

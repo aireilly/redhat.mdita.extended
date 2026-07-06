@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE map PUBLIC "-//RED HAT//DTD MDITA 2.0 Map//EN" "mditaMap.dtd">
+<map>
+  <title>MDITA Map Validation Test</title>
+  <topicmeta>
+    <data name="category" value="test"/>
+  </topicmeta>
+  <topicref href="test_topic.dita"/>
+  <topicref href="test_concept.dita"/>
+  <topichead>
+    <topicmeta>
+      <titlealt title-role="navigation">Task Topics</titlealt>
+    </topicmeta>
+    <topicref href="test_task.dita"/>
+  </topichead>
+  <topicref href="test_reference.dita"/>
+  <keydef keys="product-name">
+    <topicmeta>
+      <keywords>
+        <keyword>MDITA</keyword>
+      </keywords>
+    </topicmeta>
+  </keydef>
+  <mapref href="other.ditamap"/>
+  <reltable>
+    <relrow>
+      <relcell>
+        <topicref href="test_concept.dita"/>
+      </relcell>
+      <relcell>
+        <topicref href="test_reference.dita"/>
+      </relcell>
+    </relrow>
+  </reltable>
+</map>

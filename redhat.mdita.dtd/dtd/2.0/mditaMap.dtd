@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- ============================================================= -->
+<!--  MODULE:    MDITA Map Shell (DITA 2.0)                        -->
+<!--  PURPOSE:   DTD shell constraining DITA map to the MDITA      -->
+<!--             extended profile element subset                    -->
+<!-- ============================================================= -->
+
+<!-- ============================================================= -->
+<!--        DOMAIN SUB-ENTITY OVERRIDES                            -->
+<!-- ============================================================= -->
+
+<!-- mapgroup-d: exclude mapresources, topicgroup (not in MDITA maps) -->
+<!ENTITY % mapgroup-d-topicref
+  "keydef |
+   mapref |
+   topichead"
+>
+
+<!-- ============================================================= -->
+<!--             DOMAIN ENTITY DECLARATIONS                        -->
+<!-- ============================================================= -->
+
+<!ENTITY % mapgroup-d-dec
+  PUBLIC "-//OASIS//ENTITIES DITA 2.0 Map Group Domain//EN"
+         "mapGroup.ent"
+>%mapgroup-d-dec;
+
+<!-- ============================================================= -->
+<!--             DOMAIN ATTRIBUTES DECLARATIONS                    -->
+<!-- ============================================================= -->
+
+<!ENTITY % audienceAtt-d-dec
+  PUBLIC "-//OASIS//ENTITIES DITA 2.0 Audience Attribute Domain//EN"
+         "audienceAttDomain.ent"
+>%audienceAtt-d-dec;
+
+<!ENTITY % deliveryTargetAtt-d-dec
+  PUBLIC "-//OASIS//ENTITIES DITA 2.0 Delivery Target Attribute Domain//EN"
+         "deliveryTargetAttDomain.ent"
+>%deliveryTargetAtt-d-dec;
+
+<!ENTITY % platformAtt-d-dec
+  PUBLIC "-//OASIS//ENTITIES DITA 2.0 Platform Attribute Domain//EN"
+         "platformAttDomain.ent"
+>%platformAtt-d-dec;
+
+<!ENTITY % productAtt-d-dec
+  PUBLIC "-//OASIS//ENTITIES DITA 2.0 Product Attribute Domain//EN"
+         "productAttDomain.ent"
+>%productAtt-d-dec;
+
+<!ENTITY % otherpropsAtt-d-dec
+  PUBLIC "-//OASIS//ENTITIES DITA 2.0 Otherprops Attribute Domain//EN"
+         "otherpropsAttDomain.ent"
+>%otherpropsAtt-d-dec;
+
+<!-- ============================================================= -->
+<!--                    DOMAIN EXTENSIONS                          -->
+<!-- ============================================================= -->
+
+<!ENTITY % topicref      "topicref |
+                           %mapgroup-d-topicref;
+                          ">
+<!ENTITY % data           "data">
+<!ENTITY % keyword        "keyword">
+
+<!-- ============================================================= -->
+<!--                    DOMAIN ATTRIBUTE EXTENSIONS                -->
+<!-- ============================================================= -->
+
+<!ENTITY % props-attribute-extensions
+  "%audienceAtt-d-attribute;
+   %deliveryTargetAtt-d-attribute;
+   %platformAtt-d-attribute;
+   %productAtt-d-attribute;
+   %otherpropsAtt-d-attribute;"
+>
+<!ENTITY % base-attribute-extensions  "">
+
+<!-- ============================================================= -->
+<!--                    DOMAINS ATTRIBUTE OVERRIDE                 -->
+<!-- ============================================================= -->
+
+<!ENTITY included-domains
+                          "&audienceAtt-d-att;
+                           &deliveryTargetAtt-d-att;
+                           &otherpropsAtt-d-att;
+                           &platformAtt-d-att;
+                           &productAtt-d-att;
+  "
+>
+
+<!-- ============================================================= -->
+<!--                    CONTENT CONSTRAINT INTEGRATION             -->
+<!-- ============================================================= -->
+
+<!ENTITY % mditaMapConstraint-def
+  PUBLIC "-//RED HAT//ELEMENTS MDITA 2.0 Map Constraint//EN"
+         "mditaMapConstraint.mod"
+>%mditaMapConstraint-def;
+
+<!-- ============================================================= -->
+<!--                    MAP ELEMENT INTEGRATION                    -->
+<!-- ============================================================= -->
+
+<!ENTITY % map-type
+  PUBLIC "-//OASIS//ELEMENTS DITA 2.0 Map//EN"
+         "map.mod"
+>%map-type;
+
+<!-- ============================================================= -->
+<!--                    DOMAIN ELEMENT INTEGRATION                 -->
+<!-- ============================================================= -->
+
+<!ENTITY % mapgroup-d-def
+  PUBLIC "-//OASIS//ELEMENTS DITA 2.0 Map Group Domain//EN"
+         "mapGroup.mod"
+>%mapgroup-d-def;
+
+<!-- ================= End of MDITA Map Shell ================= -->

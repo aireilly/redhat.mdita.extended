@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE topic PUBLIC "-//RED HAT//DTD MDITA 2.0 Topic//EN" "mditaTopic.dtd">
+<topic id="test-topic">
+  <title>MDITA Topic Validation Test</title>
+  <shortdesc>Tests all MDITA extended profile elements in a topic shell.</shortdesc>
+  <prolog>
+    <data name="author" value="test"/>
+  </prolog>
+  <body>
+    <p>A paragraph with <b>bold</b>, <i>italic</i>, <u>underline</u>,
+       <sub>subscript</sub>, <sup>superscript</sup>, <tt>teletype</tt>,
+       and <line-through>strikethrough</line-through>.</p>
+    <p>Inline code: <codeph>echo hello</codeph>.
+       A filepath: <filepath>/etc/hosts</filepath>.
+       System output: <systemoutput>OK</systemoutput>.
+       User input: <userinput>ls -la</userinput>.
+       Message phrase: <msgph>ERR001</msgph>.</p>
+    <p>Software domain: <cmdname>oc</cmdname>, <varname>$HOME</varname>.</p>
+    <p>UI domain: <uicontrol>File</uicontrol>,
+       <menucascade><uicontrol>File</uicontrol><uicontrol>Save</uicontrol></menucascade>,
+       <wintitle>Terminal</wintitle>.</p>
+    <p>A <xref href="http://example.com" format="html" scope="external">link</xref>
+       and a <keyword>keyword</keyword>.</p>
+    <note>A note block.</note>
+    <lq>A long quote.</lq>
+    <ul>
+      <li>Unordered item</li>
+    </ul>
+    <ol>
+      <li>Ordered item</li>
+    </ol>
+    <dl>
+      <dlentry>
+        <dt>Term</dt>
+        <dd>Definition</dd>
+      </dlentry>
+    </dl>
+    <pre>Preformatted text</pre>
+    <codeblock>code block content</codeblock>
+    <fig>
+      <title>A figure</title>
+      <image href="test.png"/>
+    </fig>
+    <simpletable>
+      <sthead>
+        <stentry>Header</stentry>
+      </sthead>
+      <strow>
+        <stentry>Cell</stentry>
+      </strow>
+    </simpletable>
+    <image href="test.png"/>
+    <section>
+      <title>A section</title>
+      <p>Section content.</p>
+    </section>
+  </body>
+</topic>

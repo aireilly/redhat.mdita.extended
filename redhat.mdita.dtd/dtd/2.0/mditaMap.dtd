@@ -16,6 +16,11 @@
    topichead"
 >
 
+<!-- hi-d: exclude overline (not representable in MDITA) -->
+<!ENTITY % hi-d-ph
+  "b | i | line-through | sup | sub | tt | u"
+>
+
 <!-- ============================================================= -->
 <!--             DOMAIN ENTITY DECLARATIONS                        -->
 <!-- ============================================================= -->
@@ -24,6 +29,11 @@
   PUBLIC "-//OASIS//ENTITIES DITA 2.0 Map Group Domain//EN"
          "mapGroup.ent"
 >%mapgroup-d-dec;
+
+<!ENTITY % hi-d-dec
+  PUBLIC "-//OASIS//ENTITIES DITA 2.0 Highlight Domain//EN"
+         "highlightDomain.ent"
+>%hi-d-dec;
 
 <!-- ============================================================= -->
 <!--             DOMAIN ATTRIBUTES DECLARATIONS                    -->
@@ -60,6 +70,9 @@
 
 <!ENTITY % topicref      "topicref |
                            %mapgroup-d-topicref;
+                          ">
+<!ENTITY % ph             "ph |
+                           %hi-d-ph;
                           ">
 <!ENTITY % data           "data">
 <!ENTITY % keyword        "keyword">
@@ -116,5 +129,10 @@
   PUBLIC "-//OASIS//ELEMENTS DITA 2.0 Map Group Domain//EN"
          "mapGroup.mod"
 >%mapgroup-d-def;
+
+<!ENTITY % hi-d-def
+  PUBLIC "-//OASIS//ELEMENTS DITA 2.0 Highlight Domain//EN"
+         "highlightDomain.mod"
+>%hi-d-def;
 
 <!-- ================= End of MDITA Map Shell ================= -->

@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE map PUBLIC "-//RED HAT//DTD MDITA 1.3 Map//EN" "mditaMap.dtd">
+<map>
+  <title>DITA 1.3 Map Validation Test</title>
+  <topicmeta>
+    <data name="category" value="validation"/>
+    <data name="version" value="1.3"/>
+  </topicmeta>
+
+  <!-- ========== SIMPLE TOPICREFS ========== -->
+  <topicref href="test_1.3_topic.dita"/>
+  <topicref href="test_1.3_concept.dita" type="concept"/>
+
+  <!-- ========== TOPICREF WITH ATTRIBUTES ========== -->
+  <topicref href="test_1.3_task.dita" type="task" platform="ocp"/>
+  <topicref href="test_1.3_reference.dita" type="reference" audience="admin"/>
+  <topicref href="https://docs.openshift.com" format="html" scope="external"
+            product="ocp"/>
+
+  <!-- ========== TOPICHEAD WITH NAVTITLE (1.3 uses navtitle, not titlealt) ========== -->
+  <topichead>
+    <topicmeta>
+      <navtitle>Installation Guide</navtitle>
+    </topicmeta>
+    <topicref href="test_1.3_concept.dita">
+      <topicmeta>
+        <data name="chapter" value="1"/>
+      </topicmeta>
+    </topicref>
+    <topicref href="test_1.3_task.dita">
+      <topicref href="test_1.3_reference.dita"/>
+    </topicref>
+  </topichead>
+
+  <!-- ========== NESTED TOPICREFS (DEEP NESTING) ========== -->
+  <topicref href="test_1.3_topic.dita">
+    <topicref href="test_1.3_concept.dita">
+      <topicref href="test_1.3_reference.dita"/>
+    </topicref>
+  </topicref>
+
+  <!-- ========== TOPICHEAD WITH NESTED TOPICHEAD ========== -->
+  <topichead>
+    <topicmeta>
+      <navtitle>Administration</navtitle>
+    </topicmeta>
+    <topichead>
+      <topicmeta>
+        <navtitle>Monitoring</navtitle>
+      </topicmeta>
+      <topicref href="test_1.3_task.dita"/>
+    </topichead>
+    <topicref href="test_1.3_reference.dita"/>
+  </topichead>
+
+  <!-- ========== COLLECTION-TYPE SEQUENCE ========== -->
+  <topicref href="test_1.3_topic.dita" collection-type="sequence">
+    <topicref href="test_1.3_concept.dita"/>
+    <topicref href="test_1.3_task.dita"/>
+    <topicref href="test_1.3_reference.dita"/>
+  </topicref>
+
+  <!-- ========== KEYDEFS: keyword content ========== -->
+  <keydef keys="product-name">
+    <topicmeta>
+      <keywords>
+        <keyword>Red Hat OpenShift Container Platform</keyword>
+      </keywords>
+    </topicmeta>
+  </keydef>
+  <keydef keys="version">
+    <topicmeta>
+      <keywords>
+        <keyword>4.15</keyword>
+      </keywords>
+    </topicmeta>
+  </keydef>
+
+  <!-- ========== KEYDEFS: href-based ========== -->
+  <keydef keys="product-url" href="https://www.redhat.com/openshift"
+          format="html" scope="external"/>
+  <keydef keys="install-guide" href="test_1.3_task.dita"/>
+
+  <!-- ========== MAPREF ========== -->
+  <mapref href="other.ditamap"/>
+
+  <!-- ========== RELTABLE WITH HEADER ========== -->
+  <reltable>
+    <relheader>
+      <relcolspec type="concept"/>
+      <relcolspec type="task"/>
+      <relcolspec type="reference"/>
+    </relheader>
+    <relrow>
+      <relcell>
+        <topicref href="test_1.3_concept.dita"/>
+      </relcell>
+      <relcell>
+        <topicref href="test_1.3_task.dita"/>
+      </relcell>
+      <relcell>
+        <topicref href="test_1.3_reference.dita"/>
+      </relcell>
+    </relrow>
+  </reltable>
+
+  <!-- ========== SECOND RELTABLE ========== -->
+  <reltable>
+    <relrow>
+      <relcell>
+        <topicref href="test_1.3_topic.dita"/>
+      </relcell>
+      <relcell>
+        <topicref href="test_1.3_concept.dita"/>
+      </relcell>
+    </relrow>
+  </reltable>
+
+</map>

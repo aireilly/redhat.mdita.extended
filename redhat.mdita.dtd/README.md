@@ -117,13 +117,16 @@ redhat.mdita.dtd/
 └── test/
     ├── catalog.xml             # Test catalog (resolves to local DTDs)
     ├── validate.sh             # Validation suite
-    ├── test_topic.dita         # Curated positive tests
+    ├── test_topic.dita         # Curated 2.0 positive tests
     ├── test_concept.dita
     ├── test_task.dita
     ├── test_reference.dita
     ├── test_map.ditamap
-    ├── test_1.3_topic.dita
+    ├── test_1.3_topic.dita     # Curated 1.3 positive tests
     ├── test_1.3_task.dita
+    ├── test_1.3_concept.dita
+    ├── test_1.3_reference.dita
+    ├── test_1.3_map.ditamap
     └── negative/               # Negative tests (must fail)
         ├── neg_abstract.dita
         ├── neg_cals_table.dita
@@ -139,4 +142,4 @@ redhat.mdita.dtd/
 bash redhat.mdita.dtd/test/validate.sh
 ```
 
-The suite validates curated test files and converter output fixtures (42 positive tests) and confirms that 6 negative test files are correctly rejected. Requires `xmllint` (libxml2).
+The suite validates curated test files and converter output fixtures (47 positive tests) and confirms that 6 negative test files are correctly rejected. Requires `xmllint` (libxml2).

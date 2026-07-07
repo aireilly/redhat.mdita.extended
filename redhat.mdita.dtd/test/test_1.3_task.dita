@@ -1,16 +1,178 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE task PUBLIC "-//RED HAT//DTD MDITA 1.3 Task//EN" "mditaTask.dtd">
 <task id="test-13-task">
-  <title>DITA 1.3 Task Test</title>
+  <title>DITA 1.3 Task Validation Test</title>
+  <shortdesc>Exercises all task-specific elements under the 1.3 task shell:
+    prereq, context, steps with substeps and choices, steps-unordered,
+    result, tasktroubleshooting, postreq, and notes.</shortdesc>
+  <prolog>
+    <metadata>
+      <audience type="administrator"/>
+      <keywords>
+        <keyword>task</keyword>
+        <keyword>dita-1.3</keyword>
+      </keywords>
+    </metadata>
+    <data name="author" value="Validation Suite"/>
+  </prolog>
   <taskbody>
-    <context><p>Context paragraph.</p></context>
+
+    <!-- ========== PREREQ ========== -->
+    <prereq>
+      <p>Ensure these prerequisites are met:</p>
+      <ul>
+        <li>A running cluster with <cmdname>oc</cmdname> access.</li>
+        <li>Administrator privileges.</li>
+      </ul>
+      <note type="important">Back up your <filepath>kubeconfig</filepath>.</note>
+      <simpletable>
+        <sthead>
+          <stentry>Requirement</stentry>
+          <stentry>Minimum</stentry>
+        </sthead>
+        <strow>
+          <stentry>CPU</stentry>
+          <stentry>4 cores</stentry>
+        </strow>
+        <strow>
+          <stentry>Memory</stentry>
+          <stentry>16 GB</stentry>
+        </strow>
+      </simpletable>
+    </prereq>
+
+    <!-- ========== CONTEXT ========== -->
+    <context>
+      <p>This procedure configures cluster monitoring on
+        <keyword keyref="product-name"/>.</p>
+      <dl>
+        <dlentry>
+          <dt>Prometheus</dt>
+          <dd>Time-series metrics database.</dd>
+        </dlentry>
+        <dlentry>
+          <dt>Alertmanager</dt>
+          <dd>Alert routing and grouping.</dd>
+        </dlentry>
+      </dl>
+      <codeblock outputclass="language-yaml">apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: monitoring-config</codeblock>
+    </context>
+
+    <!-- ========== SECTION BEFORE STEPS ========== -->
+    <section platform="aws">
+      <title>AWS considerations</title>
+      <p>Install <codeph>ebs-csi-driver</codeph> for persistent storage.</p>
+    </section>
+
+    <!-- ========== STEPS ========== -->
     <steps>
+      <!-- Step 1: cmd + info -->
       <step>
-        <cmd>Run the command.</cmd>
+        <cmd>Log in to the cluster.</cmd>
+        <info>
+          <codeblock outputclass="language-bash">oc login -u kubeadmin https://api.cluster.example.com:6443</codeblock>
+          <note type="tip">Use <userinput>oc whoami</userinput> to verify.</note>
+        </info>
+      </step>
+
+      <!-- Step 2: substeps with note and info -->
+      <step>
+        <cmd>Create the monitoring configuration.</cmd>
+        <info>
+          <p>The ConfigMap controls which components are enabled.</p>
+        </info>
         <substeps>
-          <substep><cmd>Substep A.</cmd></substep>
+          <substep>
+            <note type="important">Do not modify while Prometheus restarts.</note>
+            <cmd>Apply the ConfigMap.</cmd>
+            <info>
+              <codeblock outputclass="language-bash">oc apply -f config.yaml</codeblock>
+            </info>
+          </substep>
+          <substep>
+            <cmd>Verify the ConfigMap.</cmd>
+            <info>
+              <p>Expected: <systemoutput>enableUserWorkload: true</systemoutput>.</p>
+            </info>
+          </substep>
+          <substep>
+            <cmd>Wait for pods to restart.</cmd>
+          </substep>
         </substeps>
       </step>
+
+      <!-- Step 3: choices -->
+      <step>
+        <cmd>Choose a storage backend.</cmd>
+        <choices>
+          <choice>Ephemeral storage (no persistence).</choice>
+          <choice><codeph>PersistentVolumeClaim</codeph> for durable storage.</choice>
+          <choice>External <codeph>Thanos</codeph> object store.</choice>
+        </choices>
+      </step>
+
+      <!-- Step 4: note before cmd -->
+      <step>
+        <note type="caution">Coordinate with operations before modifying alerts.</note>
+        <cmd>Configure alerting rules.</cmd>
+        <info>
+          <codeblock outputclass="language-yaml">apiVersion: monitoring.coreos.com/v1
+kind: PrometheusRule
+metadata:
+  name: custom-alerts</codeblock>
+        </info>
+      </step>
+
+      <!-- Step 5: rich inline in cmd -->
+      <step>
+        <cmd>Navigate to <menucascade><uicontrol>Observe</uicontrol><uicontrol>Metrics</uicontrol></menucascade>
+          in the <wintitle>Web Console</wintitle>.</cmd>
+      </step>
     </steps>
+
+    <!-- ========== RESULT ========== -->
+    <result>
+      <p>Monitoring is installed. Verify:</p>
+      <codeblock outputclass="language-bash">oc get pods -n openshift-monitoring</codeblock>
+      <p>All pods should show <systemoutput>Running</systemoutput>.</p>
+      <simpletable>
+        <sthead>
+          <stentry>Component</stentry>
+          <stentry>Pods</stentry>
+        </sthead>
+        <strow>
+          <stentry>Prometheus</stentry>
+          <stentry>2</stentry>
+        </strow>
+        <strow>
+          <stentry>Alertmanager</stentry>
+          <stentry>3</stentry>
+        </strow>
+      </simpletable>
+    </result>
+
+    <!-- ========== TASKTROUBLESHOOTING ========== -->
+    <tasktroubleshooting>
+      <p>If pods are not starting:</p>
+      <ol>
+        <li>Check events: <userinput>oc get events -n openshift-monitoring</userinput></li>
+        <li>Check logs: <userinput>oc logs prometheus-k8s-0 -n openshift-monitoring</userinput></li>
+      </ol>
+      <note type="tip">Error <msgph>OOMKilled</msgph> means insufficient memory.</note>
+    </tasktroubleshooting>
+
+    <!-- ========== POSTREQ ========== -->
+    <postreq>
+      <p>Next steps:</p>
+      <ul>
+        <li>Configure alerting channels.</li>
+        <li>Set up Grafana dashboards.</li>
+        <li>Review <filepath>/etc/prometheus/rules</filepath>.</li>
+      </ul>
+    </postreq>
+
   </taskbody>
 </task>

@@ -2,21 +2,220 @@
 <!DOCTYPE reference PUBLIC "-//RED HAT//DTD MDITA 2.0 Reference//EN" "mditaReference.dtd">
 <reference id="test-reference">
   <title>MDITA Reference Validation Test</title>
-  <shortdesc>Tests the reference shell DTD.</shortdesc>
+  <shortdesc>Exercises all elements permitted in the MDITA reference shell:
+    multiple sections, simpletables, all block and inline elements in refbody,
+    and profiling attributes.</shortdesc>
+  <prolog>
+    <metadata>
+      <audience type="programmer"/>
+      <category>CLI Reference</category>
+      <keywords>
+        <keyword>reference</keyword>
+        <keyword>cli</keyword>
+        <keyword>api</keyword>
+      </keywords>
+    </metadata>
+    <data name="author" value="Validation Suite"/>
+  </prolog>
   <refbody>
-    <section>
-      <title>Overview</title>
-      <p>Reference content with <cmdname>oc</cmdname> and <varname>$HOME</varname>.</p>
+
+    <!-- ========== PARAGRAPHS WITH ALL INLINE ELEMENTS ========== -->
+    <p>The <cmdname>oc</cmdname> command-line tool provides access to
+      <keyword keyref="product-name"/> features. Set
+      <varname>$KUBECONFIG</varname> to point to your cluster configuration
+      at <filepath>~/.kube/config</filepath>.</p>
+    <p>Inline elements: <b>bold</b>, <i>italic</i>, <u>underline</u>,
+       <sub>sub</sub>, <sup>sup</sup>, <tt>teletype</tt>,
+       <line-through>strikethrough</line-through>,
+       <codeph>code</codeph>, <apiname>RESTful</apiname>,
+       <option>-o</option>, <msgph>E_TIMEOUT</msgph>,
+       <systemoutput>OK</systemoutput>, <userinput>oc get pods</userinput>,
+       <uicontrol>Apply</uicontrol>, <wintitle>Console</wintitle>,
+       <menucascade><uicontrol>Actions</uicontrol><uicontrol>Delete</uicontrol></menucascade>,
+       <cite>API Reference</cite>, <ph>phrase</ph>,
+       <keyword>keyword</keyword>,
+       <xref href="https://docs.openshift.com" format="html" scope="external">docs</xref>.</p>
+
+    <!-- ========== DATA IN BODY ========== -->
+    <data name="api-version" value="v1"/>
+
+    <!-- ========== NOTES ========== -->
+    <note>The <cmdname>oc</cmdname> CLI is backwards compatible with
+      <cmdname>kubectl</cmdname>.</note>
+    <note type="tip">Use <codeph>oc explain &lt;resource&gt;</codeph> to
+      view the schema for any resource type.</note>
+    <note type="warning">The <option>--force</option> flag bypasses
+      confirmation prompts. Use with caution.</note>
+
+    <!-- ========== LONG QUOTE ========== -->
+    <lq>All oc commands accept the <option>--loglevel</option> flag for
+      debug output.</lq>
+
+    <!-- ========== DEFINITION LIST ========== -->
+    <dl>
+      <dlentry>
+        <dt><codeph>oc get</codeph></dt>
+        <dd>List resources of a given type.</dd>
+      </dlentry>
+      <dlentry>
+        <dt><codeph>oc describe</codeph></dt>
+        <dd>Show detailed information about a resource.</dd>
+      </dlentry>
+      <dlentry>
+        <dt><codeph>oc delete</codeph></dt>
+        <dd>Remove resources by name or label selector.</dd>
+      </dlentry>
+    </dl>
+
+    <!-- ========== LISTS ========== -->
+    <ol>
+      <li>Authenticate with <codeph>oc login</codeph>.</li>
+      <li>Select a project with <codeph>oc project &lt;name&gt;</codeph>.</li>
+      <li>Run <codeph>oc get pods</codeph> to list pods.</li>
+    </ol>
+    <ul>
+      <li><option>-n</option> — target namespace</li>
+      <li><option>-o json</option> — JSON output</li>
+      <li><option>-o yaml</option> — YAML output</li>
+      <li><option>-w</option> — watch for changes</li>
+    </ul>
+
+    <!-- ========== PREFORMATTED / CODEBLOCK ========== -->
+    <pre>Usage: oc [command] [flags]</pre>
+    <codeblock outputclass="language-bash">oc get pods -n openshift-monitoring -o wide</codeblock>
+
+    <!-- ========== FIGURE ========== -->
+    <fig>
+      <title>CLI output example</title>
+      <image href="cli-output.png" placement="break">
+        <alt>Example oc get pods output</alt>
+      </image>
+    </fig>
+
+    <!-- ========== STANDALONE IMAGE ========== -->
+    <image href="terminal-icon.svg">
+      <alt>Terminal icon</alt>
+    </image>
+
+    <!-- ========== REQUIRED CLEANUP ========== -->
+    <required-cleanup remap="verify">Confirm flag names against latest release.</required-cleanup>
+
+    <!-- ========== SECTION: oc get ========== -->
+    <section id="oc-get">
+      <title><codeph>oc get</codeph></title>
+      <p>Retrieve one or more resources. Supports filtering by label
+        (<option>-l</option>) and field selector (<option>--field-selector</option>).</p>
+      <codeblock outputclass="language-bash">oc get pods -l app=frontend -n my-project</codeblock>
     </section>
-    <simpletable>
+
+    <!-- ========== SIMPLETABLE: oc get flags ========== -->
+    <simpletable keycol="1">
       <sthead>
-        <stentry>Option</stentry>
+        <stentry>Flag</stentry>
+        <stentry>Type</stentry>
         <stentry>Description</stentry>
       </sthead>
       <strow>
-        <stentry><codeph>--verbose</codeph></stentry>
-        <stentry>Enable verbose output.</stentry>
+        <stentry><option>-o</option></stentry>
+        <stentry><codeph>string</codeph></stentry>
+        <stentry>Output format: <codeph>json</codeph>, <codeph>yaml</codeph>,
+          <codeph>wide</codeph>, <codeph>name</codeph>.</stentry>
+      </strow>
+      <strow>
+        <stentry><option>-l</option></stentry>
+        <stentry><codeph>string</codeph></stentry>
+        <stentry>Label selector (e.g. <codeph>app=frontend</codeph>).</stentry>
+      </strow>
+      <strow>
+        <stentry><option>-A</option></stentry>
+        <stentry><codeph>bool</codeph></stentry>
+        <stentry>List resources across all namespaces.</stentry>
+      </strow>
+      <strow>
+        <stentry><option>-w</option></stentry>
+        <stentry><codeph>bool</codeph></stentry>
+        <stentry>Watch for changes after listing.</stentry>
       </strow>
     </simpletable>
+
+    <!-- ========== SECTION: oc apply ========== -->
+    <section id="oc-apply" platform="ocp" audience="admin">
+      <title><codeph>oc apply</codeph></title>
+      <p>Apply a configuration to a resource by file or stdin.</p>
+      <codeblock outputclass="language-bash">oc apply -f deployment.yaml</codeblock>
+      <note type="important">Use <option>--server-side</option> for
+        large resources to avoid client-side throttling.</note>
+    </section>
+
+    <!-- ========== SIMPLETABLE: oc apply flags ========== -->
+    <simpletable>
+      <sthead>
+        <stentry>Flag</stentry>
+        <stentry>Description</stentry>
+      </sthead>
+      <strow>
+        <stentry><option>-f</option></stentry>
+        <stentry>Path to the file containing the resource definition.</stentry>
+      </strow>
+      <strow>
+        <stentry><option>--dry-run=client</option></stentry>
+        <stentry>Preview changes without applying.</stentry>
+      </strow>
+      <strow>
+        <stentry><option>--server-side</option></stentry>
+        <stentry>Use server-side apply.</stentry>
+      </strow>
+    </simpletable>
+
+    <!-- ========== SECTION: Environment variables ========== -->
+    <section id="env-vars">
+      <title>Environment variables</title>
+      <simpletable keycol="1">
+        <sthead>
+          <stentry>Variable</stentry>
+          <stentry>Description</stentry>
+          <stentry>Default</stentry>
+        </sthead>
+        <strow>
+          <stentry><varname>KUBECONFIG</varname></stentry>
+          <stentry>Path to cluster configuration file.</stentry>
+          <stentry><filepath>~/.kube/config</filepath></stentry>
+        </strow>
+        <strow>
+          <stentry><varname>OC_EDITOR</varname></stentry>
+          <stentry>Editor for <codeph>oc edit</codeph>.</stentry>
+          <stentry><codeph>vi</codeph></stentry>
+        </strow>
+        <strow>
+          <stentry><varname>LOGLEVEL</varname></stentry>
+          <stentry>Debug log verbosity (0-10).</stentry>
+          <stentry><codeph>0</codeph></stentry>
+        </strow>
+      </simpletable>
+    </section>
+
+    <!-- ========== SECTION: Exit codes ========== -->
+    <section id="exit-codes">
+      <title>Exit codes</title>
+      <dl>
+        <dlentry>
+          <dt><codeph>0</codeph></dt>
+          <dd>Success.</dd>
+        </dlentry>
+        <dlentry>
+          <dt><codeph>1</codeph></dt>
+          <dd>General error.</dd>
+        </dlentry>
+        <dlentry>
+          <dt><codeph>126</codeph></dt>
+          <dd>Command not executable.</dd>
+        </dlentry>
+        <dlentry>
+          <dt><codeph>127</codeph></dt>
+          <dd>Command not found.</dd>
+        </dlentry>
+      </dl>
+    </section>
+
   </refbody>
 </reference>

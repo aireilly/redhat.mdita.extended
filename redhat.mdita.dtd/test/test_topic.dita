@@ -2,57 +2,244 @@
 <!DOCTYPE topic PUBLIC "-//RED HAT//DTD MDITA 2.0 Topic//EN" "mditaTopic.dtd">
 <topic id="test-topic">
   <title>MDITA Topic Validation Test</title>
-  <shortdesc>Tests all MDITA extended profile elements in a topic shell.</shortdesc>
+  <shortdesc>Exercises all MDITA extended profile elements in the topic shell,
+    including every inline domain, block element, profiling attribute, and
+    structural feature permitted by the constrained DTD.</shortdesc>
   <prolog>
-    <data name="author" value="test"/>
+    <metadata>
+      <audience type="programmer"/>
+      <category>Testing</category>
+      <keywords>
+        <keyword>mdita</keyword>
+        <keyword>validation</keyword>
+        <keyword>round-trip</keyword>
+      </keywords>
+    </metadata>
+    <data name="author" value="MDITA Test Suite"/>
+    <data name="category" value="validation"/>
+    <data name="workflow" value="review"/>
   </prolog>
   <body>
-    <p>A paragraph with <b>bold</b>, <i>italic</i>, <u>underline</u>,
+
+    <!-- ========== HIGHLIGHT DOMAIN (hi-d) ========== -->
+    <p>Highlight domain: <b>bold</b>, <i>italic</i>, <u>underline</u>,
        <sub>subscript</sub>, <sup>superscript</sup>, <tt>teletype</tt>,
        and <line-through>strikethrough</line-through>.</p>
-    <p>Inline code: <codeph>echo hello</codeph>.
-       A filepath: <filepath>/etc/hosts</filepath>.
-       System output: <systemoutput>OK</systemoutput>.
-       User input: <userinput>ls -la</userinput>.
-       Message phrase: <msgph>ERR001</msgph>.</p>
-    <p>Software domain: <cmdname>oc</cmdname>, <varname>$HOME</varname>.</p>
-    <p>UI domain: <uicontrol>File</uicontrol>,
-       <menucascade><uicontrol>File</uicontrol><uicontrol>Save</uicontrol></menucascade>,
-       <wintitle>Terminal</wintitle>.</p>
-    <p>A <xref href="http://example.com" format="html" scope="external">link</xref>
-       and a <keyword>keyword</keyword>.</p>
-    <note>A note block.</note>
-    <lq>A long quote.</lq>
-    <ul>
-      <li>Unordered item</li>
-    </ul>
+
+    <!-- ========== PROGRAMMING DOMAIN (pr-d) ========== -->
+    <p>Programming domain: <codeph>System.exit(0)</codeph>,
+       <apiname>getResourceURL</apiname>, <option>--verbose</option>.</p>
+
+    <!-- ========== SOFTWARE DOMAIN (sw-d) ========== -->
+    <p>Software domain: run <cmdname>oc</cmdname> with
+       <varname>$KUBECONFIG</varname> set.</p>
+
+    <!-- ========== UI DOMAIN (ui-d) ========== -->
+    <p>UI domain: click <uicontrol>Save</uicontrol>, then navigate
+       <menucascade><uicontrol>File</uicontrol><uicontrol>Export</uicontrol><uicontrol>PDF</uicontrol></menucascade>.
+       The <wintitle>Dashboard</wintitle> window opens.</p>
+
+    <!-- ========== INLINE: filepath, systemoutput, userinput, msgph ========== -->
+    <p>More pr-d/sw-d: edit <filepath>/etc/sysconfig/network</filepath>.
+       Expected output: <systemoutput>Connection established</systemoutput>.
+       Type <userinput>sudo reboot</userinput> to restart.
+       Error <msgph>RHEL-4021: disk full</msgph> indicates a storage issue.</p>
+
+    <!-- ========== INLINE: cite, ph, keyword, xref ========== -->
+    <p>A citation: <cite>Kubernetes in Action</cite> by Marko Lukša.
+       A bare <ph>phrase element</ph> with content.
+       A <keyword>keyword</keyword> and a
+       <keyword keyref="product-name"/> keyref.
+       An external <xref href="https://docs.redhat.com" format="html"
+       scope="external">Red Hat documentation</xref> link and
+       a local <xref href="test_concept.dita"/> cross-reference.</p>
+
+    <!-- ========== NESTED INLINE ========== -->
+    <p>Nested inline: <b>bold with <codeph>code</codeph> inside</b> and
+       <i>italic with <uicontrol>UI control</uicontrol> inside</i>.</p>
+
+    <!-- ========== REQUIRED-CLEANUP ========== -->
+    <required-cleanup remap="review">Flag this paragraph for editorial review.</required-cleanup>
+
+    <!-- ========== DATA IN BODY ========== -->
+    <data name="build-target" value="x86_64"/>
+
+    <!-- ========== NOTE TYPES ========== -->
+    <note>A default note.</note>
+    <note type="tip">A tip note.</note>
+    <note type="important">An important note with <b>bold</b> emphasis.</note>
+    <note type="warning">A warning note.</note>
+    <note type="caution">A caution note.</note>
+    <note type="danger">A danger note.</note>
+    <note type="attention">An attention note.</note>
+    <note type="remember">A remember note.</note>
+    <note type="restriction">A restriction note.</note>
+    <note type="trouble">A trouble note.</note>
+    <note type="notice">A notice note.</note>
+    <note type="fastpath">A fastpath note.</note>
+    <note type="other" othertype="security">A custom security note.</note>
+
+    <!-- ========== LONG QUOTE ========== -->
+    <lq>A simple long quote.</lq>
+    <lq>A long quote with multiple sentences. The quote can contain
+      <b>bold</b> and <codeph>inline code</codeph> elements.</lq>
+
+    <!-- ========== ORDERED LIST ========== -->
     <ol>
-      <li>Ordered item</li>
+      <li>First ordered item.</li>
+      <li>Second item with <codeph>inline code</codeph>.</li>
+      <li>Third item with a nested list:
+        <ol>
+          <li>Nested ordered item A.</li>
+          <li>Nested ordered item B.</li>
+        </ol>
+      </li>
     </ol>
+
+    <!-- ========== UNORDERED LIST ========== -->
+    <ul>
+      <li>Bullet one.</li>
+      <li>Bullet two with <b>bold</b> text.</li>
+      <li>Bullet three with nested:
+        <ul>
+          <li>Sub-bullet A.</li>
+          <li>Sub-bullet B.</li>
+        </ul>
+      </li>
+      <li>Bullet four with a nested ordered list:
+        <ol>
+          <li>Step 1 inside a bullet.</li>
+          <li>Step 2 inside a bullet.</li>
+        </ol>
+      </li>
+    </ul>
+
+    <!-- ========== DEFINITION LIST ========== -->
     <dl>
       <dlentry>
-        <dt>Term</dt>
-        <dd>Definition</dd>
+        <dt>API</dt>
+        <dd>Application Programming Interface. See <xref
+            href="https://en.wikipedia.org/wiki/API" format="html"
+            scope="external">Wikipedia</xref>.</dd>
+      </dlentry>
+      <dlentry>
+        <dt>CLI</dt>
+        <dd>Command Line Interface, e.g. <cmdname>oc</cmdname>.</dd>
+      </dlentry>
+      <dlentry>
+        <dt><codeph>stdout</codeph></dt>
+        <dd>Standard output stream.</dd>
       </dlentry>
     </dl>
-    <pre>Preformatted text</pre>
-    <codeblock>code block content</codeblock>
+
+    <!-- ========== PREFORMATTED / CODEBLOCK ========== -->
+    <pre>Preformatted text preserves   spaces   and
+line breaks.</pre>
+    <codeblock outputclass="language-yaml">apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: my-config
+data:
+  key: value</codeblock>
+    <codeblock outputclass="language-bash">#!/bin/bash
+set -euo pipefail
+echo "Hello, MDITA"</codeblock>
+
+    <!-- ========== FIGURE WITH IMAGE ========== -->
     <fig>
-      <title>A figure</title>
-      <image href="test.png"/>
+      <title>Architecture diagram</title>
+      <image href="architecture.png" placement="break">
+        <alt>System architecture overview</alt>
+      </image>
     </fig>
-    <simpletable>
+
+    <!-- ========== STANDALONE IMAGES ========== -->
+    <image href="icon.svg" placement="inline">
+      <alt>Status icon</alt>
+    </image>
+    <image href="screenshot.png" placement="break" height="300px" width="500px">
+      <alt>Application screenshot</alt>
+    </image>
+
+    <!-- ========== SIMPLETABLE ========== -->
+    <simpletable keycol="1">
       <sthead>
-        <stentry>Header</stentry>
+        <stentry>Parameter</stentry>
+        <stentry>Type</stentry>
+        <stentry>Description</stentry>
       </sthead>
       <strow>
-        <stentry>Cell</stentry>
+        <stentry><codeph>--output</codeph></stentry>
+        <stentry><codeph>string</codeph></stentry>
+        <stentry>Output format: <codeph>json</codeph>, <codeph>yaml</codeph>,
+          or <codeph>table</codeph>.</stentry>
+      </strow>
+      <strow>
+        <stentry><codeph>--namespace</codeph></stentry>
+        <stentry><codeph>string</codeph></stentry>
+        <stentry>Target namespace (default: <codeph>default</codeph>).</stentry>
+      </strow>
+      <strow>
+        <stentry><codeph>--timeout</codeph></stentry>
+        <stentry><codeph>int</codeph></stentry>
+        <stentry>Request timeout in seconds.</stentry>
       </strow>
     </simpletable>
-    <image href="test.png"/>
-    <section>
-      <title>A section</title>
-      <p>Section content.</p>
+
+    <!-- ========== SECTION ========== -->
+    <section id="profiling-section" platform="linux" audience="admin">
+      <title>Profiling attributes</title>
+      <p platform="linux">This paragraph is Linux-only.</p>
+      <p product="ocp" audience="admin">This paragraph targets OCP admins.</p>
+      <p deliveryTarget="html">This paragraph is for HTML output.</p>
+      <p otherprops="internal">This paragraph uses otherprops.</p>
+      <note type="tip" platform="rhel">Platform-specific tip for RHEL.</note>
     </section>
+
+    <section id="mixed-content-section">
+      <title>Mixed content section</title>
+      <p>A section with every block element:</p>
+      <ol>
+        <li>Ordered item in section.</li>
+      </ol>
+      <ul>
+        <li>Unordered item in section.</li>
+      </ul>
+      <dl>
+        <dlentry>
+          <dt>Term in section</dt>
+          <dd>Definition in section.</dd>
+        </dlentry>
+      </dl>
+      <simpletable>
+        <strow>
+          <stentry>Cell in section</stentry>
+        </strow>
+      </simpletable>
+      <codeblock>code in section</codeblock>
+      <note>Note in section.</note>
+      <lq>Quote in section.</lq>
+      <fig>
+        <title>Figure in section</title>
+        <image href="fig.png"/>
+      </fig>
+      <image href="inline.png"/>
+    </section>
+
   </body>
+
+  <!-- ========== NESTED TOPIC ========== -->
+  <topic id="nested-topic">
+    <title>Nested topic</title>
+    <shortdesc>A child topic testing topic nesting.</shortdesc>
+    <body>
+      <p>Content in a nested topic with <b>bold</b> and
+         <keyword keyref="version"/>.</p>
+      <section>
+        <title>Nested section</title>
+        <p>Section inside a nested topic.</p>
+      </section>
+    </body>
+  </topic>
+
 </topic>

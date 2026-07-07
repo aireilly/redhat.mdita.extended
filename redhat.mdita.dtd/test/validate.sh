@@ -48,12 +48,27 @@ validate_fixture() {
 echo "=== DITA 2.0 MDITA DTD Validation ==="
 echo ""
 
-echo "--- Curated Test Files ---"
+echo "--- Curated Test Files (DITA 2.0) ---"
 for f in "$SCRIPT_DIR"/test_topic.dita \
          "$SCRIPT_DIR"/test_concept.dita \
          "$SCRIPT_DIR"/test_task.dita \
          "$SCRIPT_DIR"/test_reference.dita \
          "$SCRIPT_DIR"/test_map.ditamap; do
+  if [ -f "$f" ]; then
+    validate "$f"
+  else
+    echo "  SKIP: $(basename "$f") (not found)"
+    SKIP=$((SKIP + 1))
+  fi
+done
+
+echo ""
+echo "--- Curated Test Files (DITA 1.3) ---"
+for f in "$SCRIPT_DIR"/test_1.3_topic.dita \
+         "$SCRIPT_DIR"/test_1.3_task.dita \
+         "$SCRIPT_DIR"/test_1.3_concept.dita \
+         "$SCRIPT_DIR"/test_1.3_reference.dita \
+         "$SCRIPT_DIR"/test_1.3_map.ditamap; do
   if [ -f "$f" ]; then
     validate "$f"
   else

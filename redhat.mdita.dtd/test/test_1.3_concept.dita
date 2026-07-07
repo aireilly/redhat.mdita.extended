@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE concept PUBLIC "-//RED HAT//DTD MDITA 1.3 Concept//EN" "mditaConcept.dtd">
+<concept id="test-13-concept">
+  <title>DITA 1.3 Concept Validation Test</title>
+  <shortdesc>Exercises all elements permitted in the MDITA 1.3 concept shell,
+    including prolog, all block and inline elements in conbody, sections,
+    and profiling attributes.</shortdesc>
+  <prolog>
+    <metadata>
+      <audience type="administrator"/>
+      <category>Infrastructure</category>
+      <keywords>
+        <keyword>concept</keyword>
+        <keyword>dita-1.3</keyword>
+      </keywords>
+    </metadata>
+    <data name="author" value="Validation Suite"/>
+  </prolog>
+  <conbody>
+
+    <!-- ========== ALL INLINE ELEMENTS ========== -->
+    <p>Highlight: <b>bold</b>, <i>italic</i>, <u>underline</u>,
+       <sub>sub</sub>, <sup>sup</sup>, <tt>tt</tt>,
+       <line-through>strikethrough</line-through>.</p>
+    <p>Programming: <codeph>kubectl</codeph>,
+       <apiname>Deployment</apiname>, <option>--dry-run</option>.</p>
+    <p>Software: <cmdname>podman</cmdname>, <varname>$HOME</varname>,
+       <filepath>/opt/config.yaml</filepath>,
+       <systemoutput>200 OK</systemoutput>,
+       <userinput>curl https://api.example.com</userinput>,
+       <msgph>WARN-1002</msgph>.</p>
+    <p>UI: <uicontrol>Apply</uicontrol>,
+       <menucascade><uicontrol>Settings</uicontrol><uicontrol>Network</uicontrol></menucascade>,
+       <wintitle>Preferences</wintitle>.</p>
+    <p>Structural: <cite>Twelve-Factor App</cite>, <ph>phrase</ph>,
+       <keyword>container</keyword>,
+       <xref href="https://kubernetes.io" format="html" scope="external">K8s docs</xref>.</p>
+
+    <!-- ========== DATA IN BODY ========== -->
+    <data name="component" value="networking"/>
+
+    <!-- ========== NOTES ========== -->
+    <note>Default note.</note>
+    <note type="tip">Tip note.</note>
+    <note type="warning">Warning with <codeph>code</codeph>.</note>
+    <note type="important">Important note.</note>
+
+    <!-- ========== LONG QUOTE ========== -->
+    <lq>A long quote in concept.</lq>
+
+    <!-- ========== LISTS ========== -->
+    <ol>
+      <li>Ordered with <b>bold</b>.</li>
+      <li>Nested:
+        <ul>
+          <li>Sub A.</li>
+          <li>Sub B.</li>
+        </ul>
+      </li>
+    </ol>
+    <ul>
+      <li>Unordered with <filepath>/var/log</filepath>.</li>
+      <li>Nested ordered:
+        <ol>
+          <li>Step 1.</li>
+          <li>Step 2.</li>
+        </ol>
+      </li>
+    </ul>
+
+    <!-- ========== DEFINITION LIST ========== -->
+    <dl>
+      <dlentry>
+        <dt>Pod</dt>
+        <dd>Smallest deployable unit.</dd>
+      </dlentry>
+      <dlentry>
+        <dt>Service</dt>
+        <dd>Exposes pods on the network.</dd>
+      </dlentry>
+    </dl>
+
+    <!-- ========== PRE / CODEBLOCK ========== -->
+    <pre>Preformatted text.</pre>
+    <codeblock outputclass="language-yaml">apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: frontend</codeblock>
+
+    <!-- ========== FIGURE ========== -->
+    <fig>
+      <title>Architecture</title>
+      <image href="arch.png" placement="break">
+        <alt>Architecture diagram</alt>
+      </image>
+    </fig>
+
+    <!-- ========== STANDALONE IMAGE ========== -->
+    <image href="logo.svg" height="32px" width="32px">
+      <alt>Logo</alt>
+    </image>
+
+    <!-- ========== SIMPLETABLE ========== -->
+    <simpletable keycol="1">
+      <sthead>
+        <stentry>Resource</stentry>
+        <stentry>Namespaced</stentry>
+      </sthead>
+      <strow>
+        <stentry><codeph>Pod</codeph></stentry>
+        <stentry>Yes</stentry>
+      </strow>
+      <strow>
+        <stentry><codeph>Namespace</codeph></stentry>
+        <stentry>No</stentry>
+      </strow>
+    </simpletable>
+
+    <!-- ========== REQUIRED CLEANUP ========== -->
+    <required-cleanup remap="todo">Review before publishing.</required-cleanup>
+
+    <!-- ========== SECTIONS ========== -->
+    <section id="networking" platform="ocp">
+      <title>Networking</title>
+      <p>Uses <codeph>OVN-Kubernetes</codeph> by default.</p>
+      <note type="restriction" audience="developer">Developers cannot modify
+        cluster network settings.</note>
+    </section>
+
+    <section id="storage" product="odf">
+      <title>Storage</title>
+      <p>Persistent volumes provide durable storage.</p>
+      <dl>
+        <dlentry>
+          <dt>PV</dt>
+          <dd>PersistentVolume.</dd>
+        </dlentry>
+        <dlentry>
+          <dt>PVC</dt>
+          <dd>PersistentVolumeClaim.</dd>
+        </dlentry>
+      </dl>
+    </section>
+
+  </conbody>
+</concept>

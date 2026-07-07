@@ -2,35 +2,230 @@
 <!DOCTYPE task PUBLIC "-//RED HAT//DTD MDITA 2.0 Task//EN" "mditaTask.dtd">
 <task id="test-task">
   <title>MDITA Task Validation Test</title>
-  <shortdesc>Tests the task shell DTD with substeps.</shortdesc>
+  <shortdesc>Exercises all elements permitted in the MDITA task shell:
+    prereq, context, steps with substeps and choices, steps-unordered,
+    result, tasktroubleshooting, postreq, notes, and profiling.</shortdesc>
+  <prolog>
+    <metadata>
+      <audience type="administrator"/>
+      <category>Installation</category>
+      <keywords>
+        <keyword>installation</keyword>
+        <keyword>task</keyword>
+      </keywords>
+    </metadata>
+    <data name="author" value="Validation Suite"/>
+  </prolog>
   <taskbody>
+
+    <!-- ========== PREREQ ========== -->
     <prereq>
-      <p>You need a terminal.</p>
+      <p>Before you begin, ensure the following prerequisites are met:</p>
+      <ul>
+        <li>A running <keyword keyref="product-name"/> cluster (version 4.14+).</li>
+        <li>The <cmdname>oc</cmdname> CLI installed and configured.</li>
+        <li>Administrator access to the <codeph>openshift-config</codeph> namespace.</li>
+      </ul>
+      <note type="important">Back up your <filepath>kubeconfig</filepath>
+        before proceeding.</note>
+      <simpletable>
+        <sthead>
+          <stentry>Requirement</stentry>
+          <stentry>Minimum</stentry>
+        </sthead>
+        <strow>
+          <stentry>CPU</stentry>
+          <stentry>4 cores</stentry>
+        </strow>
+        <strow>
+          <stentry>Memory</stentry>
+          <stentry>16 GB</stentry>
+        </strow>
+        <strow>
+          <stentry>Disk</stentry>
+          <stentry>100 GB</stentry>
+        </strow>
+      </simpletable>
     </prereq>
+
+    <!-- ========== CONTEXT ========== -->
     <context>
-      <p>This task tests the MDITA task constraint.</p>
+      <p>This procedure installs and configures the monitoring stack on
+        <keyword keyref="product-name"/>. The monitoring stack collects
+        metrics from cluster components and user workloads.</p>
+      <p>For details, see <cite>Monitoring Guide</cite> or the
+        <xref href="https://docs.openshift.com/monitoring" format="html"
+              scope="external">upstream documentation</xref>.</p>
+      <dl>
+        <dlentry>
+          <dt>Prometheus</dt>
+          <dd>Time-series database for metrics.</dd>
+        </dlentry>
+        <dlentry>
+          <dt>Alertmanager</dt>
+          <dd>Handles alerts from Prometheus.</dd>
+        </dlentry>
+      </dl>
+      <codeblock outputclass="language-yaml">apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: cluster-monitoring-config
+  namespace: openshift-monitoring
+data:
+  config.yaml: |
+    enableUserWorkload: true</codeblock>
     </context>
+
+    <!-- ========== ADDITIONAL SECTION BEFORE STEPS ========== -->
+    <section platform="aws">
+      <title>AWS-specific considerations</title>
+      <p>On AWS, ensure that the <codeph>ebs-csi-driver</codeph> is installed
+        for persistent storage.</p>
+    </section>
+
+    <!-- ========== STEPS ========== -->
     <steps>
+      <!-- Step 1: simple cmd + info -->
       <step>
-        <cmd>Run the first command.</cmd>
+        <cmd>Log in to the cluster as an administrator.</cmd>
         <info>
-          <p>Some additional info.</p>
+          <codeblock outputclass="language-bash">oc login -u kubeadmin https://api.cluster.example.com:6443</codeblock>
+          <note type="tip">Use <userinput>oc whoami</userinput> to verify
+            your identity.</note>
+        </info>
+      </step>
+
+      <!-- Step 2: cmd + substeps with notes and info -->
+      <step>
+        <cmd>Create the monitoring configuration.</cmd>
+        <info>
+          <p>The configuration file controls which components are enabled.</p>
         </info>
         <substeps>
           <substep>
-            <cmd>Run substep A.</cmd>
+            <note type="important">Do not modify the
+              <filepath>cluster-monitoring-config</filepath> ConfigMap
+              while Prometheus is restarting.</note>
+            <cmd>Create the ConfigMap in the
+              <codeph>openshift-monitoring</codeph> namespace.</cmd>
+            <info>
+              <codeblock outputclass="language-bash">oc apply -f monitoring-config.yaml</codeblock>
+            </info>
           </substep>
           <substep>
-            <cmd>Run substep B.</cmd>
+            <cmd>Verify the ConfigMap was created.</cmd>
+            <info>
+              <codeblock outputclass="language-bash">oc get configmap cluster-monitoring-config -n openshift-monitoring -o yaml</codeblock>
+              <p>Expected output includes <systemoutput>enableUserWorkload: true</systemoutput>.</p>
+            </info>
+          </substep>
+          <substep>
+            <cmd>Wait for the Prometheus pods to restart.</cmd>
+            <info>
+              <codeblock outputclass="language-bash">oc rollout status statefulset/prometheus-k8s -n openshift-monitoring</codeblock>
+            </info>
           </substep>
         </substeps>
       </step>
+
+      <!-- Step 3: cmd + choices -->
       <step>
-        <cmd>Verify the output.</cmd>
+        <cmd>Choose a storage backend for metrics retention.</cmd>
+        <choices>
+          <choice>Use ephemeral storage (default, no persistence across restarts).</choice>
+          <choice>Use a <codeph>PersistentVolumeClaim</codeph> for durable storage.</choice>
+          <choice>Use an external <codeph>Thanos</codeph> object store.</choice>
+        </choices>
+      </step>
+
+      <!-- Step 4: note before cmd -->
+      <step>
+        <note type="caution">This step modifies cluster-wide alerting rules.
+          Coordinate with your operations team.</note>
+        <cmd>Configure alerting rules.</cmd>
+        <info>
+          <p>Create a <codeph>PrometheusRule</codeph> resource:</p>
+          <codeblock outputclass="language-yaml">apiVersion: monitoring.coreos.com/v1
+kind: PrometheusRule
+metadata:
+  name: custom-alerts
+  namespace: openshift-user-workload-monitoring
+spec:
+  groups:
+    - name: pod-alerts
+      rules:
+        - alert: PodCrashLooping
+          expr: rate(kube_pod_container_status_restarts_total[15m]) > 0
+          for: 1h</codeblock>
+        </info>
+      </step>
+
+      <!-- Step 5: step with inline elements in cmd -->
+      <step>
+        <cmd>Open the <uicontrol>Monitoring</uicontrol> page in the
+          <wintitle>OpenShift Web Console</wintitle> and navigate to
+          <menucascade><uicontrol>Observe</uicontrol><uicontrol>Metrics</uicontrol></menucascade>.</cmd>
+      </step>
+
+      <!-- Step 6: profiling on step -->
+      <step platform="azure">
+        <cmd>For Azure clusters, configure the managed identity for
+          Thanos access.</cmd>
+        <info>
+          <p>Set <varname>$AZURE_CLIENT_ID</varname> and
+            <varname>$AZURE_TENANT_ID</varname>.</p>
+        </info>
       </step>
     </steps>
+
+    <!-- ========== RESULT ========== -->
     <result>
-      <p>The test passes.</p>
+      <p>The monitoring stack is installed and collecting metrics.</p>
+      <p>Verify by running:</p>
+      <codeblock outputclass="language-bash">oc get pods -n openshift-monitoring</codeblock>
+      <p>All pods should show <systemoutput>Running</systemoutput> status.</p>
+      <simpletable>
+        <sthead>
+          <stentry>Component</stentry>
+          <stentry>Expected pods</stentry>
+        </sthead>
+        <strow>
+          <stentry>Prometheus</stentry>
+          <stentry>2</stentry>
+        </strow>
+        <strow>
+          <stentry>Alertmanager</stentry>
+          <stentry>3</stentry>
+        </strow>
+        <strow>
+          <stentry>Thanos Querier</stentry>
+          <stentry>2</stentry>
+        </strow>
+      </simpletable>
+      <note>It may take up to 5 minutes for all pods to reach a running state.</note>
     </result>
+
+    <!-- ========== TASKTROUBLESHOOTING ========== -->
+    <tasktroubleshooting>
+      <p>If monitoring pods are not starting:</p>
+      <ol>
+        <li>Check events: <userinput>oc get events -n openshift-monitoring --sort-by='.lastTimestamp'</userinput></li>
+        <li>Check pod logs: <userinput>oc logs -n openshift-monitoring prometheus-k8s-0</userinput></li>
+        <li>Verify the ConfigMap: <userinput>oc get cm cluster-monitoring-config -n openshift-monitoring -o yaml</userinput></li>
+      </ol>
+      <note type="tip">Error <msgph>OOMKilled</msgph> indicates insufficient
+        memory. Increase the node memory or reduce retention period.</note>
+    </tasktroubleshooting>
+
+    <!-- ========== POSTREQ ========== -->
+    <postreq>
+      <p>After the monitoring stack is running:</p>
+      <ul>
+        <li>Configure <xref href="test_concept.dita">alerting channels</xref>.</li>
+        <li>Set up Grafana dashboards for visualization.</li>
+        <li>Review <filepath>/etc/prometheus/rules</filepath> for default alert rules.</li>
+      </ul>
+    </postreq>
+
   </taskbody>
 </task>

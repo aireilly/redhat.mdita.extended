@@ -1,12 +1,210 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE topic PUBLIC "-//RED HAT//DTD MDITA 1.3 Topic//EN" "mditaTopic.dtd">
-<topic id="test-13">
-  <title>DITA 1.3 Topic Test</title>
-  <shortdesc>Tests the 1.3 topic constraint.</shortdesc>
+<topic id="test-13-topic">
+  <title>DITA 1.3 Topic Validation Test</title>
+  <shortdesc>Exercises all MDITA extended profile elements under the 1.3 topic
+    shell, including all inline domains, block elements, profiling attributes,
+    and structural features.</shortdesc>
+  <prolog>
+    <metadata>
+      <audience type="programmer"/>
+      <category>Testing</category>
+      <keywords>
+        <keyword>mdita</keyword>
+        <keyword>dita-1.3</keyword>
+      </keywords>
+    </metadata>
+    <data name="author" value="MDITA Test Suite"/>
+    <data name="category" value="validation"/>
+  </prolog>
   <body>
-    <p>Inline: <b>bold</b>, <i>italic</i>, <codeph>code</codeph>,
-       <cmdname>oc</cmdname>, <uicontrol>OK</uicontrol>.</p>
-    <codeblock>echo hello</codeblock>
-    <note>A note.</note>
+
+    <!-- ========== HIGHLIGHT DOMAIN ========== -->
+    <p>Highlight domain: <b>bold</b>, <i>italic</i>, <u>underline</u>,
+       <sub>subscript</sub>, <sup>superscript</sup>, <tt>teletype</tt>,
+       <line-through>strikethrough</line-through>.</p>
+
+    <!-- ========== PROGRAMMING DOMAIN ========== -->
+    <p>Programming domain: <codeph>System.exit(0)</codeph>,
+       <apiname>getResourceURL</apiname>, <option>--verbose</option>.</p>
+
+    <!-- ========== SOFTWARE DOMAIN ========== -->
+    <p>Software domain: <cmdname>oc</cmdname>,
+       <varname>$KUBECONFIG</varname>,
+       <filepath>/etc/hosts</filepath>,
+       <systemoutput>OK</systemoutput>,
+       <userinput>ls -la</userinput>,
+       <msgph>ERR001</msgph>.</p>
+
+    <!-- ========== UI DOMAIN ========== -->
+    <p>UI domain: <uicontrol>Save</uicontrol>,
+       <menucascade><uicontrol>File</uicontrol><uicontrol>Export</uicontrol></menucascade>,
+       <wintitle>Dashboard</wintitle>.</p>
+
+    <!-- ========== STRUCTURAL INLINE ========== -->
+    <p>Structural: <cite>Kubernetes in Action</cite>,
+       <ph>a phrase</ph>,
+       <keyword>keyword</keyword>,
+       <keyword keyref="product-name"/>,
+       <xref href="https://docs.redhat.com" format="html"
+             scope="external">Red Hat docs</xref>,
+       <xref href="test_1.3_concept.dita"/>.</p>
+
+    <!-- ========== NESTED INLINE ========== -->
+    <p>Nested: <b>bold with <codeph>code</codeph></b> and
+       <i>italic with <uicontrol>button</uicontrol></i>.</p>
+
+    <!-- ========== REQUIRED-CLEANUP ========== -->
+    <required-cleanup remap="review">Flag for review.</required-cleanup>
+
+    <!-- ========== DATA IN BODY ========== -->
+    <data name="build-arch" value="aarch64"/>
+
+    <!-- ========== NOTE TYPES ========== -->
+    <note>Default note.</note>
+    <note type="tip">Tip note.</note>
+    <note type="important">Important note.</note>
+    <note type="warning">Warning note.</note>
+    <note type="caution">Caution note with <b>bold</b>.</note>
+    <note type="danger">Danger note.</note>
+    <note type="attention">Attention note.</note>
+    <note type="remember">Remember note.</note>
+    <note type="restriction">Restriction note.</note>
+    <note type="trouble">Trouble note.</note>
+    <note type="notice">Notice note.</note>
+    <note type="fastpath">Fastpath note.</note>
+    <note type="other" othertype="security">Custom note.</note>
+
+    <!-- ========== LONG QUOTE ========== -->
+    <lq>A long quote.</lq>
+    <lq href="https://example.com/source" format="html" scope="external">Attributed quote.</lq>
+
+    <!-- ========== LISTS ========== -->
+    <ol>
+      <li>First item.</li>
+      <li>Second with nested:
+        <ol>
+          <li>Nested A.</li>
+          <li>Nested B.</li>
+        </ol>
+      </li>
+    </ol>
+    <ul>
+      <li>Bullet one.</li>
+      <li>Bullet with nested:
+        <ul>
+          <li>Sub A.</li>
+        </ul>
+      </li>
+      <li>Bullet with nested ordered:
+        <ol>
+          <li>Sub 1.</li>
+          <li>Sub 2.</li>
+        </ol>
+      </li>
+    </ul>
+
+    <!-- ========== DEFINITION LIST ========== -->
+    <dl>
+      <dlentry>
+        <dt>API</dt>
+        <dd>Application Programming Interface.</dd>
+      </dlentry>
+      <dlentry>
+        <dt><codeph>stdout</codeph></dt>
+        <dd>Standard output stream.</dd>
+      </dlentry>
+    </dl>
+
+    <!-- ========== PRE / CODEBLOCK ========== -->
+    <pre>Preformatted   text.</pre>
+    <codeblock outputclass="language-yaml">apiVersion: v1
+kind: Pod
+metadata:
+  name: test</codeblock>
+
+    <!-- ========== FIGURE WITH IMAGE ========== -->
+    <fig>
+      <title>Architecture</title>
+      <image href="arch.png" placement="break">
+        <alt>Architecture diagram</alt>
+      </image>
+    </fig>
+
+    <!-- ========== STANDALONE IMAGES ========== -->
+    <image href="icon.svg" placement="inline">
+      <alt>Status icon</alt>
+    </image>
+    <image href="screenshot.png" height="300px" width="500px">
+      <alt>Screenshot</alt>
+    </image>
+
+    <!-- ========== SIMPLETABLE ========== -->
+    <simpletable keycol="1">
+      <sthead>
+        <stentry>Parameter</stentry>
+        <stentry>Type</stentry>
+        <stentry>Description</stentry>
+      </sthead>
+      <strow>
+        <stentry><codeph>--output</codeph></stentry>
+        <stentry><codeph>string</codeph></stentry>
+        <stentry>Output format.</stentry>
+      </strow>
+      <strow>
+        <stentry><codeph>--timeout</codeph></stentry>
+        <stentry><codeph>int</codeph></stentry>
+        <stentry>Timeout in seconds.</stentry>
+      </strow>
+    </simpletable>
+
+    <!-- ========== PROFILING ATTRIBUTES ========== -->
+    <section id="profiling-section" platform="linux" audience="admin">
+      <title>Profiling attributes</title>
+      <p platform="linux">Linux-only paragraph.</p>
+      <p product="ocp" audience="admin">OCP admin paragraph.</p>
+      <p otherprops="internal">Internal paragraph.</p>
+      <note type="tip" platform="rhel">RHEL-specific tip.</note>
+    </section>
+
+    <!-- ========== MIXED SECTION ========== -->
+    <section id="mixed-section">
+      <title>Mixed content</title>
+      <p>Section with all block elements.</p>
+      <ol>
+        <li>Ordered in section.</li>
+      </ol>
+      <ul>
+        <li>Unordered in section.</li>
+      </ul>
+      <dl>
+        <dlentry>
+          <dt>Term</dt>
+          <dd>Definition.</dd>
+        </dlentry>
+      </dl>
+      <codeblock>code in section</codeblock>
+      <note>Note in section.</note>
+      <lq>Quote in section.</lq>
+      <simpletable>
+        <strow>
+          <stentry>Cell in section</stentry>
+        </strow>
+      </simpletable>
+      <fig>
+        <title>Figure in section</title>
+        <image href="fig.png"/>
+      </fig>
+    </section>
+
   </body>
+
+  <!-- ========== NESTED TOPIC ========== -->
+  <topic id="nested-13">
+    <title>Nested topic</title>
+    <body>
+      <p>Content in a nested 1.3 topic.</p>
+    </body>
+  </topic>
+
 </topic>

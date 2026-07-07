@@ -3,33 +3,134 @@
 <map>
   <title>MDITA Map Validation Test</title>
   <topicmeta>
-    <data name="category" value="test"/>
+    <data name="category" value="validation"/>
+    <data name="version" value="2.0"/>
   </topicmeta>
+
+  <!-- ========== SIMPLE TOPICREFS ========== -->
   <topicref href="test_topic.dita"/>
-  <topicref href="test_concept.dita"/>
+  <topicref href="test_concept.dita" type="concept"/>
+
+  <!-- ========== TOPICREF WITH ATTRIBUTES ========== -->
+  <topicref href="test_task.dita" type="task" platform="ocp"/>
+  <topicref href="test_reference.dita" type="reference" audience="admin"/>
+  <topicref href="https://docs.openshift.com" format="html" scope="external"
+            product="ocp"/>
+
+  <!-- ========== TOPICHEAD WITH NESTED CHILDREN ========== -->
   <topichead>
     <topicmeta>
-      <titlealt title-role="navigation">Task Topics</titlealt>
+      <titlealt title-role="navigation">Installation Guide</titlealt>
     </topicmeta>
-    <topicref href="test_task.dita"/>
+    <topicref href="test_concept.dita">
+      <topicmeta>
+        <data name="chapter" value="1"/>
+      </topicmeta>
+    </topicref>
+    <topicref href="test_task.dita">
+      <topicref href="test_reference.dita"/>
+    </topicref>
   </topichead>
-  <topicref href="test_reference.dita"/>
+
+  <!-- ========== NESTED TOPICREFS (DEEP NESTING) ========== -->
+  <topicref href="test_topic.dita">
+    <topicref href="test_concept.dita">
+      <topicref href="test_reference.dita"/>
+    </topicref>
+  </topicref>
+
+  <!-- ========== TOPICHEAD WITH MIXED NESTING ========== -->
+  <topichead>
+    <topicmeta>
+      <titlealt title-role="navigation">Administration</titlealt>
+    </topicmeta>
+    <topichead>
+      <topicmeta>
+        <titlealt title-role="navigation">Monitoring</titlealt>
+      </topicmeta>
+      <topicref href="test_task.dita"/>
+    </topichead>
+    <topicref href="test_reference.dita"/>
+  </topichead>
+
+  <!-- ========== COLLECTION-TYPE SEQUENCE ========== -->
+  <topicref href="test_topic.dita" collection-type="sequence">
+    <topicref href="test_concept.dita"/>
+    <topicref href="test_task.dita"/>
+    <topicref href="test_reference.dita"/>
+  </topicref>
+
+  <!-- ========== KEYDEFS: keyword content ========== -->
   <keydef keys="product-name">
     <topicmeta>
       <keywords>
-        <keyword>MDITA</keyword>
+        <keyword>Red Hat OpenShift Container Platform</keyword>
       </keywords>
     </topicmeta>
   </keydef>
+  <keydef keys="product-short">
+    <topicmeta>
+      <keywords>
+        <keyword>OpenShift</keyword>
+      </keywords>
+    </topicmeta>
+  </keydef>
+  <keydef keys="version">
+    <topicmeta>
+      <keywords>
+        <keyword>4.15</keyword>
+      </keywords>
+    </topicmeta>
+  </keydef>
+
+  <!-- ========== KEYDEFS: href-based ========== -->
+  <keydef keys="product-url" href="https://www.redhat.com/openshift"
+          format="html" scope="external"/>
+  <keydef keys="install-guide" href="test_task.dita"/>
+
+  <!-- ========== MAPREF ========== -->
   <mapref href="other.ditamap"/>
+  <mapref href="sub-map.ditamap" platform="ocp"/>
+
+  <!-- ========== RELTABLE WITH HEADER ========== -->
   <reltable>
+    <relheader>
+      <relcolspec type="concept"/>
+      <relcolspec type="task"/>
+      <relcolspec type="reference"/>
+    </relheader>
     <relrow>
       <relcell>
         <topicref href="test_concept.dita"/>
+      </relcell>
+      <relcell>
+        <topicref href="test_task.dita"/>
+      </relcell>
+      <relcell>
+        <topicref href="test_reference.dita"/>
+      </relcell>
+    </relrow>
+    <relrow>
+      <relcell/>
+      <relcell>
+        <topicref href="test_task.dita"/>
       </relcell>
       <relcell>
         <topicref href="test_reference.dita"/>
       </relcell>
     </relrow>
   </reltable>
+
+  <!-- ========== SECOND RELTABLE (multiple reltables) ========== -->
+  <reltable>
+    <relrow>
+      <relcell>
+        <topicref href="test_topic.dita"/>
+      </relcell>
+      <relcell>
+        <topicref href="test_concept.dita"/>
+      </relcell>
+    </relrow>
+  </reltable>
+
 </map>

@@ -8,6 +8,15 @@ correct DITA equivalent, including domain specializations (ui-d, sw-d,
 pr-d) via class attributes. The reverse direction (DITA → MDITA) is
 inherently lossy, as DITA has constructs with no Markdown equivalent.
 
+**Fully lossless round-tripping** (MDITA → DITA → MDITA and back) is
+achievable by constraining DITA authoring to the MDITA-compatible subset.
+The included [`redhat.mdita.dtd`](#included-plugin-redhatmditadtd) plugin
+enforces this constraint at validation time: if a DITA file validates
+against the MDITA DTDs, it is guaranteed to survive the round trip without
+information loss. The trade-off is a smaller DITA vocabulary — standard
+DITA has hundreds of elements, while the MDITA DTDs permit only the
+subset that has a Markdown representation.
+
 ## What it does
 
 - Parses Markdown into DITA XML (SAX-based reader).
@@ -561,14 +570,25 @@ A Markdown table placed after the topic list is converted to a DITA
 ## Included plugin: `redhat.mdita.dtd`
 
 The repository includes a companion DITA-OT DTD plugin (`redhat.mdita.dtd/`)
-that constrains standard DITA to only the elements representable in the MDITA
-extended profile. Any DITA file that validates against these DTDs is guaranteed
-to round-trip losslessly through MDITA conversion.
+that makes fully lossless round-tripping possible between MDITA and DITA.
 
-Standard DITA has hundreds of elements; MDITA supports a useful subset. If a
-writer uses an element outside that subset, the converter must drop or
-approximate it. This plugin catches that at authoring time: if it validates, it
-round-trips.
+Standard DITA has hundreds of elements. The MDITA extended profile supports a
+useful subset — enough for the vast majority of technical documentation, but
+not the full DITA vocabulary. If a writer uses an element outside that subset,
+the converter must drop or approximate it, making the round trip lossy.
+
+The `redhat.mdita.dtd` plugin solves this by providing constrained DTDs that
+permit only the DITA elements representable in the MDITA extended profile. The
+guarantee is simple: **if a DITA file validates against these DTDs, it will
+round-trip losslessly through MDITA conversion.** No information is lost in
+either direction.
+
+The trade-off is a cut-down DTD spec. Writers give up access to constructs
+like CALS tables, footnotes, `choicetable`, `hazardstatement`, and other
+elements that have no Markdown equivalent. In practice, the permitted subset
+covers the elements that documentation teams use day-to-day — paragraphs,
+lists, steps, substeps, code blocks, admonitions, simple tables, inline
+domain markup (ui-d, sw-d, pr-d), and conditional profiling attributes.
 
 ### Supported document types
 
@@ -622,7 +642,7 @@ amplification limits that DITA DTDs exceed at the default threshold.
 bash redhat.mdita.dtd/test/validate.sh
 ```
 
-The suite validates curated test files and converter output fixtures (42
+The suite validates curated test files and converter output fixtures (47
 positive tests) and confirms that 6 negative test files are correctly
 rejected. Requires `xmllint` (libxml2).
 

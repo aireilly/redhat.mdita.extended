@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE reference PUBLIC "-//RED HAT//DTD MDITA 1.3 Reference//EN" "mditaReference.dtd">
+<reference id="test-13-reference">
+  <title>DITA 1.3 Reference Validation Test</title>
+  <shortdesc>Exercises all elements permitted in the MDITA 1.3 reference shell:
+    multiple sections, simpletables, all block and inline elements in refbody,
+    and profiling attributes.</shortdesc>
+  <prolog>
+    <metadata>
+      <audience type="programmer"/>
+      <category>CLI Reference</category>
+      <keywords>
+        <keyword>reference</keyword>
+        <keyword>dita-1.3</keyword>
+      </keywords>
+    </metadata>
+    <data name="author" value="Validation Suite"/>
+  </prolog>
+  <refbody>
+
+    <!-- ========== ALL INLINE ELEMENTS ========== -->
+    <p>Inline: <b>bold</b>, <i>italic</i>, <u>underline</u>,
+       <sub>sub</sub>, <sup>sup</sup>, <tt>tt</tt>,
+       <line-through>strikethrough</line-through>,
+       <codeph>code</codeph>, <apiname>RESTful</apiname>,
+       <option>-o</option>, <cmdname>oc</cmdname>,
+       <varname>$HOME</varname>, <filepath>~/.kube/config</filepath>,
+       <systemoutput>OK</systemoutput>, <userinput>oc get pods</userinput>,
+       <msgph>E_TIMEOUT</msgph>,
+       <uicontrol>Apply</uicontrol>, <wintitle>Console</wintitle>,
+       <menucascade><uicontrol>Actions</uicontrol><uicontrol>Delete</uicontrol></menucascade>,
+       <cite>API Ref</cite>, <ph>phrase</ph>, <keyword>keyword</keyword>,
+       <xref href="https://docs.openshift.com" format="html" scope="external">docs</xref>.</p>
+
+    <!-- ========== DATA ========== -->
+    <data name="api-version" value="v1"/>
+
+    <!-- ========== NOTES ========== -->
+    <note>Default note.</note>
+    <note type="tip">Use <codeph>oc explain</codeph> for schema info.</note>
+    <note type="warning"><option>--force</option> bypasses confirmation.</note>
+
+    <!-- ========== LONG QUOTE ========== -->
+    <lq>All commands accept <option>--loglevel</option>.</lq>
+
+    <!-- ========== DEFINITION LIST ========== -->
+    <dl>
+      <dlentry>
+        <dt><codeph>oc get</codeph></dt>
+        <dd>List resources.</dd>
+      </dlentry>
+      <dlentry>
+        <dt><codeph>oc describe</codeph></dt>
+        <dd>Show details.</dd>
+      </dlentry>
+    </dl>
+
+    <!-- ========== LISTS ========== -->
+    <ol>
+      <li>Login with <codeph>oc login</codeph>.</li>
+      <li>Select project.</li>
+      <li>List pods.</li>
+    </ol>
+    <ul>
+      <li><option>-n</option> — namespace</li>
+      <li><option>-o json</option> — JSON output</li>
+      <li><option>-w</option> — watch</li>
+    </ul>
+
+    <!-- ========== PRE / CODEBLOCK ========== -->
+    <pre>Usage: oc [command] [flags]</pre>
+    <codeblock outputclass="language-bash">oc get pods -n openshift-monitoring -o wide</codeblock>
+
+    <!-- ========== FIGURE ========== -->
+    <fig>
+      <title>CLI output</title>
+      <image href="cli-output.png" placement="break">
+        <alt>CLI output example</alt>
+      </image>
+    </fig>
+
+    <!-- ========== IMAGE ========== -->
+    <image href="terminal-icon.svg">
+      <alt>Terminal icon</alt>
+    </image>
+
+    <!-- ========== REQUIRED CLEANUP ========== -->
+    <required-cleanup remap="verify">Check flag names.</required-cleanup>
+
+    <!-- ========== SECTIONS ========== -->
+    <section id="oc-get-13">
+      <title><codeph>oc get</codeph></title>
+      <p>Retrieve resources filtered by label or field selector.</p>
+      <codeblock outputclass="language-bash">oc get pods -l app=frontend</codeblock>
+    </section>
+
+    <!-- ========== SIMPLETABLE ========== -->
+    <simpletable keycol="1">
+      <sthead>
+        <stentry>Flag</stentry>
+        <stentry>Type</stentry>
+        <stentry>Description</stentry>
+      </sthead>
+      <strow>
+        <stentry><option>-o</option></stentry>
+        <stentry><codeph>string</codeph></stentry>
+        <stentry>Output format.</stentry>
+      </strow>
+      <strow>
+        <stentry><option>-l</option></stentry>
+        <stentry><codeph>string</codeph></stentry>
+        <stentry>Label selector.</stentry>
+      </strow>
+      <strow>
+        <stentry><option>-A</option></stentry>
+        <stentry><codeph>bool</codeph></stentry>
+        <stentry>All namespaces.</stentry>
+      </strow>
+    </simpletable>
+
+    <!-- ========== SECTION WITH PROFILING ========== -->
+    <section id="oc-apply-13" platform="ocp" audience="admin">
+      <title><codeph>oc apply</codeph></title>
+      <p>Apply configuration by file or stdin.</p>
+      <note type="important">Use <option>--server-side</option> for large resources.</note>
+    </section>
+
+    <!-- ========== SECOND SIMPLETABLE ========== -->
+    <simpletable>
+      <sthead>
+        <stentry>Variable</stentry>
+        <stentry>Description</stentry>
+      </sthead>
+      <strow>
+        <stentry><varname>KUBECONFIG</varname></stentry>
+        <stentry>Cluster config path.</stentry>
+      </strow>
+      <strow>
+        <stentry><varname>LOGLEVEL</varname></stentry>
+        <stentry>Debug verbosity (0-10).</stentry>
+      </strow>
+    </simpletable>
+
+    <!-- ========== SECTION: Exit codes ========== -->
+    <section id="exit-codes-13">
+      <title>Exit codes</title>
+      <dl>
+        <dlentry>
+          <dt><codeph>0</codeph></dt>
+          <dd>Success.</dd>
+        </dlentry>
+        <dlentry>
+          <dt><codeph>1</codeph></dt>
+          <dd>General error.</dd>
+        </dlentry>
+      </dl>
+    </section>
+
+  </refbody>
+</reference>

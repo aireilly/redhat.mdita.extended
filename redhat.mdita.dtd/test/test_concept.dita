@@ -2,12 +2,179 @@
 <!DOCTYPE concept PUBLIC "-//RED HAT//DTD MDITA 2.0 Concept//EN" "mditaConcept.dtd">
 <concept id="test-concept">
   <title>MDITA Concept Validation Test</title>
-  <shortdesc>Tests the concept shell DTD.</shortdesc>
+  <shortdesc>Exercises all elements permitted in the MDITA concept shell,
+    including prolog, every block and inline element in conbody, sections,
+    and profiling attributes.</shortdesc>
+  <prolog>
+    <metadata>
+      <audience type="administrator"/>
+      <category>Infrastructure</category>
+      <keywords>
+        <keyword>concept</keyword>
+        <keyword>architecture</keyword>
+      </keywords>
+    </metadata>
+    <data name="author" value="Validation Suite"/>
+    <data name="category" value="concepts"/>
+  </prolog>
   <conbody>
-    <p>A concept paragraph with <b>bold</b> and <codeph>code</codeph>.</p>
-    <section>
-      <title>Details</title>
-      <p>Section content with <xref href="http://example.com" format="html" scope="external">a link</xref>.</p>
+
+    <!-- ========== PARAGRAPHS WITH ALL INLINE ELEMENTS ========== -->
+    <p>Highlight domain: <b>bold</b>, <i>italic</i>, <u>underline</u>,
+       <sub>subscript</sub>, <sup>superscript</sup>, <tt>teletype</tt>,
+       <line-through>strikethrough</line-through>.</p>
+    <p>Programming domain: <codeph>kubectl apply</codeph>,
+       <apiname>Deployment</apiname>, <option>--dry-run</option>.</p>
+    <p>Software domain: <cmdname>podman</cmdname>,
+       <varname>$REGISTRY_URL</varname>.</p>
+    <p>UI domain: <uicontrol>Apply</uicontrol>,
+       <menucascade><uicontrol>Settings</uicontrol><uicontrol>Network</uicontrol></menucascade>,
+       <wintitle>Preferences</wintitle>.</p>
+    <p>More inline: <filepath>/opt/app/config.yaml</filepath>,
+       <systemoutput>200 OK</systemoutput>,
+       <userinput>curl -k https://api.example.com</userinput>,
+       <msgph>WARN-1002</msgph>.</p>
+    <p>Structural inline: <cite>The Twelve-Factor App</cite>,
+       <ph>a phrase element</ph>,
+       <keyword>container</keyword>,
+       <keyword keyref="product-name"/>,
+       <xref href="https://kubernetes.io" format="html" scope="external">Kubernetes docs</xref>.</p>
+
+    <!-- ========== DATA IN BODY ========== -->
+    <data name="component" value="networking"/>
+
+    <!-- ========== NOTE TYPES ========== -->
+    <note>Default note in concept.</note>
+    <note type="tip">Tip: use labels for filtering.</note>
+    <note type="warning">Warning: this operation is irreversible.</note>
+    <note type="important">Important: back up data first.</note>
+    <note type="caution">Caution note with <codeph>inline code</codeph>.</note>
+
+    <!-- ========== LONG QUOTES ========== -->
+    <lq>A simple long quote in a concept.</lq>
+    <lq>Store config in the environment. See
+      <cite>The Twelve-Factor App</cite> for details.</lq>
+
+    <!-- ========== LISTS ========== -->
+    <ol>
+      <li>First ordered item with <b>bold</b>.</li>
+      <li>Second with nested:
+        <ul>
+          <li>Nested unordered A.</li>
+          <li>Nested unordered B.</li>
+        </ul>
+      </li>
+      <li>Third item.</li>
+    </ol>
+    <ul>
+      <li>Unordered item with <filepath>/var/log</filepath>.</li>
+      <li>Nested ordered:
+        <ol>
+          <li>Sub-step 1.</li>
+          <li>Sub-step 2.</li>
+        </ol>
+      </li>
+    </ul>
+
+    <!-- ========== DEFINITION LIST ========== -->
+    <dl>
+      <dlentry>
+        <dt>Pod</dt>
+        <dd>The smallest deployable unit in <keyword keyref="product-name"/>.</dd>
+      </dlentry>
+      <dlentry>
+        <dt>Service</dt>
+        <dd>An abstract way to expose an application running on a set of
+          <xref href="https://kubernetes.io/docs/concepts/workloads/pods/"
+                format="html" scope="external">Pods</xref>.</dd>
+      </dlentry>
+    </dl>
+
+    <!-- ========== PREFORMATTED / CODEBLOCK ========== -->
+    <pre>Preformatted text in concept.</pre>
+    <codeblock outputclass="language-yaml">apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: frontend
+spec:
+  replicas: 3</codeblock>
+
+    <!-- ========== FIGURE ========== -->
+    <fig>
+      <title>Container lifecycle</title>
+      <image href="lifecycle.png" placement="break">
+        <alt>Container lifecycle diagram</alt>
+      </image>
+    </fig>
+
+    <!-- ========== STANDALONE IMAGE ========== -->
+    <image href="logo.svg" height="32px" width="32px">
+      <alt>Product logo</alt>
+    </image>
+
+    <!-- ========== SIMPLETABLE ========== -->
+    <simpletable keycol="1">
+      <sthead>
+        <stentry>Resource</stentry>
+        <stentry>API Group</stentry>
+        <stentry>Namespaced</stentry>
+      </sthead>
+      <strow>
+        <stentry><codeph>Pod</codeph></stentry>
+        <stentry>core/v1</stentry>
+        <stentry>Yes</stentry>
+      </strow>
+      <strow>
+        <stentry><codeph>Namespace</codeph></stentry>
+        <stentry>core/v1</stentry>
+        <stentry>No</stentry>
+      </strow>
+    </simpletable>
+
+    <!-- ========== REQUIRED CLEANUP ========== -->
+    <required-cleanup remap="todo">Review this section before publishing.</required-cleanup>
+
+    <!-- ========== SECTIONS ========== -->
+    <section id="networking-concepts" platform="ocp">
+      <title>Networking concepts</title>
+      <p>Cluster networking uses <codeph>OVN-Kubernetes</codeph> by default.</p>
+      <note type="restriction" audience="developer">Developers cannot modify
+        cluster network settings.</note>
+      <simpletable>
+        <sthead>
+          <stentry>Network type</stentry>
+          <stentry>Plugin</stentry>
+        </sthead>
+        <strow>
+          <stentry>Cluster</stentry>
+          <stentry><codeph>OVN-Kubernetes</codeph></stentry>
+        </strow>
+      </simpletable>
     </section>
+
+    <section id="storage-concepts" product="odf">
+      <title>Storage concepts</title>
+      <p>Persistent volumes provide durable storage.</p>
+      <dl>
+        <dlentry>
+          <dt>PV</dt>
+          <dd>PersistentVolume — cluster-level storage resource.</dd>
+        </dlentry>
+        <dlentry>
+          <dt>PVC</dt>
+          <dd>PersistentVolumeClaim — a request for storage.</dd>
+        </dlentry>
+      </dl>
+      <codeblock outputclass="language-yaml">apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: data-pvc
+spec:
+  accessModes: ["ReadWriteOnce"]
+  resources:
+    requests:
+      storage: 10Gi</codeblock>
+    </section>
+
   </conbody>
 </concept>
